@@ -1,0 +1,76 @@
+
+// COLORS
+
+$backgroundColor: #fcf8e3; //#eee;
+$mainColor: #222;
+$headingColor: #222;
+$contentBoxColor: lighten($mainColor, 50%);
+
+$invertedPercentageBackground: 80%;
+$invertedPercentageMain: 100%;
+
+$linkColor: #2a76dd;
+$linkColorHover: lighten( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+$white: #ffffff;
+$black: #222;
+$orange: #FF8B22;
+$muted: #B4B4B4;
+$info: #00BFFF;//#77ABDA;
+$warning: #FBC15E;
+$danger: #fb4c52;//#F3635F;
+$success: #9fc857;//#85c939;
+$pop: #ce4ad0;//#F267F1;
+$pink: #FB7FC0;
+
+
+// FONTS
+
+$mainFont: 	  'Raleway', sans-serif; //'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Raleway', sans-serif; //'Source Sans Pro', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: none;
+$headingFontWeight: 500;
+$headingPaddingBottom: 0em;
+
+$blockMargin: 10px; // Vertical spacing between blocks of text
+$headingMargin: 0 0 $blockMargin 0;
+
+// SIZES
+
+$mainFontSize: 2.5em;
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+$tiniest: 0.3em;
+$tinier: 0.35em;
+$tiny: 0.4em;
+$smallest: 0.5em;
+$smaller: 0.6em;
+$small: 0.7em;
+$normal: 0.9em;
+$big: 1.1em;
+$bigger: 1.25em;
+$biggest: 1.5em;
+$massive: 2em;
+$huge: 3em;
+$extreme: 5em;
+
+
+// BORDERS
+
+$borderColor: black;
+$borderThickness: 2px;
+$borderSidedThickness: 10px;
+$borderRadius: 15px;
+
+// OTHERS
+
+
+
+
