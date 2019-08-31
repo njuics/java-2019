@@ -33,7 +33,7 @@ bower_components
 build/Release
 build/
 src/_scripts/_generatedEntries
-dist/
+#dist/
 
 # Dependency directories
 node_modules/
