@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Java语言基础</title>
+
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          Java语言基础
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>符号</h2>
+        </div>
+        <div class="down-9">
+          <ul>
+            <li>标识符</li>
+            <li>分隔符</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>标识符</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>程序中要用到许多名字，诸如类、对象、变量、方法等。标识符就是用来标识它们的唯一性和存在性的名字。</li>
+            <li>标识符的长度是任意的,标识符分为两类：
+              <ul>
+                <li>
+                  保留字：是Java预定义的标识符，具有特定的含义，又称关键字。
+                </li>
+                <li>
+                  用户定义标识符：是程序设计者根据自己的需要为定义的类、对象、变量、方法等的命名。
+                </li>
+              </ul>
+            </li>
+            <li>Java采用Unicode字符集，由16位构成，可以记录表达任何人类语言。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>用户自定义标识符的定义规则</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>以字母、下划线或$符开头的字母、下划线、数字、 $符的序列。</li>
+            <li>一些由开发环境自动生成的名称中会带有$符或下划线，因此虽然规则允许，但是自定义的变量名称中应尽量避免使用$符或下划线。</li>
+            <li>标识符区分大小写。</li>
+            <li>标识符不能与保留字同名。</li>
+            <li>标识符遵守先定义后使用的原则。</li>
+            <li>虽然<code>true</code>、<code>false</code>和<code>null</code>并不是关键字，但其代表的是值，也不可以用。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>分隔符</h2>
+        </div>
+        <div class="down-3">
+          规定任意两个相邻标识符、数、保留字或两个语句之间必须至少有一个分隔符，以便编译程序能识别：
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>空白分隔符：空格、TAB、换行符与回车符</li>
+            <li>普通分隔符</li>
+            <li><code>{ }</code> 用来定义复合语句、类体、方法体以及进行数组的初始化等</li>
+            <li><code>;</code> 表示一条语句的结束。</li>
+            <li><code>:</code> 有些地方会用到，你自会知道。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>注释</h2>
+        </div>
+        <div class="down-3">
+          注释用来对程序中的代码做出解释。注释部分对程序的执行不产生任何影响，可增加程序的可读性，有利于程序的修改、调试、交流。
+        </div>
+        <div class="down-2 row ">
+          <pre class="col-40">
+                <code data-trim>
+                    // 这是一个单行注释
+                </code>
+              </pre>
+          <pre class="col-40">
+                  <code data-trim>
+                /* 这是也是注释 *／
+              </code>
+            </pre>
+        </div>
+        <div class="down-2 row">
+          <pre class="col-40">
+                <code data-trim>
+                   /*
+                      这是还是注释
+                      可以多行
+                    *／
+            </code>
+          </pre>
+          <pre class="col-40">
+              <code data-trim>
+              /**
+                * 这也是多行注释
+                * 但称为说明注释，跟代码文档相关
+                */
+          </code>
+        </pre>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>数据类型</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>基本数据类型</li>
+            <li>复合数据类型</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>基本数据类型</h2>
+        </div>
+        <div class="down-3">
+          数值型 </div>
+        <div class="down-5">
+          <ul>
+            <li> 字节型：<code>byte</code>，短整型：<code>short</code>，整型：<code>int</code>，长整型：<code>long</code></li>
+            <li> 单精度：<code>float</code>，双精度：<code>double</code></li>
+            <li> 字符型：<code>char</code></li>
+            <li> 布尔型：<code>boolean</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>数据存储空间大小</h2>
+        </div>
+        <div class="small down-5">
+          <table>
+            <thead>
+              <tr>
+                <th>类型</th>
+                <th>内存</th>
+                <th>数值范围</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>byte</code></td>
+                <td>1</td>
+                <td>-128 ～ 127</td>
+              </tr>
+              <tr>
+                <td><code>short</code></td>
+                <td>2</td>
+                <td>-32768 ～ 32767</td>
+              </tr>
+              <tr>
+                <td><code>int</code></td>
+                <td>4</td>
+                <td>-2147483648 ～ 2147483647</td>
+              </tr>
+              <tr>
+                <td><code>long</code></td>
+                <td>8</td>
+                <td>whatever</td>
+              </tr>
+              <tr>
+                <td><code>float</code></td>
+                <td>4</td>
+                <td>who cares</td>
+              </tr>
+              <tr>
+                <td><code>double</code></td>
+                <td>4</td>
+                <td>holy crap</td>
+              </tr>
+              <tr>
+                <td><code>char</code></td>
+                <td>2</td>
+                <td>\u0000 ~ \uFFFF</td>
+              </tr>
+              <tr>
+                <td><code>boolean</code></td>
+                <td>1</td>
+                <td><code>true</code> or <code>false</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2><code>SizeOf</code></h2>
+        </div>
+
+        <div class="down-2 row ">
+          <pre>
+                  <code data-trim>
+                      private static void calSize() {
+                        System.out.println("Integer: " + Integer.SIZE/8); // 4
+                        System.out.println("Short: " + Short.SIZE/8); // 2
+                        System.out.println("Long: " + Long.SIZE/8); // 8
+                        System.out.println("Byte: " + Byte.SIZE/8); // 1
+                        System.out.println("Character: " + Character.SIZE/8); // 2
+                        System.out.println("Float: " + Float.SIZE/8); // 4
+                        System.out.println("Double: " + Double.SIZE/8); // 8
+                      }
+                  </code>
+                </pre>
+
+        </div>
+      </section>
+
+
+
+
+      <section>
+        <div class="down-3">
+          <h2>常量</h2>
+        </div>
+        <div class="down-3">
+          常量是指在程序运行过程中其值不变的量
+        </div>
+        <div class="down-3">
+          常量通过用关键字<code class="danger">final</code>来实现声明
+        </div>
+        <div class="down-2  center ">
+          <pre>
+                  <code data-trim>
+                      final int WIDTH=100;
+                  </code>
+                </pre>
+        </div>
+        <div class="down-3 small center">
+          此处<code>100</code>称为<span class="danger">字面值(Literal)</span>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>变量</h2>
+        </div>
+        <div class="down-3">
+          变量用来存放指定类型的数据，其值在程序运行过程中是可变的。
+        </div>
+        <div class="down-3">
+          使用一个变量之前必须先声明它。一方面给该变量分配内存空间，另一方面防止在以后使用此变量时因错误输入而对不存在的变量进行操作。
+        </div>
+        <div class="down-2  center ">
+          <pre>
+                    <code data-trim>
+                        int a;
+                        boolean found=false;
+                        float b=0f,c,d=1.3f;
+                    </code>
+                  </pre>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>变量作用域</h2>
+        </div>
+        <div class="down-3">
+          变量有一定的生存期和有效范围，变量的作用域指明可访问该变量的一段代码</div>
+        <div class="down-5">
+          <ul>
+            <li> 全局变量：可以在整个类中被访问；</li>
+            <li> 局部变量：在方法或方法的一个代码块中声明，它的作用域为它所在的代码块；</li>
+            <li> 类变量：在类中声明，而不是类的某个方法中声明，作用域为整个类；</li>
+            <li> 方法参数（变量）：作用域为传递给的那个方法；</li>
+            <li> 异常处理参数：传递给异常处理代码，作用域是异常处理部分。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>运算符</h2>
+        </div>
+        <div class="down-3">
+          程序中用来处理数据、表示数据运算、赋值和比较的符号称为运算符，参与运算的数据称为操作数。</div>
+        <div class="down-5">
+          <ul>
+            <li> 算术运算符：<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>++</code>,
+              <code>--</code>...</li>
+            <li> 比较运算符: <code>></code>, <code><</code>, <code>==</code>, <code>!=</code>, <code>>=</code>...</li>
+            <li> 逻辑运算符：<code>!</code>, <code>&</code>, <code>|</code>, <code>^</code>, <code>&&</code>,
+              <code>||</code>...</li>
+            <li> 位运算符: <code>~</code>, <code>&</code>, <code>|</code>, <code>^</code>, <code><<</code>, <code>>></code>,
+              <code>>>></code></li>
+            <li> 条件运算符：<code>?:</code></li>
+            <li> 赋值运算符：<code>=</code>, <code>+=</code>, <code>-=</code>, <code>/=</code>...</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>表达式（Expression）</h2>
+        </div>
+        <div class="down-3">
+          表达式是由操作数和运算符按照一定的语法形式组成的符号序列，计算出单一值。Java允许使用各种较小的表达式构成复合表达式，但表达式各个部分的数据类型要匹配。 </div>
+        <div>
+          <pre>
+            <code data-trim>
+                        a=0
+            </code>
+          </pre>
+          <pre>
+            <code data-trim>
+                          value1==value2
+            </code>
+          </pre>
+          <pre>
+            <code data-trim>
+                        1 * 2 * 3
+            </code>
+          </pre>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>语句（Statement）</h2>
+        </div>
+        <div class="down-3">
+          表达式加上“<code>;</code>”构成语句（表达式语句）</div>
+        <div>
+          <pre>
+                      <code data-trim>
+                          a=0;
+                        </code>
+                    </pre>
+        </div>
+        <div class="down-3">
+          还有另外几种语句：声明语句、控制流语句、方法调用语句等</div>
+        <div>
+          <pre>
+                        <code data-trim>
+                            int cadence = 0;
+                            anArray[0] = 100;
+                            System.out.println("Element 1 at index 0: " + anArray[0]);
+                  
+                            int result = 1 + 2; // result is now 3
+                            if (value1 == value2)
+                              System.out.println("value1 == value2");                   
+                          </code>
+                  </pre>
+
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>块（Block）</h2>
+        </div>
+        <div class="down-3">
+          是位于成对大括号之间的零个或多个语句的语句组，可以在允许使用单一语句的任何位置使用块。</div>
+        <div>
+          <pre>
+            <code data-trim>
+                            class BlockDemo {
+                              public static void main(String[] args) {
+                                boolean condition = true;
+                                if (condition) { // begin block 1
+                                  System.out.println("Condition is true.");
+                                } // end block one
+                                else { // begin block 2
+                                  System.out.println("Condition is false.");
+                                } // end block 2
+                              }
+                            }
+              </code>
+          </pre>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>编码规范</h2>
+        </div>
+        <div class="down-3">
+          规范原则 </div>
+        <div class="down-5">
+          <ul>
+            <li> 尽量使用完整的英文描述符；</li>
+            <li> 采用大小写混合使名字可读，采用适用于相关领域的术语；</li>
+            <li> 尽量少用缩写，若已使用尽量明智，且在整个文件或工程中通用；</li>
+            <li> 避免使用长的和类似的名字，或仅仅是大小写不同的名字；</li>
+            <li> 除静态常量外，尽量少用下划线。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>约定细则</h2>
+        </div>
+        <div class="down-3">
+          源文件命名规则</div>
+        <div class="down-5">
+          <ul>
+            <li> 源程序中包含有公共类的定义，源文件名必须与该公共类的名字一致。在一个源程序中至多只能有一个公共类的定义；</li>
+            <li> 源程序中不包含公共类，则该文件名只要和某个类名字相同即可；</li>
+          </ul>
+        </div>
+        <div class="down-5 smallest center">
+          源程序中有多个类的定义，编译时将会为每个类生成一个class文件
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>约定细则</h2>
+        </div>
+        <div class="down-3">
+          命名规则</div>
+        <div class="down-5">
+          <ul>
+            <li> 包：包名是全小写的名词，中间可以由点分隔开，如java.awt.event。</li>
+            <li> 类／接口：类／接口名首字母大写，若由多个单词合成一个类名，要求每个单词的字母也要大写，如MyFirstJava</li>
+            <li> 方法：由多个单词组成的方法名首字母小写，中间的每个单词首字母大写，如isButtonPressed。</li>
+            <li> 变量： 一般全小写，如length</li>
+            <li>常量：一般全大写，如果由多个单词组成则中间用下划线相连。如果是对象类型的常量，则是大小写混合，由大写字母把单词隔开，如STR_LENGTH</li>
+            <li>组件：使用完整的英文描述来说明组件的用途，尾部应该加上组件类型，如okButton。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>示例</h2>
+        </div>
+        <div>
+          <pre>
+            <code data-trim>
+              /*
+                Find Largest and Smallest Number in an Array Example
+                This Java Example shows how to find largest and smallest number in an
+                array.
+              */
+              public class FindLargestSmallestNumber {
+                public static void main(String[] args) {
+                  //array of 10 numbers
+                  int numbers[] = new int[]{32,43,53,54,32,65,63,98,43,23};
+                  //assign first element of an array to largest and smallest
+                  int smallest = numbers[0];
+                  int largetst = numbers[0];
+                  for(int i=1; i< numbers.length; i++) { 
+                    if(numbers[i]> largetst)
+                      largetst = numbers[i];
+                    else if (numbers[i] < smallest) smallest=numbers[i]; 
+                  } 
+                  System.out.println("Largest Number is : " + largetst);
+                  System.out.println(" Smallest Number is : " + smallest);
+                }
+              }
+            </code>
+          </pre>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>参考</h2>
+        </div>
+        <div class="down-3">
+          Language Basics </div>
+        <div class="down-5 smaller">
+          <a
+            href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html">https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html</a>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>作业</h2>
+        </div>
+        <div class="down-3">
+            Java语言基础实践 </div>
+        <div class="down-5 smaller">
+          <a
+            href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html">https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html</a>
+        </div>
+      </section>
+
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html>
