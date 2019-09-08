@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象编程</title>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    面向对象编程
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>编程范式</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>命令式编程 (Imperative programming): Focuses on describing <em class="strong danger">how</em> a
+                            program operates.</li>
+                        <li>声明式编程 (Declarative programming): Focuses on <em class="strong danger">what</em> the program
+                            should accomplish without specifying how the program should achieve the result.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>命令式编程</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>原始命令式 (汇编)</li>
+                        <li>过程式 (Procedural programming): Fortran, ALGOL, COBOL and BASIC</li>
+                        <li>结构化程序设计 (Structured programming): Pascal (C严格意义上不是结构化语言)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-5 row">
+                    <div class="down-3 col-50">
+                        <div>
+                            <h2>过程式编程</h2>
+                        </div>
+                        <div class="down-5">
+                            自顶向下，逐步求精。
+                        </div>
+                    </div>
+                    <div class="down-3 col-50">
+                        <div>
+                            <h2>结构化编程</h2>
+                        </div>
+                        <div class="down-5">
+                            有序控制，降低复杂度。
+                        </div>
+                    </div>
+                </div>
+                <div class="down-5 row fragment">
+                    <div class="down-5">
+                        <div>但是，他们都是面向“解空间”的。</div>
+                        <div>
+                            即针对现实中“做什么”的问题直接给出在机器中“怎么做”的解决方案。
+                        </div>
+                    </div>
+                </div>
+                <div class="down-5 row fragment">
+                    <div>
+                        <div class="danger">这种编程语言迫使我们以机器视角进行编程</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>如何把大象装进冰箱？</h2>
+                </div>
+                <div class="down-3 fragment">
+                    为了把大象装进冰箱，需要3个步骤（过程）
+
+                </div>
+                <div class="down-3 fragment">
+                    <div>1. 把冰箱门打开</div>
+                    <div>2. 把大象装进去</div>
+                    <div>3. 把冰箱门关上</div>
+                </div>
+
+                <div class="fragment down-3">每个过程有一个阶段性的目标，依次完成这些过程，就能把大象装进冰箱。 </div>
+
+                <div class="fragment down-3 danger center strong">这是面向过程</div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>面向对象编程</h2>
+                </div>
+                <div class="down-5 center">
+                    从“用什么做”开始考虑 </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>如何把大象装进冰箱？</h2>
+                </div>
+                <div class="down-3 fragment">
+                    <div>为了把大象装进冰箱，需要做三个动作（行为）。</div>
+                    <div>每个动作有一个执行者，它就是对象。</div>
+
+                </div>
+                <div class="down-3 fragment">
+                    <div>1. 冰箱，你给我把门打开</div>
+                    <div>2. 大象，你给我钻到冰箱里去</div>
+                    <div>3. 冰箱，你给我把门关上</div>
+                </div>
+
+                <div class="fragment down-3">每个执行者依次做这些动作，大象就装进了冰箱。
+                </div>
+
+                <div class="fragment down-3 danger center strong">这是面向对象</div>
+
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>对比</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="down-3 col-50">
+                        <div>
+                            <h3>面向过程</h3>
+                        </div>
+                        <div class="down-3 small">
+                            <div>1. 把冰箱门打开</div>
+                            <div>2. 把大象装进去</div>
+                            <div>3. 把冰箱门关上</div>
+                        </div>
+                        <div class="down-5">> 做一件事，是对机器行为的说明.
+                        </div>
+                    </div>
+                    <div class="down-3 col-50">
+                        <div>
+                            <h3>面向对象</h3>
+                        </div>
+                        <div class="down-3 small">
+                            <div>1. 冰箱，你给我把门打开</div>
+                            <div>2. 大象，你给我钻到冰箱里去</div>
+                            <div>3. 冰箱，你给我把门关上</div>
+                        </div>
+                        <div class="down-5">> 造一堆东西，是对现实中对象的刻画。
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>基本方法</h2>
+                </div>
+                <div class="down-5 center">
+                    <em class="big ">
+                        “面向对象编程的首要工作就是认识待解决问题所涉及的<span class="pop">基本对象</span>和他们间的相互关系。”</em>
+                    <div class="right small down-3">- 徐家福，《对象式程序设计语言》</div>
+                    <div class="down-3 fragment center">然后通过将这些对象映射到计算机中，实现计算机对现实问题的<span
+                            class="danger">模拟</span>，得到与应用问题结构对应（一致）的程序系统结构。
+                    </div>
+                    <div class="down-3 fragment center">这样使我们能<span class="success">从问题的角度</span>进行编程</div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>历史</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-40">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Simula_-_logo.svg/2880px-Simula_-_logo.svg.png" />
+                    </div>
+                    <div class="col-60">
+                        Simula, 1967, Ole-Johan Dahl and Kristen Nygaard
+                    </div>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-60">
+                        Smalltalk, 1970s, Alan Kay
+                    </div>
+                    <div class="col-40">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Alan_Kay_%283097597186%29.jpg/1920px-Alan_Kay_%283097597186%29.jpg" />
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>面向对象（Object Oriented）</h2>
+                </div>
+                <div class="down-7">
+                    <ul>
+                        <li>Everything is an object.</li>
+                        <li>A program is a bunch of objects telling each other what to do, by sending messages.</li>
+                    </ul>
+                </div>
+
+                <div class="down-5 fragment center">写程序就是写对象，实现对现实世界的模拟</div>
+
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>对象：现实世界中事物的抽象</h2>
+                </div>
+                <div class="down-5  center">
+                    <img src="https://pic2.zhimg.com/50/v2-0c6c35cf72ed9b761dd27f57b2bf3671_hd.jpg" />
+                </div>
+                <div class="smallest center">
+                    https://zhuanlan.zhihu.com/p/38891517
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>计算机中的对象 Object</h2>
+                </div>
+                <div class="down-5  center">
+                    Each object has its own memory, and is made up of other objects.
+                </div>
+                <div class="fragment center down-5">
+                    对象属性 </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>对象类型 Class</h2>
+                </div>
+                <div class="down-5  center">
+                    An object has an interface, determined by its class.
+                </div>
+                <div class="down-5  center">
+                    Every object has a type (class) </div>
+                <div class="fragment center down-5 fragment">
+                    接口即与对外界交互的接口，代表对象的行为。同类型对象行为一致。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>举个例子</h2>
+                </div>
+                <div>
+                    <div class="fragment">“你”、“我”都是Object（对象）</div>
+                    <div class="fragment">“你”、“我”的行为方法都一样，所以我们都是"人"这个Class(类型)。</div>
+                    <div class="fragment">如果“你”、“我”的行为方法不一样...</div>
+                </div>
+                <div class="down-5  center fragment">
+                    <img width="30%" src="http://www.shuoshuokong.org/uploads/allimg/160919/2-160919104204.jpg" />
+                    <div class="center danger">“你（对象）不是人（类型）！”</div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>面向对象编程</h2>
+                </div>
+
+                <div class="row">
+                    <div class="down-5 center col-50">
+                        <div class="down-3 center">
+                            Java编程
+                        </div>
+                        <div class="down-3">
+                            <pre class="Java">
+                                            <code data-trim >
+
+                                                    class Human {
+                    
+                                                    }
+
+                                                    Human you;
+                                                    Human me;
+                                                    Human him, her;
+
+                                            </code>
+                                        </pre>
+                        </div>
+                        <div class="center fragment" data-fragment-index=3>仅定义了类型，<span class="danger">声明了对象</span>
+                        </div>
+                    </div>
+
+                    <div class="down-5 center col-50 fragment" data-fragment-index=1>
+                        <div class="down-3 center">
+                            女娲造人
+                        </div>
+                        <div class="down-5 center">
+                            <img src="content/images/3/nvwa.jpg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row danger center fragment" data-fragment-index=2>
+                    Wait, 还不对...
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>在代码中造人</h2>
+                </div>
+
+                <div class="row">
+                    <div class="down-5 center col-50 fragment" data-fragment-index=1>
+                        <div class="down-3 center ">
+                            Java编程
+                        </div>
+                        <div class="down-3">
+                            <pre class="Java">
+                                                <code data-trim >
+    
+                                                        class Human {
+
+                                                        }
+                                                        
+                                                        ...
+                                                        Human you = new Human();
+                                                        Human me = new Human();
+                                                        Human him = new Human();
+                                                        Human her = new Human();
+                                                        ...
+                                                        
+    
+                                                </code>
+                                            </pre>
+                        </div>
+                        <div class="center fragment" data-fragment-index=2>仅定义了类型，<span class="danger">声明且创造了对象</span>
+                        </div>
+                    </div>
+
+                    <div class="down-5 center col-50" data-fragment-index=1>
+                        <div class="down-3 center">
+                            女娲造人
+                        </div>
+                        <div class="down-5 center">
+                            <img src="content/images/3/nvwa.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>稍微详细点
+                    </h2>
+                </div>
+                <div class="down-3 ">
+                    类型定义
+                </div>
+                <div class="down-1 center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                                <code data-trim >
+    
+                                                        class Human {
+                                                            int age; // 属性
+                                                            boolean gender; // 属性
+                                                          
+                                                            void talk(){} // 接口/行为
+                                                            void eat(){  // 快乐的行为
+                                                              ...
+                                                            }
+                                                            boolean isDead(){} //悲哀的行为
+                                                        }
+    
+
+                                                </code>
+                                            </pre>
+                        <div class="center ">
+                            造的是个什么样的人？
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="down-3 fragment danger strong center">你还缺个女娲, 或者叫“上帝之手”
+                </div>
+
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Run起来</h2>
+                </div>
+                <div class="down-1 center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                             <code data-trim >
+        
+                                void main() {
+                                    Human you = new Human();
+                                    Human me = new Human();
+                                                              
+                                    while(!me.isDead() && !you.isDead()){
+                                        me.talk();
+                                        me.eat();
+                                        you.talk();
+                                        you.eat();
+                                     }
+                                }
+    
+                            </code>
+                         </pre>
+                        <div class="center fragment success">
+                            C'est la vie
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2><code>main()</code>放哪里
+                    </h2>
+                </div>
+                <div class="down-5 center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                 <code data-trim >
+            
+                                        class God {
+                                            public static void main(String[] args){
+                                                Human you = new Human();
+                                                Human me = new Human();
+                                                while(!me.isDead() && !you.isDead()){
+                                                    me.talk();
+                                                    me.eat();
+                                                    you.talk();
+                                                    you.eat();
+                                                }
+                                            }
+                                        }
+                                </code>
+                             </pre>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section>
+                <div class="down-3">
+                    <h2>关系： Composition</h2>
+                </div>
+                <div class="down-5 center">
+
+                    <div class="down-3 center">One class has another as a part.
+
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2>再来点更抽象的
+                    </h2>
+                </div>
+                <div class="center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                     <code data-trim >
+                                            class Society {
+                                                Human[] members; //A society's subparts
+                                              
+                                                void initialize(){
+                                                    Human you = new Human();
+                                                    Human me = new Human();
+                                                    members = new Human[2];
+                                                    members[0] = you;
+                                                    members[1] = me;
+                                                }
+                                                void functioning(){
+                                                    for (int i=0; i< memebers.length; i++){
+                                                            if (!member[i].isDead()){
+                                                                member[i].talk();
+                                                                member[i].eat();
+                                                            }
+                                                    }
+                                                }
+                                                public static void main(String[] args){
+                                                    Society society = new Society();
+                                                    society.initialize();
+                                                    society.functioning();
+                                                }
+                                              }
+                                    </code>
+                                 </pre>
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>关系： Inheritance</h2>
+                </div>
+                <div class="down-5 center">
+
+                    <div class="down-3 center">One class is a specialized version of another.
+
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>男人和女人
+                    </h2>
+                </div>
+                <div class="center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                         <code data-trim >
+                                                class Man extends Human {
+                                                    void chiji(){}
+                                                }
+                                                  
+                                                class Woman extends Human {
+                                                    void selfie(){}
+                                                }
+                                                  
+                                                Man me = new Man();
+                                                me.chiji();
+                                                me.talk();
+                                                  
+                                                Woman her = new Woman();
+                                                her().selfie();
+                                                her.eat();
+                                        </code>
+                                     </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>最抽象的那个对象
+                    </h2>
+                </div>
+
+                <div class="center bigger">
+                    <code>Object</code>
+                </div>
+                <div class="center" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                             <code data-trim >
+                                                    class Object {
+                                                        ...
+                                                    }
+                                            </code>
+                                         </pre>
+                    </div>
+                </div>
+                <div class="center bigger">
+                    <code>Object</code> : 对一切事物的泛指。
+                </div>
+                <div class="center smallest down-5">
+                    <a
+                        href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html</a>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Actually
+                    </h2>
+                </div>
+
+                <div class="center down-5" data-fragment-index=1>
+
+                    <div class="">
+                        <pre class="Java">
+                                                 <code data-trim >
+                                                        class Human extends Object {
+                                                            ...
+                                                        }
+                                                </code>
+                                             </pre>
+                    </div>
+                </div>
+                <div class="center down-5">
+                    Java中定义的每个类型默认都继承自<code>Object</code>类型。
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Override</h2>
+                </div>
+
+                <div class="center down-3" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                            <code data-trim >
+                                    class Man extends Human {
+                                        void playDota(){}
+
+                                        @Override
+                                        void talk(){
+                                            System.out.println("bala bala");
+                                        }
+                                    }
+                                                              
+                                    class Woman extends Human {
+                                        void selfie(){}
+
+                                        @Override
+                                        void talk(){
+                                            while (true) System.out.println("bala bala");
+                                        }
+                                    }
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <div class="center">
+                    同样都是人，但男女还是很不一样的。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>父类与子类</h2>
+                </div>
+
+                <div class="center down-5" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                                <code data-trim >
+                                    public static void main(String[] args){
+                                        Man me = new Man();
+                                        Woman you = new Woman();
+                                        Human her = new Human();
+                                        Human he = new Man();
+                                        Man he = new Human(); // wrong
+                                    }
+                                </code>
+                            </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>会是什么结果？</h2>
+                </div>
+
+                <div class="center down-5" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                                    <code data-trim >
+                                        public static void main(String[] args){
+                                            Man me = new Man(); me.talk();
+                                            Woman you = new Woman(); you.talk();
+                                            Human her = new Human(); her.talk();
+                                            Human he = new Man(); he.talk();
+                                            Man he = new Human(); // wrong
+                                        }
+                                    </code>
+                                </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Polymorphism 多态</h2>
+                </div>
+                <div class="down-5 center">
+
+                    <div class="down-3 center">Different subclasses respond to the same message, possibly with different
+                        actions.
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>会是什么结果？</h2>
+                </div>
+
+                <div class="center down-1" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                                        <code data-trim >
+                                                class Society{
+                                                    Human[] members;
+                                                    void initialize(){
+                                                        Man you = new Man();
+                                                        Woman me = new Woman();
+                                                        members = new Human[2];
+                                                        members[0] = you;
+                                                        members[1] = me;
+                                                    }
+                                                    void functioning(){
+                                                        for (int i=0; i< memebers.length; i++){
+                                                            if (!member[i].isDead()){
+                                                                member[i].talk();
+                                                            }
+                                                        }
+                                                    }
+                                                    public static void main(String[] args){
+                                                        Society society = new Society();
+                                                        society.initialize();
+                                                        society.functioning();
+                                                    }
+                                                  }
+                                                  
+                                        </code>
+                                    </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>对象初始化 Initialization</h2>
+                </div>
+
+                <div class="center down-5" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                                            <code data-trim >
+                                                class Human{
+                                                    int age;
+                                                    boolean gender;
+                                                    ....
+                                                }
+                                                      
+                                                Human you = new Human(); // age=0; gender=false;
+                                            </code>
+                                    </pre>
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Customized Initialization</h2>
+                </div>
+
+                <div class="center down-5" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                                            <code data-trim >
+                                                    class Human {
+                                                        int age;
+                                                        boolean gender;
+                                                        Human() {
+                                                            age = 0;
+                                                            gender = true;
+                                                        }
+                                                      
+                                                        Human(int age) {
+                                                            self.age = age; //self -> this object
+                                                        }
+                                                        ...
+                                                    }
+                                            </code>
+                                    </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Destroying Objects</h2>
+                </div>
+
+                <div class="down-5 center row">
+
+                    <div class="down-3  col-70">If an object goes “out of scope,” it can no longer be used (its
+                        name is
+                        no longer known).
+                        In C++, we might need to write an explicit function to free memory allocated to an object.
+                        Java uses references and “garbage collection”.
+                    </div>
+                    <div class="down-3 center col-30">
+                        <img src="https://c-guntur.github.io/java9-gc/images/DukeGarbageCollector.png" />
+
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>What Happens?</h2>
+                </div>
+
+                <div class="center down-5 row" data-fragment-index=1>
+                    <div class="col-60">
+                        <div class="">
+                            <pre class="Java">
+                                                            <code data-trim >
+                                                                    class Woman {
+                                                                        ...
+                                                                        void giveBirth() {
+                                                                            Human baby;
+                                                                            baby = new Human();
+                                                                            return;
+                                                                        }
+                                                                        ...
+                                                                    }
+                                                            </code>
+                                                    </pre>
+                        </div>
+
+
+                    </div>
+                    <div class="down-3 center col-30">
+                        <img src="http://img1.gtimg.com/0/8/830/83094_750x750_0.jpg" />
+
+                    </div>
+                </div>
+
+                <div>
+                    The <code>Human</code> object still exists, but the reference <code>baby</code> disappears (it’s out
+                    of scope after return). Eventually, the garbage collector removes the actual <code>Human</code>
+                    object, i.e., the <code>baby</code>.
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Inside</h2>
+                </div>
+
+                <div class="down-5 center">
+                    <img
+                        src="http://www.programcreek.com/wp-content/uploads/2013/09/string-pass-by-reference--650x247.jpeg" />
+                </div>
+
+                <div class="down-3 center small">
+                    <a
+                        href="https://www.baeldung.com/jvm-garbage-collectors">https://www.baeldung.com/jvm-garbage-collectors</a>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Primitives?</h2>
+                </div>
+
+                <div class="center down-5 row" data-fragment-index=1>
+                    <div class="">
+                        <pre class="Java">
+                            <code data-trim >
+                                int i;
+                                double d;
+                                ...
+                            </code>
+                        </pre>
+                    </div>
+
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Heap and Stack</h2>
+                </div>
+
+                <div class="down-5 center">
+                    <img src="https://i.stack.imgur.com/KdBPf.png" />
+                </div>
+
+                <div class="down-3 center small">
+                    <a
+                        href="https://www.baeldung.com/java-stack-heap">https://www.baeldung.com/java-stack-heap</a>
+                </div>
+            </section>
+
+            <section>
+                    <div class="down-3">
+                        <h2>Always remember</h2>
+                    </div>
+    
+                    <div class="down-5 center">
+                        <img width="50%" src="https://i.pinimg.com/originals/c9/c7/c2/c9c7c24576bc40705f9ad4c7d5a3bce8.jpg" />
+                    </div>
+    
+                </section>
+
+                <section>
+                        <div class="down-3">
+                            <h2>Let's DO some programming!</h2>
+                        </div>
+        
+                        <div class="down-5 center">
+                            <img width="80%" src="https://miro.medium.com/max/1200/1*ENNVliiCHjcURSXKeZbISA.png" />
+                        </div>
+        
+                    </section>
+
+                    <section class="title-slide">
+                            <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                                See you next week!
+                            </div>
+                        </section>
+        </div> <!-- slides -->
+    </div> <!-- reveal -->
+
+</html>
