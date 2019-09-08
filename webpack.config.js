@@ -36,8 +36,10 @@ async function getConfig() {
   }
 
   // Check if all the font formats already present in dist folder.
-  const FONTS_DONWLOAD = userConfig.GOOGLE_FONTS_FORMATS.map(format => fs.existsSync(`./dist/lib/css/${format}.css`))
-    .reduce((acc, bool) => acc && bool, true) ? false : true
+  // const FONTS_DONWLOAD = userConfig.GOOGLE_FONTS_FORMATS.map(format => fs.existsSync(`./dist/lib/css/${format}.css`))
+    // .reduce((acc, bool) => acc && bool, true) ? false : true
+
+  const FONTS_DONWLOAD =  false
 
   const htmlList = await gchelpers.getEntries('./src/')
   const [entries, htmlPluginList] = gchelpers.getEntriesAndHTMLPlugins(htmlList, userConfig.FONTAWESOME_BACKEND == 'svg')
