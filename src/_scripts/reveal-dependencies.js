@@ -9,6 +9,8 @@ import 'nodePath/reveal.js/plugin/markdown/marked.js'
 
 import 'nodePath/reveal.js/plugin/markdown/markdown.js'
 
+import 'nodePath/reveal-ga/dist/reveal-ga.min.js'
+
 // Speaker notes
 import './reveal-plugins/reveal-notes.js'
 // Modified Math.js to integrate special fragments capabilities in latex equations

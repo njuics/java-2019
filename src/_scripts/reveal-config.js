@@ -17,6 +17,8 @@ Object.keys(HIGHLIGHT_LANGUAGES).forEach(key => {
 document.addEventListener('DOMContentLoaded', (event) => {
   window.Reveal = Reveal // plugins need that
 
+  var gaPropertyID = 'UA-121783408-6';
+
   Reveal.initialize({
     width: 960,
     height: 700,
