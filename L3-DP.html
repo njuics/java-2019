@@ -70,8 +70,8 @@
         </div>
         <div class="down-5">
           <ul>
-            <li>过程抽象<i class="fas fa-arrow-right"></i>数据抽象</li><br>
-            <li>结构化<i class="fas fa-arrow-right"></i> 面向对象</li><br>
+            <li>过程抽象  <i class="fas fa-arrow-right"></i>  数据抽象</li><br>
+            <li>结构化  <i class="fas fa-arrow-right"></i>  面向对象</li><br>
           </ul>
         </div>
         <div class="down-5 row fragment">
@@ -116,11 +116,11 @@
         </div>
         <div class="down-5">
           <ul>
-            <li>SRP (The Single-Responsibility Principle)</li>
-            <li>OCP (The Open-Closed Principle) </li>
-            <li>LSP (The Liskov Substitution Principle)</li>
-            <li>ISP (The Interface-Segregation Principle)</li>
-            <li>DIP (The Dependency-Inversion Principle) </li> 
+            <li><h4>SRP (The Single-Responsibility Principle)</h4></li>
+            <li><h4>OCP (The Open-Closed Principle)</h4></li>
+            <li><h4>LSP (The Liskov Substitution Principle)</h4></li>
+            <li><h4>ISP (The Interface-Segregation Principle)</h4></li>
+            <li><h4>DIP (The Dependency-Inversion Principle)</h4></li> 
           </ul>
         </div>
       </section>
@@ -132,8 +132,8 @@
         <div class="down-5">
           <ul>
             <li>A class should have only <span class="danger"> one reason to change</span>.</li><br>
-            <li>What is a Responsibility?</li><br>
-            <li>An axis of change is an axis of change only if the changes actually occur.</li><br>
+            <li>What is a <span class="danger">Responsibility?</span></li><br>
+            <li>An axis of change is an axis of change <span class="fragment highlight-current-bg-danger-white">only if</span> <span class="fragment highlight-current-danger">the changes actually occur</span>.</li><br>
           </ul>
         </div>
       </section>
@@ -217,7 +217,7 @@
               </ul>
             </div>
             <div class="down-5">
-                <h4><span class="fragment highlight-current-bg-danger-white">Do not modify sourcecode, but change behavior.</span></h4>
+                <h4><span class="fragment highlight-current-bg-danger-white">Do not modify source code, but change behavior.</span></h4>
             </div>
             <div class="down-5 row fragment">
                     <div>
@@ -336,12 +336,15 @@
                 <pre>
                     <code data-trim>
                             public class Square extends Shape{
+
                                 Square(ShapeType shapeType){
                                     super(shapeType);
                                 }
+
                                 public void draw(){
                                     System.out.println("Draw a square.");
                                 }
+
                             }
                     </code>
                 </pre>
@@ -460,8 +463,8 @@
             </div>
             <div class="down-5">
               <ul>
-                <li>Validity is not intrinsic.</li><br>
-                <li>IS-A is about Behavior. </li><br>
+                <li><h3>Validity is not intrinsic.</h3></li><br>
+                <li><h3>IS-A is about Behavior.</h3></li><br>
               </ul>
             </div>
             <div class="down-5 row fragment">
@@ -477,7 +480,7 @@
             </div>
             <div class="down-5">
               <ul>
-                <li>Violation 1: Degenerate functions in derivations.</li>
+                <li><h3>Violation 1: Degenerate functions in derivations.</h3></li>
                 <pre class="java">
                     <code data-trim>
                             public class Base{
@@ -488,7 +491,17 @@
                             }
                     </code>
                 </pre>
-                <li>Violation 2: Throwing exceptions from derivatives.</li>
+                <li><h3>Violation 2: Throwing exceptions from derivatives.</h3></li>
+                <pre class="java">
+                  <code data-trim>
+                          public class Base{
+                              public void f(){/** some code */}
+                          }
+                          public class Derived extends Base{
+                              public void f() throws Exception{/** compilation error */}
+                          }
+                  </code>
+              </pre>
               </ul>
             </div>
       </section>
@@ -499,8 +512,8 @@
             </div>
             <div class="down-5">
               <ul>
-                <li>LSP is one of the enablers of the OCP.</li><br>
-                <li>It is the substitutability of subtypes that allows a module, expressed in terms of a base type, to be extensible without modification.</li>
+                <li><h3>LSP is one of the enablers of the OCP.</h3></li><br>
+                <li><h3>It is <span class="fragment highlight-current-bg-danger-white">the substitutability of subtypes</span> that allows a module, expressed in terms of a base type, to be extensible without modification.</h3></li>
               </ul>
             </div>
       </section>
@@ -511,8 +524,8 @@
             </div>
             <div class="down-5">
               <ul>
-                <li>Clients should not be forced to depend on methods that they do not use.</li><br>
-                <li>Deals with the disadvantage of “fat” interfaces – whose interfaces are not cohesive.</li>
+                <li><h3>Clients should not be forced to depend on methods that they do not use.</h3></li><br>
+                <li><h3>Deals with the disadvantage of “fat” interfaces – whose interfaces are not cohesive.</h3></li>
               </ul>
             </div>
       </section>
@@ -614,8 +627,8 @@
                 </div>
                 <div class="down-5">
                     <ul>
-                        <li>High level modules should not depend on low-level modules. Both should depend on abstractions.</li><br>
-                        <li>Abstractions should not depend on details. Details should depend on abstractions.</li><br>
+                        <li><h3>High level modules should not depend on low-level modules. Both should depend on abstractions.</h3></li><br>
+                        <li><h3>Abstractions should not depend on details. Details should depend on abstractions.</h3></li><br>
                     </ul>
               </div>
               <div class="down-5 row fragment">
@@ -630,10 +643,8 @@
                 <div class="down-3">
                     <h2>Laying</h2>
                 </div>
-                <div class="down-5">
-                    <ul>
-                        <li><em>Booch: “… all well structured OO architectures have clearly defined layers, with each layer providing some coherent set of services through a well-defined and controlled interface.”</em></li>
-                    </ul>
+                <div class="down-5 em small">
+                    Booch: “… all well structured OO architectures have clearly defined layers, with each layer providing some coherent set of services through a well-defined and controlled interface.”
               </div>
               <div class="down-5 center">
                       <img src="http://www.plantuml.com/plantuml/png/2yZFoKokz4ciJ2rIqDEpK_1DJSv8pCiipWKBSQ5omIf2Ip9pCaiWMW00" />
@@ -661,8 +672,8 @@
                 </div>
                 <div class="down-5">
                     <ul>
-                        <li>“Don’t call us, we’ll call you.” <span class="fragment highlight-danger">低层模块实现了在高层模块中声明并被高层模块调用的接口。</span> </li><br>
-                        <li>also an inversion of interface ownership: <span class="fragment highlight-danger">客户拥有抽象接口，服务者则从这些抽象接口派生。</span></li><br>
+                        <li><h3>“Don’t call us, we’ll call you.” <span class="fragment highlight-danger">低层模块实现了在高层模块中声明并被高层模块调用的接口。</span> </h3></li><br>
+                        <li><h3>also an inversion of interface ownership: <span class="fragment highlight-danger">客户拥有抽象接口，服务者则从这些抽象接口派生。</span></h3></li><br>
                     </ul>
               </div>
         </section>
@@ -740,9 +751,7 @@
                     <h2>Heuristic</h2>
                 </div>
                 <div class="down-5">
-                    <ul>
-                        <li>Depend on abstractions!</li>
-                    </ul>
+                    Depend on abstractions!
               </div>
               <div class="down-5 row fragment">
                     <div>
@@ -786,8 +795,8 @@
                     <ul>
                         <li class="down-5 fragment">Composition vs. Aggregration</li>
                         <ul>
-                            <li class="down-5 fragment">聚合表示“拥有”关系或者整体与部分的关系。</li>
-                            <li class="down-5 fragment">合成是一种强得多的“拥有”关系——部分和整体的生命周期是一样的。</li>
+                            <li class="down-5 fragment big">聚合表示“拥有”关系或者整体与部分的关系。</li>
+                            <li class="down-5 fragment big">合成是一种强得多的“拥有”关系——部分和整体的生命周期是一样的。</li>
                         </ul>
                         <li class="down-5 fragment danger">换句话说：合成是值的聚合（Aggregation by Value），而一般说的聚合是引用的聚合（Aggregation by Reference）</li>
                     </ul>
@@ -803,9 +812,9 @@
                     <li>复用方法</li>
                          <ul>
                             <br>
-                            <li>合成/聚合复用：将已有对象纳入到新对象中，使之成为新对象的一部分</li>
+                            <li><h3>合成/聚合复用：将已有对象纳入到新对象中，使之成为新对象的一部分</h3></li>
                             <br>
-                            <li>继承</li>
+                            <li><h3>继承</h3></li>
                         </ul>
                 </ul>
             </div>
@@ -893,8 +902,8 @@
                 </div>
                 <div class="down-5">
                     <ul>
-                        <li>Only talk to your immediate friends</li><br>
-                        <li>Don't talk to strangers</li><br>
+                        <li><h3>Only talk to your immediate friends.</h3></li><br>
+                        <li><h3>Don't talk to strangers.</h3></li><br>
                  </ul>
                 </div>
         </section>
@@ -930,13 +939,13 @@
                 </div>
                 <div class="down-5">
                   <ul>
-                    <li>SRP (The Single-Responsibility Principle) 单一职责原则</li>
-                    <li>OCP (The Open-Closed Principle) 开放-封闭原则</li>
-                    <li>LSP (The Liskov Substitution Principle) Liskov替换原则</li>
-                    <li>ISP (The Interface-Segregation Principle) 接口隔离原则</li>
-                    <li>DIP (The Dependency-Inversion Principle) 合成/聚合复用原则</li> 
-                    <li>CARP (Composition/Aggregation Reuse Principle) 合成/聚合复用原则</li>
-                    <li>LoD (Law of Demeter) 迪米特法则</li>
+                    <li><h4>SRP (The Single-Responsibility Principle) 单一职责原则</h4></li>
+                    <li><h4>OCP (The Open-Closed Principle) 开放-封闭原则</h4></li>
+                    <li><h4>LSP (The Liskov Substitution Principle) Liskov替换原则</h4></li>
+                    <li><h4>ISP (The Interface-Segregation Principle) 接口隔离原则</h4></li>
+                    <li><h4>DIP (The Dependency-Inversion Principle) 合成/聚合复用原则</h4></li> 
+                    <li><h4>CARP (Composition/Aggregation Reuse Principle) 合成/聚合复用原则</h4></li>
+                    <li><h4>LoD (Law of Demeter) 迪米特法则</h4></li>
                   </ul>
                 </div>
         </section>
