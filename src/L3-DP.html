@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>设计原则</title>
+  
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          设计原则
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+            <h2>基本方法</h2>
+        </div>
+        <div class="down-5 center">
+            <em class="big ">
+                “复杂性是软件开发过程中所固有的特质。”</em>
+            <div class="right small down-3">- Grady Booch, 1994</div>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>应对复杂性的基本途径</h2>
+        </div>
+        <div class="down-5">
+            <h4>元方法</h4>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>分解（分而治之）</li><br>
+            <li>抽象（抓本质，抓重点）</li><br>
+            <li>层次化（纲举目张）</li><br>
+          </ul>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">面向过程 vs. 面向对象</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>软件复用</h2>
+        </div>
+        <div class="down-9">
+          <ul>
+            <li>为什么要复用？</li><br>
+            <li>复用什么？</li><br>
+            <li>复用的技术问题？</li><br>
+          </ul>
+        </div>
+      </section>  
+
+      <section>
+        <div class="down-3">
+          <h2>软件复用</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>过程抽象 --> 数据抽象</li><br>
+            <li>结构化 -->  面向对象</li><br>
+          </ul>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">软件工程发展的历史就是人们不断追求更高的抽象、封装和模块化的历史。</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+            <h2>OOSC</h2>
+        </div>
+        <div class="down-5">
+            <em class="normal">
+                “Object-oriented software construction is the approach to system structuring that bases the architecture of software systems on <em class="strong danger">the types of objects</em> they manipulate — not on the function they achieve.”</em>
+            <div class="right small down-3">- Bertrand Meyer, 1998</div>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center strong danger">But OOP == OOSC ?</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>软件设计</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>遵循<span class="strong danger">敏捷实践</span>去发现问题；</li><br>
+            <li>应用<span class="strong danger">设计原则</span>去诊断问题；</li><br>
+            <li>应用适当的<span class="strong danger">设计模式</span>去解决问题。</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>SOLID</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>SRP (The Single-Responsibility Principle)</li>
+            <li>OCP (The Open-Closed Principle) </li>
+            <li>LSP (The Liskov Substitution Principle)</li>
+            <li>ISP (The Interface-Segregation Principle)</li>
+            <li>DIP (The Dependency-Inversion Principle) </li> 
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>SRP 单一职责原则</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>A class should have only <span class="danger"> one reason to change</span>.</li><br>
+            <li>What is a Responsibility?</li><br>
+            <li>An axis of change is an axis of change only if the changes actually occur.</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>来个例子</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vM24fDBadCIyz9hUPIKD0koyzCKKWfIYpNq0HnK_9Bat9I5HABKXE10hLSGE2SdrjGMf9OafcVbvWJxvwQdvjQKbGPxrXGa9EP31PMqDMrGnZBvLwKM901bCh1emRE0ekxXte20000" />
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Applying SRP</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vM24fDBadCIyz9hUPIKD0koyzCKKWfIYpNqEIgvU9A1YjnJytFJIqfoaoEHrMSab-Qb9Ega5YKcWXHpkMSdrjGMf9OafcVbvWJ3zLN6UzOK92JcGmMLj3LjSDc89TxKM911b1H3ePgOjIuXtfomTNXj0DDHQWd0000" />
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>SRP Violation</h2>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                        interface Modem{
+                            public void dial (String pno);
+                            public void hangup();
+                            public void send (char c);
+                            public char recv();
+                        }
+                </code>
+            </pre>  
+        </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Applying SRP</h2>
+            </div>
+            <div class="down-5 center">
+               <img src="http://www.plantuml.com/plantuml/png/yymhIIrAIqnELN19B4cCTyv8pCjBpU7oX0ixvmC5aaioy_Euk92LADZKwEeg-EQdfER6U-OMvAJcfkQL98BL8RJWLWG0" />
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">Note：如果应用程序的变化方式总是导致这两个职责同时变化，那么就不必分离它们！</div>
+                    </div>
+            </div>
+          </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>OCP 开放封闭原则</h2>
+        </div>
+        <div class="down-5">
+            <h4><em>Software entities (classes, modules, functions, etc.) should be <span class="fragment highlight-success">open for extension</span>, but <span class="fragment highlight-danger">closed for modification</span>.</em></h4>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">OCP is the heart of OO design!</div>
+                    </div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>OCP Inside</h2>
+            </div>
+            <div class="down-5">
+                <h4>Two primary attributes</h4>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>Open for extension: the behavior of the module can be extended.</li><br>
+                <li>Closed for modification: extending the behavior of a module does not result in changes to the source or binary code of the module.</li>
+              </ul>
+            </div>
+            <div class="down-5">
+                <h4><span class="fragment highlight-current-bg-danger-white">Do not modify sourcecode, but change behavior.</span></h4>
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">Is it possible?</div>
+                    </div>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Abstraction is the key！</h2>
+            </div>
+            <div class="down-5 center">
+                <img src="http://www.plantuml.com/plantuml/png/Syv9B2vMSCx9JCqhuShBBqbLo4bDAx62YYXa5YlafMQMPAGMAUGNfEOfvEKNAIJdv1UdfkXnEOEr1gSMbQKMSN51DUZgsa650000" />
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Applying OCP</h2>
+            </div>
+            <div class="down-5 center">
+                <img src="http://www.plantuml.com/plantuml/png/yymhIIrAIqnELN3EoKpDAudtX0bmEUSa5XSh1ASMbQKMGJaGDLnv-IMf2ZcfQILMK165p6A5fFoI38NyWjGyXSIy58NadFpYr1GkBdHJ5MngT7KHXe8rw-hQOTWE0000" />
+            </div>
+      </section>
+
+
+      <section>
+            <div class="down-3">
+              <h2>Template Pattern</h2>
+            </div>
+            <div class="down-5 center">
+                <img src="http://www.plantuml.com/plantuml/png/IqmgBYbAJ2vHICv9B2vM2CZFoKokhEPIKD0koyzCKIW0yzrAyv9BClFpD3I14jM9K2srK3N5gKLbcScfI8fgkRWWnddc5kIavgRcbII2P136OjK2iLl1faPN5qqZ0000" />
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">A clear separation of generic functionality from the detailed implementation of that functionality！</div>
+                    </div>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Heuristics</h2>
+            </div>
+            <div class="down-5">
+                <h4><span class="fragment highlight-current-bg-danger-white">OCP是面向对象设计的核心所在！</span></h4>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>灵活性、可重用性、可维护性</li>
+                <li>使用OOPL不代表遵循了OCP</li>
+                <li>肆意抽象亦不是一个好主意</li>
+              </ul>
+            </div>
+            <div class="down-5">
+                <h4><span class="fragment highlight-current-bg-danger-white">100%的封闭不可能，必须有策略地对待这个问题。</span></h4>
+            </div>
+            <div class="down-5">
+                <ul>
+                    <li>对程序中呈现出频繁变化的那些部分做出抽象，拒绝不成熟的抽象和抽象本身一样重要。</li>
+                </ul>
+            </div>
+      </section> 
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Liskov替换法则</h2>
+            </div>
+            <div class="down-5">
+                <h4>Subtypes must be substitutable for their base types.</h4>  
+            </div>
+            <div class="down-5">
+                    <em class="small ">
+                        “If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2 then S is a subtype of T.”</em>
+                    <div class="right small down-3">- Barbara Liskov, 1988</div>
+            </div>
+      </section> 
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (I)</h2>
+            </div>
+            <div class="down-5">
+                    <h4>RTTI (运行时类型识别)</h4>  
+            </div>
+            <div class="down-5">
+                <pre class="Java">
+                    <code data-trim>
+                            public class Shape {
+                                ShapeType itsType;
+                                Shape(ShapeType shapeType){
+                                    itsType = shapeType;
+                                }
+                            }
+                    </code>
+                    <code data-trim>
+                            public class Circle extends Shape{
+                                Circle(ShapeType shapeType){
+                                    super(shapeType);
+                                }
+                                public void draw(){
+                                    System.out.println("Draw a circle.");
+                                }
+                            }
+                    </code>
+                </pre>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (I)</h2>
+            </div>
+            <div class="down-5">
+                <pre>
+                    <code data-trim>
+                            public class Square extends Shape{
+                                Square(ShapeType shapeType){
+                                    super(shapeType);
+                                }
+                                public void draw(){
+                                    System.out.println("Draw a square.");
+                                }
+                            }
+                    </code>
+                </pre>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (I)</h2>
+            </div>
+            <div class="down-5">
+                <pre class="java">
+                    <code data-trim>
+                            public class Client {
+
+                                public static void drawShape(Shape shape){
+                                    if(shape.itsType == ShapeType.circle){
+                                        Circle circle = (Circle)shape;
+                                        circle.draw();
+                                    }
+                                    else if(shape.itsType == ShapeType.square){
+                                        Square square = (Square)shape;
+                                        ((Square) shape).draw();
+                                    }
+                                }
+                            
+                                public static void main(String[] args){
+                                    Shape  s1 = new Circle(ShapeType.circle);
+                                    Shape  s2 = new Square(ShapeType.square);
+                                    Client.drawShape(s1);
+                                    Client.drawShape(s2);
+                                }
+                            }
+                    </code>
+                </pre>
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">增加一种新类型?</div>
+                    </div>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (II)</h2>
+            </div>
+            <div class="down-5">
+                <h4>incorrect IS-A Relationship</h4>
+            </div>
+            <div class="down-5">
+                <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vM24fDBadCIyz9vKe6yuCBInEBKhcuuE8ADZMwkb1X0000" />
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (II)</h2>
+            </div>
+            <div class="down-5">
+                <h4>incorrect IS-A Relationship</h4>
+            </div>
+            <div class="down-5">
+                <pre class="java">
+                    <code data-trim>
+                            class Rectangle{
+                                double itsWidth;
+                                double itsHeight;
+                                public void setWidth(double w) {itsWidth=w;}
+                                public void setHeight(double h) {itsHeight=h;}
+                                public double area(){ return itsWidth * itsHeight;}
+                              }
+                    </code>
+                    <code data-trim>
+                            class Square extends Rectangle{
+                                public void setWidth(double w) {
+                                    super.setWidth(w); super.setHeight(w);}
+                                public void setHeight(double h) {
+                                    super.setWidth(w); super.setHeight(w);}
+                              }
+                    </code>
+                </pre>    
+            </div>
+      </section>
+
+
+      <section>
+            <div class="down-3">
+              <h2>LSP Violation (II)</h2>
+            </div>
+            <div class="down-5">
+                <pre class="java">
+                    <code data-trim>
+                            public class Client{
+                                public static void main (String[] args){
+                                    Rectangle r = new Square();
+                                    r.SetWidth(5.0);
+                                    r.SetHeight(4.0);
+                                    double a = r.area();
+                                    System.out.println(a);
+                                }
+                            }
+                    </code>
+                </pre>    
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">结果为20吗？</div>
+                    </div>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>The Real Problem</h2>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>Validity is not intrinsic.</li><br>
+                <li>IS-A is about Behavior. </li><br>
+              </ul>
+            </div>
+            <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">Behaviorally, a Square is not a Rectangle.</div>
+                    </div>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Hueristics</h2>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>Violation 1: Degenerate functions in derivations.</li>
+                <pre class="java">
+                    <code data-trim>
+                            public class Base{
+                                public void f(){/** some code */}
+                            }
+                            public class Derived extends Base{
+                                public void f(){}
+                            }
+                    </code>
+                </pre>
+                <li>Violation 2: Throwing exceptions from derivatives.</li>
+              </ul>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>LSP</h2>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>LSP is one of the enablers of the OCP.</li><br>
+                <li>It is the substitutability of subtypes that allows a module, expressed in terms of a base type, to be extensible without modification.</li>
+              </ul>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>ISP 接口隔离原则</h2>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>Clients should not be forced to depend on methods that they do not use.</li><br>
+                <li>Deals with the disadvantage of “fat” interfaces – whose interfaces are not cohesive.</li>
+              </ul>
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>来个例子</h2>
+            </div>
+            <div class="down-5">
+                <ul>
+                    <li>Common Door</li>
+                       <pre class="java">
+                            <code data-trim>
+                                    class Door {
+                                        public abstract void lock();
+                                        public abstract void unlock();
+                                        public abstract bool isDoorOpen();
+                                    }
+                            </code>
+                        </pre>  
+                    <li>Timer</li>
+                        <pre class="java">
+                            <code data-trim>
+                                    class Timer {
+                                        public void register (int timeout, TimerClient client );
+                                    }
+                            </code>
+                        </pre> 
+                    <li>Timer Client</li>
+                    <pre class="java">
+                            <code data-trim>
+                                    class TimerClient{
+                                        public abstract void timeout();
+                                    }
+                            </code>
+                        </pre> 
+                </ul>
+            </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+              <h2>Interface Polution</h2>
+          </div>
+          <div class="down-5 row fragment">
+                <div>
+                    <div class="center strong danger">How about a timed door?</div>
+                </div>
+        </div>
+        <div class="down-5 center fragment">
+                <img src="http://www.plantuml.com/plantuml/png/JOr13i8m30JlViLoAqBv0Aeu04_W0r5hYgKGIudR2_1tAeCWjztLQcP8iLPSvCw5Xdy-9U5i3mAmMrH6sBhgRDsMNj_VMRLGLcCKcMwsnt4sh1qn9Ion29jmXLxzYSpi5CdJXXhLw1noAq8uj7vgClfd21-fyxp-06y0" />
+            </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+                <h2>Seperate Interfaces</h2>
+            </div>
+            <div class="down-5 row">
+                <div class="col-40">
+                    Solution 1: adapter
+                </div>
+                <div class="col-60">
+                    <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vM2CdCJItYIaQmdNCoK_DAghaK51Iqo_8pKnHAWABvfIKQcborK7Kk-Vd8Mb90V2GDAK1k25PDO0iSKn8BIbABSDZ01LQZeAjhX-mSBYIsWasDhYw6SLmW0OWKt4rSw8hWnaAauIm5FJqxJ1DHfS5I0000" />
+                </div>
+          </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>Seperate Interfaces</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-40">
+                        Solution 2: multiple inheritance
+                    </div>
+                    <div class="col-60">
+                        <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vM2CdCJItYIaQmdNCoK_DAghaK51Iqo_8pKnHAWABvfIKQcborN9vv9Qb5QOd9gGek-Vd8sb90V2HDAK1k2996Bh3P2hgwTiYsS85qATZKwEeY3E52aiSc1MOfwEb13G80" />
+                    </div>
+              </div>
+            </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>Heuristic</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>客户程序应该仅依赖于它们实际调用的方法。</li><br>
+                        <li>方法：把胖类的接口分解为多个特定于客户程序的接口。</li><br>
+                        <li>目标：<font color="red">高内聚，低耦合</font></li><br>
+                    </ul>
+              </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>DIP 依赖倒置原则</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>High level modules should not depend on low-level modules. Both should depend on abstractions.</li><br>
+                        <li>Abstractions should not depend on details. Details should depend on abstractions.</li><br>
+                    </ul>
+              </div>
+              <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">Inversion: 相对于结构化方法而言！</div>
+                    </div>
+            </div>
+        </section>
+
+
+        <section>
+                <div class="down-3">
+                    <h2>Laying</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li><em>Booch: “… all well structured OO architectures have clearly defined layers, with each layer providing some coherent set of services through a well-defined and controlled interface.”</em></li>
+                    </ul>
+              </div>
+              <div class="down-5 center">
+                      <img src="http://www.plantuml.com/plantuml/png/2yZFoKokz4ciJ2rIqDEpK_1DJSv8pCiipWKBSQ5omIf2Ip9pCaiWMW00" />
+              </div>
+        </section>
+
+
+        <section>
+                <div class="down-3">
+                    <h2>Laying</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-40">
+                       Inverted Layers
+                    </div>
+                    <div class="col-60">
+                       <img src="http://www.plantuml.com/plantuml/png/yymhIIrAIqnELGZ8pybChWnEBIhBJ4xrX0bpmLaAlgd96ObvcSMv66gu87fz4YjJYnHqTUrmcOLTMC6cHbSNOJhO52vKBjXGtFRZb84O7LgIcPDP0d4U0000" />
+                    </div>
+              </div>
+            </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>Hollywood Principle</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>“Don’t call us, we’ll call you.” <span class="fragment highlight-danger">低层模块实现了在高层模块中声明并被高层模块调用的接口。</span> </li><br>
+                        <li>also an inversion of interface ownership: <span class="fragment highlight-danger">客户拥有抽象接口，服务者则从这些抽象接口派生。</span></li><br>
+                    </ul>
+              </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                  <h2>再来个例子</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-20">
+                        <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vMS2ejASdFg-PIK53GBiZFoT7GvAhbIWPB-IJc5a0aIagBylppW59mJbeQM24NHBk2hguTM3a0" />
+                   </div>
+                   <div class="col-80">
+                    <pre class="java">
+                            <code data-trim>
+                             public class Button{
+                                 private Lamp itsLamp;
+                                 public void poll(){
+                                       if (/* some condition */)
+                                            itsLamp.turnOn();
+                                  }
+                             }
+                             </code>
+                    </pre> 
+                    </div>
+                </div>
+                <div class="down-5 row fragment">
+                        <div>
+                            <div class="center strong danger">问题：高层依赖低层！</div>
+                        </div>
+                </div>
+          </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>反转</h2>
+                </div>
+                <div class="down-5 row">
+                    <div class="col-20">
+                        <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vMS2ejASdFg-PIK53GBiZFoT7GvAhbIamgBYbAJ2vHI4PI4vnQL9PQ155PKbgKvvy7L0ldfAM1TN91r2hewjgXQED2vYZOrEZgAlWavXO00000" />
+                    </div>
+                    <div class="col-80">
+                            <pre class="java">
+                                    <code data-trim>
+                                          public class Button{
+                                              private ButtonServer bs;
+                                              public void poll(){
+                                                    if (/* some condition */)
+                                                         bs.turnOn();
+                                               }
+                                          }
+                                    </code>
+                                </pre>
+                    </div>
+              </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>反转</h2>
+                </div>
+                <div class="down-5 row fragment">
+                        <div>
+                            <div class="center strong danger">换个更友好的名字</div>
+                        </div>
+                </div>
+              <div class="down-5 center fragment">
+                      <img src="http://www.plantuml.com/plantuml/png/Iyv9B2vMS2ejASdFg-PIK53GBiZFoT7GvAhbIamgBYbAJ2vHI0Qh2IxFB4dEI4pAINL9BSjCJeMeBYajolFF0wg7SzBImBgv86OgwEhQOMZbGXTGiAdHrLNmISmj0000" />
+              </div>
+        </section>
+
+
+        <section>
+                <div class="down-3">
+                    <h2>Heuristic</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>Depend on abstractions!</li>
+                    </ul>
+              </div>
+              <div class="down-5 row fragment">
+                    <div>
+                        <div class="center strong danger">不应该依赖于具体类——程序中所有的依赖关系都应该终止于抽象类或者接口。</div>
+                    </div>
+            </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>Heuristic</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li class="down-5 fragment">任何变量都不应该持有一个指向具体类的指针或引用</li>
+                        <li class="down-5 fragment">任何类都不应该从具体类派生</li>
+                        <li class="down-5 fragment">任何方法都不应该覆写它的任何基类中的已经实现了的方法</li>
+                        <li class="down-5 fragment">例外：可以依赖稳定的具体类，比如String</li>
+                    </ul>
+              </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>DIP</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li class="down-5 fragment">依赖关系的倒置正是好的面向对象设计的标志所在。</li>
+                        <li class="down-5 fragment">如果程序的依赖关系是倒置的，它就是面向对象的设计，否则就是过程化的设计。</li>
+                        <li class="down-5 fragment">DIP是实现许多OO技术所宣称的好处的基本低层机制。它的正确应用对于创建可重用的框架来说是必须的。</li>
+                    </ul>
+              </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>CARP 合成/聚合复用原则</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li class="down-5 fragment">Composition vs. Aggregration</li>
+                        <ul>
+                            <li class="down-5 fragment">聚合表示“拥有”关系或者整体与部分的关系。</li>
+                            <li class="down-5 fragment">合成是一种强得多的“拥有”关系——部分和整体的生命周期是一样的。</li>
+                        </ul>
+                        <li class="down-5 fragment danger">换句话说：合成是值的聚合（Aggregation by Value），而一般说的聚合是引用的聚合（Aggregation by Reference）</li>
+                    </ul>
+              </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+                <h2>复用</h2>
+            </div>
+            <div class="down-5">
+                <ul>
+                    <li>复用方法</li>
+                         <ul>
+                            <br>
+                            <li>合成/聚合复用：将已有对象纳入到新对象中，使之成为新对象的一部分</li>
+                            <br>
+                            <li>继承</li>
+                        </ul>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>复用</h2>
+                </div>
+                <div class="down-5">
+                        <ul>
+                                <li>继承的优点</li>
+                                     <ul>
+                                        <br>
+                                        <li>新类易实现</li>
+                                        <br>
+                                        <li>易修改或扩展</li>
+                                    </ul>
+                                <br>
+                                <li>继承的缺点</li>
+                                    <ul>
+                                        <br>
+                                        <li>继承复用破环包装，白箱复用</li>
+                                        <br>
+                                        <li>父类发生变化，子类不得不改变</li>
+                                        <br>
+                                        <li>继承的实现是静态的，不能在运行时改变</li>
+                                    </ul>
+                        </ul>
+                </div>
+        </section>
+        
+        <section>
+                <div class="down-3">
+                    <h2>复用</h2>
+                </div>
+                <div class="down-5">
+                        <ul>
+                                <li>合成/聚合的优点</li>
+                                     <ul>
+                                        <br>
+                                        <li>黑箱复用</li>
+                                        <br>
+                                        <li>每一个新的类可以将焦点集中在一个任务上</li>
+                                        <br>
+                                        <li>可以在运行时动态进行</li>
+                                    </ul>
+                                <br>
+                                <li>缺点：系统中会有较多的对象需要管理</li>
+                        </ul>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>复用原则</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>优先使用对象合成/聚合，而不是继承</li><br>
+                        <li>利用合成/聚合可以在运行时动态配置组件的功能，并防止类层次规模的爆炸性增长</li><br>
+                        <li><font color="red">区分HAS-A 和 IS-A</font></li><br>
+                 </ul>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>Coad法则</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>只有“Is-A”关系才符合继承关系，“Has-A”关系应当用聚合来描述。</li><br>
+                        <li>永远不会出现需要将子类换成另外一个类的子类的情况。</li><br>
+                        <li>子类具有扩展父类的责任，而不是具有置换掉（override）或注销掉（Nullify）父类的责任。</li><br>
+                        <li>只有在分类学角度上有意义时，才可以使用继承。不要从工具类继承。</li><br>
+                 </ul>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>LoD （Law of Demeter)</h2>
+                    <h4>迪米特法则/最少知识原则</h4>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>Only talk to your immediate friends</li><br>
+                        <li>Don't talk to strangers</li><br>
+                 </ul>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>LoD的本质是信息隐藏</h2>
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>在类的划分上，应当创建有弱耦合的类。类之间的耦合越弱，就越有利于复用。</li><br>
+                        <li>在类的结构设计上，每一个类都应当尽量降低成员的访问权限。一个类不应当public自己的属性，而应当提供取值和赋值的方法让外界间接访问自己的属性。</li><br>
+                        <li>在类的设计上，只要有可能，一个类应当设计成<font color="red">不变类</font>。</li><br>
+                        <li>在对其它对象的引用上，一个类对其它对象的引用应该降到最低。</li><br>
+                 </ul>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                    <h2>OOSC</h2>
+                </div>
+                <div class="down-5">
+                    <em class="big ">
+                        “Object-oriented software construction is the construction of software systems as <font color=red>structured collections</font> of possibly partial <font color=red>abstract data type </font> implementations.”</em>
+                    <div class="right small down-3">- Bertrand Meyer, 1998</div>
+                </div>
+        </section>
+
+        <section>
+                <div class="down-3">
+                  <h2>Design Principles</h2>
+                </div>
+                <div class="down-5">
+                  <ul>
+                    <li>SRP (The Single-Responsibility Principle) 单一职责原则</li>
+                    <li>OCP (The Open-Closed Principle) 开放-封闭原则</li>
+                    <li>LSP (The Liskov Substitution Principle) Liskov替换原则</li>
+                    <li>ISP (The Interface-Segregation Principle) 接口隔离原则</li>
+                    <li>DIP (The Dependency-Inversion Principle) 合成/聚合复用原则</li> 
+                    <li>CARP (Composition/Aggregation Reuse Principle) 合成/聚合复用原则</li>
+                    <li>LoD (Law of Demeter) 迪米特法则</li>
+                  </ul>
+                </div>
+        </section>
+
+
+      <section class="title-slide">
+        <div class="big framed bordered border-2x font-passionone bg-danger">
+           <i class="fa-bomb fas fa-2x"></i>
+           今天，你的葫芦娃违规了吗？
+           <i class="fa-bell far fa-2x"></i>
+        </div>
+      </section>
+
+      <section class="title-slide">
+            <div class="big framed bordered border-2x font-passionone bg-success">
+               Let's Embrace Change！
+            </div>
+      </section>
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html>
