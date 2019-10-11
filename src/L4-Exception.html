@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>异常处理</title>
+  
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          异常处理
+        </div>
+        <div class="down-3">
+          "Badly formed code will not be run."
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>Outline</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Concepts</li><br>
+            <li>Java Exception Mechanism</li><br>
+            <li>Design by Contract vs. Exceptions</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Software Reliability</h2>
+        </div>
+        <div class="down-9">
+          <ul>
+            <li>Correctness 正确性：依据规约，完成任务</li><br>
+            <li>Robustness 鲁棒性：异常情况，合理反应</li><br>
+            <li>Integrity  完整性：非法访问或修改，合理反应</li><br>
+          </ul>
+        </div>
+      </section>  
+
+      <section>
+        <div class="down-3">
+          <h2>Design by Contract</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>方法学层面的思想：以尽可能小的代价开发出可靠性出众的软件</li><br>
+            <li>可以贯穿于软件创建的全过程，从分析到设计，从文档到调试，甚至可以渗透到项目管理中</li><br>
+          </ul>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="small center danger">Bertrand Meyer："DbC是构建面向对象软件系统方法的核心。"</div>
+            </div>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="small center danger">James McKim：“只要你会写程序，你就会写契约。”</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+            <h2>Contract</h2>
+        </div>
+        <div class="down-5">
+            <ul>
+              <li>“Every software element is intended to satisfy a certain <em class="strong danger">goal</em>, for the benefit of other software elements (and ultimately of human users)."</li><br>  
+              <li>This goal is the element’s <em class="strong danger">contract</em>.</li><br>
+              <li>The contract of any software element should be <em class="strong danger">Explicit</em>.</li><br>
+              <li>Part of the software element itself.</li>
+            </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>A view of software construction</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Constructing systems as structured collections of cooperating software elements — <span class="strong danger">suppliers</span> and <span class="strong danger">clients</span> 
+              — cooperating on the basis of clear definitions of <span class="strong danger">obligations</span> and <span class="strong danger">benefits</span>.</li><br>
+            <li>These definitions are the <span class="strong danger">contracts</span>.</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>葫芦娃的契约</h2>
+        </div>
+        <div class="small down-5">
+          <table>
+              <thead>
+                  <tr>
+                    <th>对象</th>
+                    <th>义务</th>
+                    <th>权益</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Client</td>
+                  <td>不能混进蛇精蝎子精 </td>
+                  <td>由小到大给葫芦娃们排序</td>
+                </tr>
+                <tr>
+                  <td>Supplier</td>
+                  <td>帮葫芦娃们由小到大排序</td>
+                  <td>只排葫芦娃</td>
+                </tr>
+              </tbody>
+          </table>  
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Properties of Contracts</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Binds two parties (or more): supplier, client.</li><br>
+            <li>Is explicit (written).</li><br>
+            <li>Specifies mutual obligations and benefits.</li><br>
+            <li>Usually maps obligation for one of the parties into benefit for the other, and conversely. </li><br>
+          </ul>
+        </div>
+      </section>
+
+
+      <section>
+          <div class="down-3">
+            <h2>Contracts</h2>
+          </div>
+          <div class="down-3">
+              <h4>契约就是<font color=red>“规范和检查”</font>！</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>Precondition：针对method，它规定了在调用该方法之前必须为真的条件</li><br>
+              <li>Postcondition：针对method，它规定了方法顺利执行完毕之后必须为真的条件</li><br>
+              <li>Invariant：针对整个类，它规定了该类任何实例调用任何方法都必须为真的条件</li><br>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>再看葫芦娃的契约</h2>
+          </div>
+          <div class="small down-5">
+            <table>
+                <thead>
+                    <tr>
+                      <th>对象</th>
+                      <th>义务</th>
+                      <th>权益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Client</td>
+                    <td>"Satisfy Preconditon": 只排葫芦娃</td>
+                    <td>"From Postcondition": 葫芦娃们由小到大给排好序</td>
+                  </tr>
+                  <tr>
+                    <td>Supplier</td>
+                    <td>"Satisfy Postconditon": 葫芦娃们由小到大排好序</td>
+                    <td>"From Precondition":只排葫芦娃</td>
+                  </tr>
+                </tbody>
+            </table>  
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Exception Handling and DbC</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>Exceptions are about dealing with things going wrong at <font color=red>runtime</font>.</li><br>
+              <li>DbC is about <font color=red>statically</font> defining the conditions under which code is supposed to operate. </li><br>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>What are Exceptions?</h2>
+          </div>
+          <div class="down-5">
+            <h5>Many “exceptional” things can happen during the running of a program, e.g.:</h5>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><font color=green>User mis-types input</font></li>
+              <li><font color=green>Web page not available</font></li>
+              <li><font color=green>File not found</font></li>
+              <li><font color=blue>Array index out of bounds</font></li>
+              <li><font color=blue>Method called on a null object</font></li>
+              <li><font color=brown>Out of memory</font></li>
+              <li><font color=brown>Bug in the actual language implementation</font></li>
+            </ul>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="small center strong danger">Exceptions are unexpected conditions in programs.</div>
+              </div>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>What do we want of exceptions?</h2>
+          </div>
+          <div class="down-3">
+              <h4>Ideally, a language (and its implementation) should:</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><font color=green>Restrict</font> the set of possible exceptions to “reasonable” ones.</li><br>
+              <li>Indicate <font color=green>where</font> they happened, and <font color=red>distinguish</font> between them.</li><br>
+              <li>Allow exceptions to be dealt with in a <font color=red>different</font> place in the code from where they occur.</li><br>
+              <li>so we <font color=red>throw</font> exceptions where they <font color=red>occur</font>, and <font color=red>catch</font> them where we want to <font color=red>deal with</font> them.</li>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>What do we want of exceptions?</h2>
+        </div>
+        <div class="down-5">
+            Ideally, we don't want non-fatal exceptions to be thrown too far — this breaks up the modularity of the program and makes it hard to reason about.</div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Exceptions in Java</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>If a thrown exception is <font color=red>not</font> caught, it <font color=red>propagates out</font> to the caller and so on until <code>main</code>.</li><br>
+              <li>If it is <font color=red>never</font> caught, it <font color=red>terminates</font> the program.</li><br>
+              <li>If a method can generate (checked) exceptions but does <font color=red>not</font> handle them, it has to explicitly <font color=red>declare</font> that it throws them so that clients know what to expect.</li>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Exceptions in Java</h2>
+          </div>
+          <div class="down-3">
+            <h4>In Java, the basic exception handling construct is to:</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><font color=red>try</font>: a block of code which normally executes ok</li><br>
+              <li><font color=red>catch</font>: any exceptions that it generates, and</li><br>
+              <li><font color=red>finally</font>: do anything we want to do irrespective of what happened before.</li>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Catch Exceptions</h2>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                    try{
+                      //Code that might generate exceptions
+                    }
+                    catch (ExceptionType1 e1){
+                      //Handle exceptions of ExceptionType1
+                    }
+                    catch (ExceptionType2 e2){
+                      //Handle exceptions of ExceptionType2
+                    }
+                    catch (ExceptionType3 e3){
+                      //Handle exceptions of ExceptionType3
+                    }
+                    finally{
+                      //Activities that happen every time
+                    }
+                </code>
+            </pre>  
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center strong danger">Termination vs. Resumption</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Catch Ordering</h2>
+          </div>
+          <div class="down-3">
+              <h4>All <code>catch</code> clauses are checked in order. An error occurs if the super-type is arranged before the sub-type.</h4>
+            </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      class SuperException extends Exception { }
+                      class SubException extends SuperException { }
+                      class BadCatch {
+                        public void goodTry() {
+                          try { 
+                            throw new SubException();
+                          } catch (SuperException superRef) { 
+                            ...
+                          } catch (SubException subRef) {
+                            ...// never be reached
+                          } // an INVALID catch ordering
+                        }
+                      }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Catch Ordering</h2>
+          </div>
+          <div class="down-5">
+              If exceptions are thrown in current <code>catch</code> and <code>finally</code>, the <code>catch</code> clauses will not be rechecked. They are passed to the outside.
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Report Exceptions</h2>
+          </div>
+          <div class="down-3">
+              <h4>Declare and Throw</h4>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                    public boolean method(int x) throws MyException{
+                        //some code
+                        throw new MyException(...);
+                    }
+                  </code>
+              </pre>  
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center strong danger">Exception Propagation</div>
+              </div>
+          </div>
+      </section>
+
+      <section>
+            <div class="down-3">
+              <h2>Create Exceptions</h2>
+            </div>
+            <div class="down-3">
+                <pre class="Java">
+                    <code data-trim>
+                        class SimpleException extends Exception{}
+
+                        public class InheritingExceptions {
+                          public void f() throws SimpleException {
+                            System.out.println("Throw SimpleException from f()");
+                            throw new SimpleException();
+                          }
+                        
+                          public static void main(String[] args){
+                            InheritingExceptions sed = new InheritingExceptions();
+                            try{
+                              sed.f();
+                            } catch(SimpleException e){
+                              System.out.println("Caught it!");
+                            }
+                          }
+                        }
+                    </code>
+                </pre>  
+            </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Getting information from exceptions</h2>
+          </div>
+          <div class="down-3">
+              <code>java.lang.Throwable</code>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      public Throwable();
+                      public Throwable(String message);
+                      public Throwable(String message, Throwable cause);
+                      public Throwable(Throwable cause);
+                  </code>
+                  <code data-trim>
+                      public String getMessage();
+                      public String getLocalizedMessage();
+                      public String toString();
+                      public void printStackTrace();
+                  </code>
+              </pre>  
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>Rethrowing exceptions</h2>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                    try {
+                      // some statements;
+                    }
+                    catch(TheException ex) {
+                      //perform operations before exits;
+                      throw ex;
+                    }
+                </code>
+            </pre>  
+        </div>
+     </section>
+     
+     <section>
+        <div class="down-3">
+          <h2>Chained Exception</h2>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                    public class ChainedExceptionDemo {
+                      public static void main(String[] args) {
+                        try {
+                          method1();
+                        }
+                        catch (Exception ex) {
+                          ex.printStackTrace();
+                        }
+                      }
+                      public static void method1() throws Exception {
+                        try {
+                          method2();
+                        }
+                        catch (Exception ex) {
+                          throw new Exception("New info from method1", ex);
+                        }
+                      }
+                      public static void method2() throws Exception {
+                          throw new Exception("New info from method2");
+                      }
+                    }
+                </code>
+            </pre>  
+        </div>
+     </section>
+
+      <section>
+         <div class="down-3">
+           <h2>Chained Exception</h2>
+        </div>
+        <div class="down-5">
+           <img src="content/images/4/exceptions.jpg" style="width:70%"/>
+         </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Exception matching</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>When an exception is thrown, the exception-handling system looks through the <font color=red>"nearest"</font> handlers in the order they are written. When it finds a match, the exception is considered handled, and no further searching occurs.</li><br>
+              <li>A derived-class object will match a handler for the base class.</li><br>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      class Annoyance extends Exception{}
+                      class Sneeze extends Annoyance{}
+                      
+                      public class Human{
+                        public static void main(String[] args){
+                          try{
+                            throw new Sneeze();
+                          } catch(Sneeze s){
+                            System.out.println("Caught Sneeze");
+                          } catch(Annoyance a){
+                            System.out.println("Caught Annoyance");
+                          }
+                      
+                          try{
+                            throw new Sneeze();
+                          } catch(Annoyance a){
+                            System.out.println("Caught Annoyance");
+                          }
+                        }
+                      }
+                  </code>
+              </pre>  
+          </div>
+       </section>
+
+
+       <section>
+          <div class="down-3">
+            <h2>Exceptions and Logging</h2>
+          </div>
+          <div class="down-3">
+              <h6>1: Send error output to the standard error stream by writing to <code>System.err</code>.</h6>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center strong danger">e.printStackTrace()</div>
+              </div>
+          </div>
+       </section>
+       <section>
+          <div class="down-5">
+              <pre class="Java">
+                  <code data-trim>
+                      class MyException extends Exception{
+                        public MyException(){}
+                        public MyException(String msg){super(msg);}
+                      }
+                      
+                      public class FullConstructors {
+                        public static void f() throws MyException{
+                          System.out.println("Throwing MyException from f()");
+                          throw new MyException();
+                        }
+                        public static void g() throws MyException{
+                           System.out.println("Throwing MyException from g()");
+                          throw new MyException("Originated in g()");
+                        }
+                      
+                        public static void main(String[] args){
+                          try{
+                            f();
+                          } catch(MyException e){
+                            e.pringStackTrace(System.out);
+                          }
+                          try{
+                            g();
+                          } catch(MyException e){
+                            e.printStackTrace(System.out);
+                          }
+                        }
+                      }
+                  </code>
+              </pre>  
+          </div>
+
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>Exceptions and Logging</h2>
+          </div>
+          <div class="down-3">
+              <h6>2: Log the output using the <code>java.util.logging</code> facility.</h6>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      import java.util.logging.*;
+                      import java.io.*;
+                      
+                      class LoggingException extends Exception{
+                        private static Logger logger = Logger.getLogger("LoggingException");
+                        public LoggingException(){
+                          StringWriter trace = new StringWriter();
+                          printStackTrace(new PrintWriter(trace));
+                          logger.severe(trace.toString());
+                        }
+                      }
+                      
+                      public class LoggingExceptions{
+                        public static void main(String[] args){
+                          try{
+                            throw new LoggingException();
+                          } catch(LoggingException e){
+                            System.err.println("Caught "+e);
+                          }
+                        }
+                      }
+                  </code>
+              </pre>  
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>Classification of Errors</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><h4><font color=red>Syntax errors</font> arise because the rules of the language have not been followed. They are detected by the compiler.</h4></li>
+              <li><h4><font color=red>Runtime errors</font> occur while the program is running if the environment detects an operation that is impossible to carry out.</h4></li>
+              <li><h4><font color=red>Logic errors</font> occur when a program doesn't perform the way it was intended to.</h4></li>
+            </ul>
+          </div>
+       </section>
+      
+       <section>
+          <div class="down-3">
+            <h2>Java Exceptions</h2>
+         </div>
+         <div class="down-5">
+            <img src="http://www.plantuml.com/plantuml/png/XP5D3e8m44RtFGKNu0Pkq6X2ejGOekjIHbejhMcdaOM7D_m4J96mQx_t9fEPeSK3E4QRJnn7kR3cpGe5P7prODzmUA4qUWQiDPQCk0ztYZcN6JmOhykfDB1IkeYIMxx8A0gmO-P2VF4QPGrJEGcJeOMLA6f0oIVrlvbvfSv6Qlnfkw2ckeI6UgJtRJkwM_MLWegfn5Q-1erhUZTwY1mXtH5wvIZrarKmd6NAhzAYP-h4k91wZjk5Xrc_wFRllW00" />
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>System Errors</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><h4><font color=red>System errors</font> are thrown by JVM and represented in the <code>Error</code> class. The <code>Error</code> class describes internal system errors. Such errors rarely occur.</h4></li>
+              <li><h4>If one does, there is little you can do beyond notifying the user and trying to terminate the program gracefully.</h4></li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>Exceptions</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><h4><font color=red>Exceptions</font> are represented in the <code>Exception</code> class that describes errors caused by your program and external circumstances. 
+                These errors can be caught and handled by your program.</h4></li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>Runtime Exceptions</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><h4><font color=red>Runtime exceptions</font> are represented in the <code>RuntimeException</code> class that describes programming
+                  errors, such as bad casting, accessing an out-of-bounds
+                  array, and numeric errors.</h4></li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h4>Checked Exceptions vs. Unchecked Exceptions</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><code>RuntimeException</code>, <code>Error</code> and their subclasses are known as <font color=red>unchecked exceptions</font>.</li><br>
+              <li>In most cases, unchecked exceptions reflect programming logic errors that are not recoverable.</li><br>
+              <li><code>NullPointerException</code>, <code>IndexOutOfBoundsException</code></li>
+            </ul>
+          </div>
+       </section>
+
+
+       <section>
+          <div class="down-3">
+            <h4>Checked Exceptions vs. Unchecked Exceptions</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>These are the logic errors that should be corrected in the program. <font color=red>Unchecked exceptions</font> can occur anywhere in the program. 
+                To avoid cumbersome overuse of <font color=blue>try-catch blocks</font>, Java does not mandate you to write code to catch unchecked exceptions.</li><br>
+              <li>All other exceptions are known as <font color=red>checked exceptions</font>, meaning that the compiler forces the
+                  programmer to check and deal with the exceptions.</li>
+            </ul>
+          </div>
+       </section>
+       
+       <section>
+          <div class="down-3">
+            <h2>Tips</h2>
+          </div>
+          <div class="down-3">
+              <h4>Exception handling is not supposed to replace a simple test.</h4>
+          </div>
+          <div class="down-3">
+             <ul>
+              <li>case a:
+                <pre class="Java">
+                  <code data-trim>
+                      If (!s.empty()) s.pop();
+                  </code>
+                </pre>
+              </li>
+              <li>case b:
+                  <pre class="Java">
+                      <code data-trim>
+                        try { //10 times longer than (a)
+                            s.pop();
+                         }
+                         catch (EmptyStackException e){
+                         }
+                      </code>
+                  </pre>
+              </li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>Tips</h2>
+          </div>
+          <div class="down-3">
+              <h4>Do not micromanage exceptions.</h4>
+          </div>
+          <div class="down-3">
+             <ul>
+              <li>case a:
+                <pre class="Java">
+                  <code data-trim>
+                      for (i=0; i&lt;100; i++) {
+                        try { n=s.pop(); }
+                        catch (EmptyStackException s) {...}
+                        try { out.writeInt(n); }
+                        catch (IOException e) {...}
+                      }
+                  </code>
+                </pre>
+              </li>
+              <li>case b:
+                  <pre class="Java">
+                      <code data-trim>
+                          try { 
+                            for (i=0 ; i&lt;100; i++) { n=s.pop(); out.writeInt(n);}
+                          }
+                          catch (IOException e) {...}
+                          catch (EmptyStackException s) {...}
+                      </code>
+                  </pre>
+              </li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+         <div class="down-3">
+           <h2>Tips</h2>
+         </div>
+         <div class="down-5">
+           <ul>
+             <li><h4>Create custom exception classes if the predefined classes are not sufficient.</h4></li><br>
+             <li><h4>Calculate some alternative result instead of what the method was supposed to.</h4></li><br>
+           </ul>
+         </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>DbC vs. Exception</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>Exceptions are about dealing with things going wrong at runtime.</li><br>
+              <li>DbC is about statically defining the conditions under which code is supposed to operate.</li><br>
+              <li>The two are nicely complementary.</li><br>
+            </ul>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="small center danger">Unchecked exceptions are “what happens when the contract is broken”.</div>
+              </div>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="small center danger">Checked exceptions are expected to happen from time to time, so are not contract violations.</div>
+              </div>
+          </div>
+        </section>
+
+      <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-warning">
+            How about assertion?
+        </div>
+      </section>
+
+      <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-success">
+            To be continued...
+        </div>
+      </section>
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html>
