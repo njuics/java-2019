@@ -424,6 +424,54 @@
     </section>
 
     <section>
+      <div class="down-3">
+        <h2>The Stack Trace</h2>
+      </div>
+      <div class="down-3">
+        <h4><code>e.printStackTrace()</code></h4>
+      </div>
+      <div class="down-3">
+        <ul>
+          <li>This method returns an array of stack trace elements, each representing one <font color=red>stack frame</font>. </li><br>
+          <li>Element zero is the top of the stack, and is the last method invocation in the sequence (the point this <code>Throwable</code> was created and thrown).</li><br>
+          <li>The last element of the array and the bottom of the stack is the first method invocation in the sequence.</li>              
+        </ul>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Example</h2>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                  public class WhoCalled {
+                      static void f() {
+                      // Generate an exception to fill in the stack trace
+                      try {
+                        throw new Exception();
+                      } catch (Exception e) {
+                        for(StackTraceElement ste : e.getStackTrace())
+                          System.out.println(ste.getMethodName());
+                      }
+                      }
+                      static void g() { f(); }
+                      static void h() { g(); }
+                      public static void main(String[] args) {
+                        f();
+                        System.out.println("--------------------------------");
+                        g();
+                        System.out.println("--------------------------------");
+                        h();
+                      }
+                  }
+                </code>
+            </pre>  
+        </div>
+     </section>
+
+    <section>
         <div class="down-3">
           <h2>Rethrowing exceptions</h2>
         </div>
@@ -557,7 +605,7 @@
                           throw new MyException();
                         }
                         public static void g() throws MyException{
-                           System.out.println("Throwing MyException from g()");
+                          System.out.println("Throwing MyException from g()");
                           throw new MyException("Originated in g()");
                         }
                       
@@ -565,7 +613,7 @@
                           try{
                             f();
                           } catch(MyException e){
-                            e.pringStackTrace(System.out);
+                            e.printStackTrace(System.out);
                           }
                           try{
                             g();
@@ -687,8 +735,7 @@
             </ul>
           </div>
        </section>
-
-
+       
        <section>
           <div class="down-3">
             <h4>Checked Exceptions vs. Unchecked Exceptions</h4>
@@ -702,7 +749,27 @@
             </ul>
           </div>
        </section>
-       
+
+       <section>
+          <div class="down-3">
+            <h4>Converting checked to unchecked exceptions</h4>
+          </div>
+          <div class="down-5">
+            <h5>"wrap" a checked exception inside a <code>RuntimeException</code> by passing it to the <code>RuntimeException</code> constructor</h5>
+          </div>
+          <div class="down-3">
+            <pre>
+              <code data-trim>
+                  try {
+                    // ... to do something useful
+                  } catch(IDontKnowWhatToDoWithThisCheckedException e) {
+                    throw new RuntimeException(e);
+                  }
+              </code>
+            </pre>
+          </div>
+       </section>
+
        <section>
           <div class="down-3">
             <h2>Tips</h2>
@@ -766,18 +833,6 @@
                       </code>
               </pre>
           </div>
-       </section>
-
-       <section>
-         <div class="down-3">
-           <h2>Tips</h2>
-         </div>
-         <div class="down-5">
-           <ul>
-             <li><h4>Create custom exception classes if the predefined classes are not sufficient.</h4></li><br>
-             <li><h4>Calculate some alternative result instead of what the method was supposed to.</h4></li><br>
-           </ul>
-         </div>
        </section>
 
        <section>
