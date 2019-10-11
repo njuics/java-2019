@@ -202,18 +202,18 @@
           <div class="down-5">
             <h5>Many “exceptional” things can happen during the running of a program, e.g.:</h5>
           </div>
-          <div class="down-5">
+          <div class="row normal">
             <ul>
-              <li><font color=green>User mis-types input</font></li>
-              <li><font color=green>Web page not available</font></li>
-              <li><font color=green>File not found</font></li>
-              <li><font color=blue>Array index out of bounds</font></li>
-              <li><font color=blue>Method called on a null object</font></li>
-              <li><font color=brown>Out of memory</font></li>
-              <li><font color=brown>Bug in the actual language implementation</font></li>
+              <li><p class="fragment highlight-bg-success">User mis-types input</p></li>
+              <li><p class="fragment highlight-bg-success">Web page not available</p></li>
+              <li><p class="fragment highlight-bg-success">File not found</p></li>
+              <li><p class="fragment highlight-bg-info">Array index out of bounds</p></li>
+              <li><p class="fragment highlight-bg-info">Method called on a null object</p></li>
+              <li><p class="fragment highlight-bg-warning">Out of memory</p></li>
+              <li><p class="fragment highlight-bg-warning">Bug in the actual language implementation</p></li>
             </ul>
           </div>
-          <div class="down-5 row fragment">
+          <div class="down-3 row fragment">
               <div>
                   <div class="small center strong danger">Exceptions are unexpected conditions in programs.</div>
               </div>
@@ -225,14 +225,15 @@
             <h2>What do we want of exceptions?</h2>
           </div>
           <div class="down-3">
-              <h4>Ideally, a language (and its implementation) should:</h4>
+              <h5>Ideally, a language (and its implementation) should:</h5>
           </div>
           <div class="down-5">
             <ul>
               <li><font color=green>Restrict</font> the set of possible exceptions to “reasonable” ones.</li><br>
               <li>Indicate <font color=green>where</font> they happened, and <font color=red>distinguish</font> between them.</li><br>
               <li>Allow exceptions to be dealt with in a <font color=red>different</font> place in the code from where they occur.</li><br>
-              <li>so we <font color=red>throw</font> exceptions where they <font color=red>occur</font>, and <font color=red>catch</font> them where we want to <font color=red>deal with</font> them.</li>
+              <li>so we <font color=red>throw</font> exceptions where they <font color=red>occur</font>, 
+                and <font color=red>catch</font> them where we want to <font color=red>deal with</font> them.</li>
             </ul>
           </div>
       </section>
@@ -242,7 +243,8 @@
           <h2>What do we want of exceptions?</h2>
         </div>
         <div class="down-5">
-            Ideally, we don't want non-fatal exceptions to be thrown too far — this breaks up the modularity of the program and makes it hard to reason about.</div>
+            Ideally, we don't want non-fatal exceptions to be thrown too far — this breaks up the modularity of the program 
+            and makes it hard to reason about.</div>
       </section>
 
       <section>
@@ -253,7 +255,7 @@
             <ul>
               <li>If a thrown exception is <font color=red>not</font> caught, it <font color=red>propagates out</font> to the caller and so on until <code>main</code>.</li><br>
               <li>If it is <font color=red>never</font> caught, it <font color=red>terminates</font> the program.</li><br>
-              <li>If a method can generate (checked) exceptions but does <font color=red>not</font> handle them, it has to explicitly <font color=red>declare</font> that it throws them so that clients know what to expect.</li>
+              <li>If a method can generate (checked) exceptions but does <font color=red>not</font> handle them, it has to explicitly <font color=red>declare</font> that it <font color=red>throws</font> them so that clients know what to expect.</li>
             </ul>
           </div>
       </section>
@@ -263,13 +265,13 @@
             <h2>Exceptions in Java</h2>
           </div>
           <div class="down-3">
-            <h4>In Java, the basic exception handling construct is to:</h4>
+            <h5>In Java, the basic exception handling construct is to:</h5>
           </div>
           <div class="down-5">
             <ul>
-              <li><font color=red>try</font>: a block of code which normally executes ok</li><br>
-              <li><font color=red>catch</font>: any exceptions that it generates, and</li><br>
-              <li><font color=red>finally</font>: do anything we want to do irrespective of what happened before.</li>
+              <li><font color=red><code>try</code></font>: a block of code which normally executes ok</li><br>
+              <li><font color=red><code>catch</code></font>: any exceptions that it generates, and</li><br>
+              <li><font color=red><code>finally</code></font>: do anything we want to do irrespective of what happened before.</li>
             </ul>
           </div>
       </section>
@@ -299,7 +301,7 @@
                 </code>
             </pre>  
         </div>
-        <div class="down-5 row fragment">
+        <div class="down-3 row fragment">
             <div>
                 <div class="center strong danger">Termination vs. Resumption</div>
             </div>
@@ -311,7 +313,7 @@
             <h2>Catch Ordering</h2>
           </div>
           <div class="down-3">
-              <h4>All <code>catch</code> clauses are checked in order. An error occurs if the super-type is arranged before the sub-type.</h4>
+              <h5>All <code>catch</code> clauses are checked in order. An error occurs if the super-type is arranged before the sub-type.</h5>
             </div>
           <div class="down-3">
               <pre class="Java">
@@ -398,7 +400,7 @@
 
       <section>
           <div class="down-3">
-            <h2>Getting information from exceptions</h2>
+            <h3>Getting information from exceptions</h3>
           </div>
           <div class="down-3">
               <code>java.lang.Throwable</code>
@@ -477,7 +479,7 @@
          <div class="down-3">
            <h2>Chained Exception</h2>
         </div>
-        <div class="down-5">
+        <div class="down-5 center">
            <img src="content/images/4/exceptions.jpg" style="width:70%"/>
          </div>
       </section>
@@ -536,7 +538,7 @@
           </div>
           <div class="down-5 row fragment">
               <div>
-                  <div class="center strong danger">e.printStackTrace()</div>
+                  <div class="center danger"><code>e.printStackTrace()</code></div>
               </div>
           </div>
        </section>
@@ -681,7 +683,7 @@
             <ul>
               <li><code>RuntimeException</code>, <code>Error</code> and their subclasses are known as <font color=red>unchecked exceptions</font>.</li><br>
               <li>In most cases, unchecked exceptions reflect programming logic errors that are not recoverable.</li><br>
-              <li><code>NullPointerException</code>, <code>IndexOutOfBoundsException</code></li>
+              <li><font color=blue><code>NullPointerException</code></font>, <font color=blue><code>IndexOutOfBoundsException</code></font></li>
             </ul>
           </div>
        </section>
@@ -706,29 +708,27 @@
             <h2>Tips</h2>
           </div>
           <div class="down-3">
-              <h4>Exception handling is not supposed to replace a simple test.</h4>
+              <h5>Exception handling is not supposed to replace a simple test.</h5>
           </div>
-          <div class="down-3">
-             <ul>
-              <li>case a:
-                <pre class="Java">
+          <div class="down-3 row">          
+              <p class="col-20">case a:</p>
+              <pre class="Java col-60">
                   <code data-trim>
                       If (!s.empty()) s.pop();
                   </code>
-                </pre>
-              </li>
-              <li>case b:
-                  <pre class="Java">
-                      <code data-trim>
+              </pre>
+          </div>
+          <div class="down-3 row">    
+              <p class="col-20">case b:</p>
+              <pre class="Java col-60">
+                  <code data-trim>
                         try { //10 times longer than (a)
                             s.pop();
                          }
                          catch (EmptyStackException e){
                          }
-                      </code>
-                  </pre>
-              </li>
-            </ul>
+                  </code>
+              </pre>
           </div>
        </section>
 
@@ -739,10 +739,9 @@
           <div class="down-3">
               <h4>Do not micromanage exceptions.</h4>
           </div>
-          <div class="down-3">
-             <ul>
-              <li>case a:
-                <pre class="Java">
+          <div class="down-2 row">
+              <p class="col-20">case a:</p>
+              <pre class="Java col-60">
                   <code data-trim>
                       for (i=0; i&lt;100; i++) {
                         try { n=s.pop(); }
@@ -751,20 +750,21 @@
                         catch (IOException e) {...}
                       }
                   </code>
-                </pre>
-              </li>
-              <li>case b:
-                  <pre class="Java">
+              </pre>
+          </div>
+          <div class="down-2 row">
+              <p class="col-20">case b:</p>
+              <pre class="Java col-60">
                       <code data-trim>
                           try { 
-                            for (i=0 ; i&lt;100; i++) { n=s.pop(); out.writeInt(n);}
+                            for (i=0 ; i&lt;100; i++) { 
+                              n=s.pop(); out.writeInt(n);
+                            }
                           }
                           catch (IOException e) {...}
                           catch (EmptyStackException s) {...}
                       </code>
-                  </pre>
-              </li>
-            </ul>
+              </pre>
           </div>
        </section>
 
@@ -786,19 +786,19 @@
           </div>
           <div class="down-5">
             <ul>
-              <li>Exceptions are about dealing with things going wrong at runtime.</li><br>
-              <li>DbC is about statically defining the conditions under which code is supposed to operate.</li><br>
+              <li>Exceptions are about dealing with things going wrong <font color=red>at runtime</font>.</li><br>
+              <li>DbC is about <font color=red>statically</font> defining the conditions under which code is supposed to operate.</li><br>
               <li>The two are nicely complementary.</li><br>
             </ul>
           </div>
-          <div class="down-5 row fragment">
+          <div class="down-3 row fragment">
               <div>
-                  <div class="small center danger">Unchecked exceptions are “what happens when the contract is broken”.</div>
+                  <div class="small pop"><i class="fas fa-arrow-right"></i>Unchecked exceptions are “what happens when the contract is broken”.</div>
               </div>
           </div>
-          <div class="down-5 row fragment">
+          <div class="down-3 row fragment">
               <div>
-                  <div class="small center danger">Checked exceptions are expected to happen from time to time, so are not contract violations.</div>
+                  <div class="small pop"><i class="fas fa-arrow-right"></i>Checked exceptions are expected to happen from time to time, so are not contract violations.</div>
               </div>
           </div>
         </section>
