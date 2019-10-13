@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>类型和自省</title>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    类型和自省
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>SOLID</h2>
+                </div>
+                <div class="down-9">
+                    高内聚: S 单一职责原则，I 接口隔离原则
+                </div>
+                <div class="down-3">
+                    低耦合: O 开闭原则，D 依赖倒置原则，L 里氏替换原则
+                </div>
+                <div class="down-5 fragment danger center biggest ">
+                    抽象
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>回顾一下抽象</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java tiny"><code data-trim>
+                        class Shape{  
+                            void draw(){
+                                System.out.println("Draw Shape");
+                            }  
+                        }  
+                        class Circle extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Circle");
+                            }  
+                        }   
+                        class Triangle extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Triangle");
+                            }  
+                        }  
+                        class Square extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Square");
+                            }  
+                        }  
+                        public class Test {  
+                             public static void main(String[] args) {  
+                                 Shape[] shapes = {new Circle(), new Triangle(), new Square()};  
+                                 for(Shape s : shapes){  
+                                     s.draw();  // without knowing the concrete type of "s"
+                                 }  
+                             }  
+                        } 
+                    </code>
+                        
+                    </pre>
+                </div>
+               
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>What if?</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java"><code data-trim>
+                        abstract class Shape{  
+                            void draw(){
+                                System.out.println("Draw Shape");
+                            }  
+                            abstract void rotate();
+                        }  
+                        
+                        public class Test {  
+                             public static void main(String[] args) {  
+                                 Shape[] shapes = {new Circle(), new Triangle(), new Square()};  
+                                 for(Shape s : shapes){  
+                                     // if s is not a circle 
+                                     s.rotate();  // circle.rotate() means nothing!
+                                 }  
+                             }  
+                        } 
+                    </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>RTTI</h2>
+                </div>
+                <div class="down-9">
+                    如何在不破坏抽象的设计原则下，获得对象的实际类型？
+                </div>
+                <div class="down-9 biggest center danger fragment">
+                    Run-time type identification
+                </div>
+               
+            </section>
+
+
+            <section>
+                <div class="down-1">
+                    <h2>Object Instances in Heap </h2>
+                </div>
+                <div>
+                    <pre>
+                        <code >
+                            class Cat {}
+                            Cat myCat = new Cat();
+                        </code>
+                    </pre>
+                </div>
+                <div class="fragment center">
+                    <img width="70%" src="https://www.cs.virginia.edu/~jh2jf/courses/cs2110/images/2110/pbr1.png" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2>Copy by Reference</h2>
+                </div>
+                <div>
+                    <pre>
+                            <code >
+                                class Cat {}
+                                Cat myCat = new Cat();
+                                Cat c = myCat;
+                            </code>
+                        </pre>
+                </div>
+                <div class="fragment center">
+                    <img width="70%" src="https://www.cs.virginia.edu/~jh2jf/courses/cs2110/images/2110/pbr2.png" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>构造函数（Constructor）</h2>
+                </div>
+                <div class="down-9">
+                    <pre>
+                        <code data-trim>
+                            class Human {
+                                int age;
+                                boolean gender;
+                                Human(){ //default constructor
+                                    age = 0;
+                                    gender = false;
+                                }
+                                Human(int age){ //overloading
+                                    gender = true;
+                                    this.age = age;
+                                }
+                                Human(boolean gender){
+                                    this(0) //calling constructors from constructors
+                                    this.gender = gender;
+                                }
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>成员变量初始化 （HC:P185/PDF:P125）</h2>
+                </div>
+                <div class="down-9">
+                    按在类中定义顺序逐个初始化（或赋予默认值），然后执行构造函数。
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>构造函数（Constructor）</h2>
+                </div>
+                <div class="down-9">
+                    <pre>
+                        <code data-trim>
+                                class Human {
+                                    static int population;
+                                
+                                    int age;
+                                    boolean gender;
+                                    Human(){ //default constructor
+                                        Human.total++;
+                                        age = 0;
+                                        gender = false;
+                                    }
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Static Blocks</h2>
+                </div>
+                <div class="down-9">
+                    <pre>
+                        <code data-trim>
+                                class Human {
+                                    static int population;
+                                    static{
+                                        population = 2; //Adam and Eve
+                                    }
+                                    int age;
+                                    boolean gender;
+                                    Human(){ //default constructor
+                                        Human.total++;
+                                        age = 0;
+                                        gender = false;
+                                    }
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Instance initialization（HC:P192/PDF:P132）</h2>
+                </div>
+                <div class="down-9">
+                    <pre>
+                        <code data-trim>
+                                class Man {
+                                    Object girlfriend;
+                                    {
+                                        girlfriend = new Dog();
+                                    }
+                                    ...
+                                }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>数组初始化</h2>
+                </div>
+                <div class="down-9">
+                    HC:P193/PDF:P133 </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Enum 怎么理解？</h2>
+                </div>
+                <div class="down-9">
+                    <pre>
+                        <code data-trim>
+                                enum GENDER {
+                                    MALE, FEMALE, NOTTELLING
+                                }
+                                
+                                public static void main(String[] args){
+                                    GENDER gender = GENDER.MALE;
+                                    System.out.println(gender.toString() + " " + gender.ordinal())
+                                }
+                        </code>
+                    </pre>
+                </div>
+                <div class="down-3 center small fragment">
+                    Although enums appear to be a new data type, the keyword only produces some compiler behavior while
+                    generating a class for the enum, so in many ways you can treat an enum as if it were any other
+                    class. In fact, enums are classes and have their own methods.
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>对象消亡</h2>
+                </div>
+                <div class="down-5">
+                    垃圾回收（Garbage Collection） </div>
+                <div class="down-5">
+                    <ul>
+                        <li>Stop-and-Copy</li>
+                        <li>Mark-and-Sweep</li>
+                    </ul>
+                </div>
+                <div class="down-5">
+                    vs. <a href="https://en.wikipedia.org/wiki/Reference_counting">Reference Counting</a>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Stop-and-Copy</h2>
+                </div>
+                <div class="down-5 center">
+                    <img src="http://www.memorymanagement.org/_images/two-space.svg" /> </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Mark-and-Sweep</h2>
+                </div>
+                <div class="down-5 center">
+                    <img
+                        src="http://3.bp.blogspot.com/-LNBSfvedEEM/VkxZomXBkvI/AAAAAAAAACI/EhsDaD0k-1g/s1600/output_oPN0rV.gif" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>package</h2>
+                </div>
+                <div class="down-3">
+                    名空间
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+                            cat Human.java
+                        </code>
+                        <code data-trim>
+                                package cn.edu.nju.java;
+
+                                class Human{
+                                
+                                }
+                        </code>
+                        <code data-trim>
+                            cat Society.java
+                        </code>
+                        <code data-trim>
+                            import cn.edu.nju.java.Human;
+                            ...
+                            </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>CLASSPATH</h2>
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+                                # /path/to/some/folder/cn/edu/nju/java/Human.class
+                        </code>
+                        <code data-trim>
+                                set CLASSPATH=.:CLASSPATH=/path/to/some/folder:/path/to/other.jar     
+                                java Human
+                        </code>
+                        <code data-trim>
+                                cd /path/to/some/folder/
+                                java Human
+                        </code>
+                    </pre>
+                </div>
+                <div class="danger center down-3 fragment">
+                    Why?
+                </div>
+                <div class="danger center down-3 fragment">The class loading problem.</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Why package?</h2>
+                </div>
+                <div class="down-9">
+                    组织管理、避免冲突、访问控制 (请看书！)
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>访问控制</h2>
+                </div>
+                <div class="down-5">
+                    Modifier
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>public</li>
+                        <li>protected</li>
+                        <li>private</li>
+                        <li>default</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>public</h2>
+                </div>
+                <div class="down-3">
+                    Interface access
+
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+                                enum Appearance {
+                                    BEAUTIFUL, UGLY
+                                }
+                                public class Human{
+                                    public Appearance appearance;
+                                }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>protected</h2>
+                </div>
+                <div class="down-3">
+                    Inheritance access
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+
+                                public class Human{
+                                    protected float money;
+                                }
+
+                        </code>
+                    </pre>
+                </div>
+                <div class="down-3 center small">
+                    * 注：此例并不恰当
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>private</h2>
+                </div>
+                <div class="down-3">
+                    You can't touch that!
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+
+                                enum Mood {
+                                    GOOD, BAD
+                                }
+                                public class Human{
+                                    private Mood mood;
+                                }
+                                
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>default</h2>
+                </div>
+                <div class="down-3">
+                    Package friendly
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+
+                                enum Performance {
+                                    GOOD, BAD
+                                }
+                                public class Human{
+                                    Performance performance;
+                                }
+                                
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Modifiers</h2>
+                </div>
+                <div class="down-5">
+                    可修饰
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>class</li>
+                        <li>member</li>
+                        <li>method</li>
+                    </ul>
+                </div>
+                <div class="danger center down-3 fragment">
+                    Why?
+                </div>
+                <div class="danger center down-3 fragment">封装</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Encapsulation</h2>
+                </div>
+
+                <div class="down-5">
+                    Encapsulation is to hide the implementation details from users.
+                </div>
+
+                <div class="down-1 center">
+                    <img width="30%" src="https://img.ashampoo.com/images/products/1304/boxshot.png" />
+                </div>
+                <div class="danger center down-1 fragment">
+                    Why?
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Encapsulating for</h2>
+                </div>
+
+                <div class="down-5">
+                    Flexibility, Reusability, Maintainability.
+                </div>
+
+                <div class="down-5 center">
+                    <img width="50%"
+                        src="https://www.flexiprep.com/NIOS-Notes/Computer-Science/posts/Ch-8-General-Concept-Of-OOP-Part-3/Image-of-Encapsulation.webp" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>代码重用（复用）</h2>
+                </div>
+                <div class="down-5">
+                    途径
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>Composition</li>
+                        <li>Inheritance</li>
+                        <li>Delegation</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Composition</h2>
+                </div>
+                <div class="down-5">
+                    强合成：“部分”的生命期不能比“整体”还要长
+                </div>
+                <div class="row down-3">
+                    <div class=" col-50">
+                        <pre>
+                            <code data-trim>
+                                public class Heart {
+                                    ...
+                                }
+                                
+                                public class Liver {
+                                    ...
+                                }
+                                
+                                public class Human {
+                                    private Heart heart;
+                                    private Liver liver;
+                                    ...
+                                }
+                                    
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="center col-50 down-9">
+                        <img src="http://www.plantuml.com/plantuml/png/yoZDJSnJK39KKj3IrGNJ7gc9HILS7XZYFfbbgKK0" />
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>弱合成</h2>
+                </div>
+                <div class="down-5">
+                    除了“强合成”关系外，还存在“弱合成”关系
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>Aggregation</li>
+                        <li>Association</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Aggregation</h2>
+                </div>
+                <div class="down-5">
+                    聚合：“部分”可独立存在
+                </div>
+
+                <div class="center down-9">
+                    <img src="http://www.plantuml.com/plantuml/png/SquiKb0oL5B8rzK5qwvvwPbvgLpEoC8cIWhX6QcfEG00" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Association</h2>
+                </div>
+                <div class="down-5">
+                    关联：对象可以向另一个对象通过某种方式发送消息
+                </div>
+
+                <div class="center down-9">
+                    <img src="http://www.plantuml.com/plantuml/png/SquiKh2fqTLLS4hDgm80" />
+                </div>
+                <div class="center down-3">Initialize the base first
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Delegating</h2>
+                </div>
+                <div class="row down-3">
+                    <div class="down-3 col-50">
+                        <pre>
+                                        <code data-trim>
+                                                public class Car {
+                                                    public Window[] windows = new Window[4];
+                                                }
+                                                
+                                                public class Jetta extends Car{
+                                                
+                                                }
+                                                
+                                                Car myCar = new Jetta();
+                                                
+                                                //手摇式玻璃
+                                                myCar.windows[0].open();
+                                        </code>
+                                    </pre>
+                    </div>
+                    <div class="down-3 col-50">
+                        <pre>
+                                            <code data-trim>
+                                                    public class Car {
+                                                        public Window[] windows = new Window[4];
+                                                    }
+                                                    
+                                                    public class Tesla extends Car{
+                                                        public void openWindow(int i){
+                                                            this.windows[i].open(); //delegate
+                                                        }
+                                                    }
+                                                    
+                                                    Car hisCar = new Tesla();
+                                                    
+                                                    //自动式玻璃
+                                                    hisCar.openWindow(1);
+                                            </code>
+                                        </pre>
+                    </div>
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>代码复用 with delegation?</h2>
+                </div>
+                <div class="center down-9">
+                    <img
+                        src="https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Art/delegation1.jpg" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>用继承实现行为定制</h2>
+                </div>
+                <div class="down-3">
+                    <pre>
+                        <code data-trim>
+                                public class Window {
+                                    private Button btnClose;
+                                
+                                    private void btnCloseClicked(){
+                                        ///???
+                                    }
+                                }
+                                public class MyWindow extends Window {
+                                    private Button btnClose;
+                                
+                                    private void btnCloseClicked(){
+                                        // bala bala
+                                    }
+                                }
+                        </code>
+                    </pre>
+                </div>
+
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>或者用Delegation</h2>
+                </div>
+                <div class="down-3">
+                    <pre>
+                            <code data-trim>
+                                    public class Window {
+                                        private Button btnClose;
+                                        
+                                        private WindowDelegate delegate;
+                                    
+                                        private void btnCloseClicked(){
+                                            delegate.windowClosing();
+                                        }
+                                    }
+                                    
+                                    public class WindowDelegate {
+                                        public windowClosing(){
+                                            //bala bala
+                                        }
+                                    }
+                            </code>
+                        </pre>
+                </div>
+
+                <div class="danger center down-1 fragment">
+                    Why?
+                </div>
+                <div class="danger center down-1 fragment">因为你确实不在做一类特殊的Window.</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>final</h2>
+                </div>
+                <div class="down-9">
+                    HC：262-271
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>final的变量</h2>
+                </div>
+                <div class="down-5">常量声明(经常和static关键字一起使用)
+                </div>
+                <div class="down-5">
+                    <pre>
+                                <code data-trim>
+                                        public static final int i = 0;
+
+                                        i=1; // compilation errorerror
+                                </code>
+                            </pre>
+                </div>
+
+                <div class="danger center down-1 fragment">
+                    Why?
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>final方法</h2>
+                </div>
+                <div class="down-5">代表这个方法不可以被子类方法重写。
+                </div>
+                <div class="down-5">
+                    <pre>
+                                    <code data-trim>
+                                            class Man extends Human{
+                                                public final void hitChild(){
+                                                    //beat and KO!
+                                                }
+                                            }
+                                             
+                                            class Father extends Man{
+                                                @Override
+                                                public final void hitChild(){
+                                                    // beat harder ...
+                                                    return // compilation error: overridden method is final
+                                                }
+                                            }
+                                    </code>
+                                </pre>
+                </div>
+                <div class="danger center down-1 fragment">“父类中这件事已经做得够好了，子类无法超越”
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>final类</h2>
+                </div>
+                <div class="down-5">代表这个类所有方法属性都不可以被子类重写。
+                </div>
+                <div class="down-5">
+                    <pre>
+                                        <code data-trim>
+                                                final class Father extends Man{ 
+
+                                                }
+                                                
+                                                class Son extends Father{ //compilation error: cannot inherit from final class
+                                                
+                                                }
+                                        </code>
+                                    </pre>
+                </div>
+                <div class="danger center down-1 fragment">“老子整个已经不可超越”
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Polymorphism</h2>
+                </div>
+                <div class="down-5">
+                    多态性是指对象能够有多种形态。
+                </div>
+                <div class="down-5">
+                    <ul>
+                        <li>男人是人</li>
+                        <li>男人是动物</li>
+                        <li>男人是一种存在</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>多态</h2>
+                </div>
+                <div class="down-5">
+                    多态是”继承“的产物 </div>
+                <div class="down-5">
+                    <pre>
+                            <code data-trim>
+                                    class Man extends Human {
+                                        ...
+                                    }
+                                    
+                                    class Human extends Creature{
+                                        ...
+                                    } 
+                                    
+                                    class Creature extends Being{
+                                        ...
+                                    }
+                            </code>
+                    </div>
+                </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>多态意味着什么？</h2>
+                </div>
+                <div class="down-5">
+                    <pre>
+                            <code data-trim>
+                                    class Creature extends Being{
+                                        public void eat(){
+                                            System.out.println("eating");
+                                        }
+                                    }
+                                    class Human extends Creature{
+                                        @Override
+                                        public void eat{
+                                            System.out.println("cooking...eating")
+                                        }
+                                    } 
+                                    class Woman extends Human {
+                                        @Override
+                                        public void eat{
+                                            System.out.println("cooking...photoing...eating");
+                                        }
+                                    }
+                                    
+                                    Being you = new Woman();
+                                    you.eat(); //??
+                            </code>
+                    </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>再举个例子</h2>
+                </div>
+                <div class="down-1">
+                    <pre>
+                                <code data-trim>
+                                        class Shape{  
+                                            void draw(){ System.out.println("Draw Shape"); }  
+                                        }  
+                                        class Circle extends Shape{  
+                                            void draw(){ System.out.println("Draw Circle"); }  
+                                        }   
+                                        class Triangle extends Shape{  
+                                            void draw(){ System.out.println("Draw Triangle"); }  
+                                        }  
+                                        class Square extends Shape{  
+                                            void draw(){ System.out.println("Draw Square"); }  
+                                        }  
+                                        public class Test {  
+                                             public static void main(String[] args) {  
+                                                 Shape[] shapes = {new Circle(), new Triangle(), new Square()};  
+                                                 for(Shape s : shapes){  
+                                                     s.draw();  
+                                                 }  
+                                             }  
+                                        }  
+                                </code>
+                        </pre>
+                </div>
+                <div class="small center">执行结果？
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>多态形成的条件</h2>
+                </div>
+
+                <div class="down-9">
+                    <ul>
+                        <li>继承</li>
+                        <li>重写</li>
+                        <li>父类引用指向子类对象</li>
+                    </ul>
+                </div>
+
+                <div class="down-5 fragment center danger">
+                    实际上是由Java中的”动态绑定“机制造成的。 </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>动态绑定</h2>
+                </div>
+                <div class="down-5">
+                    关联：对象可以向另一个对象通过某种方式发送消息
+                </div>
+
+                <div class="center down-9">
+                    <a href="https://stackoverflow.com/questions/19017258/static-vs-dynamic-binding-in-java">Static Vs.
+                        Dynamic Binding in Java</a>
+                </div>
+
+                <div class="center down-9">
+                    <a href="http://www.jianshu.com/p/0677f366db08">http://www.jianshu.com/p/0677f366db08
+                    </a>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>再想想，Why？</h2>
+                </div>
+                <div class="down-13 fragment center danger">
+                    抽象思维（编程）的支撑！ </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>抽象类</h2>
+                </div>
+                <div class="down-9 ">
+                    当一个类没有足够的信息来描述一个具体的对象，而需要其他具体的类来支撑它，那么这样的类我们称它为抽象类。
+                </div>
+                <div class="down-5">
+                    <pre>
+                        <code data-trim>
+                                class Human {
+                                    public void meetLouisVuitton(){
+                                        //??
+                                    }
+                                }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Abstract Class</h2>
+                </div>
+                <div class="down-5">
+                    <pre>
+                            <code data-trim>
+                                    abstract class Human {
+                                        public abstract void meetLouisVuitton();
+                                    }
+                                    class Man extends Human {
+                                        @Override
+                                        public void meetLouisVuitton(){
+                                            pass();
+                                        }
+                                    }
+                                    class Woman extends Human {
+                                        @Override
+                                        public void meetLouisVuitton(){
+                                            enter();
+                                        }
+                                    }
+                            </code>
+                        </pre>
+                </div>
+                <div class="down-3 fragment center danger">
+                    Why？应对不确定。 </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Interface</h2>
+                </div>
+                <div class="down-9">
+                    当所有行为都不确定时，来一份Interface。
+                </div>
+
+                <div class="down-9 fragment">
+                    接口比抽象类更抽象。接口是用来建立类与类之间的协议（protocol）。
+                </div>
+
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>举个例子</h2>
+                </div>
+                <div class="down-3">
+                    <pre>
+                                <code data-trim>
+                                        public interface Communicate{
+                                            public String talkTo(String message);
+                                        }
+                                        
+                                        public Man extends Human implements Communicate{
+                                            ...
+                                            public String talkTo(String message){
+                                                return process(message);
+                                            }
+                                        }
+                                        public Woman extends Human implements Communicate{
+                                            ...
+                                            public String talkTo(String message){
+                                                return "我不听我不听我不听";
+                                            }
+                                        }
+                                </code>
+                            </pre>
+                </div>
+                <div class="down-3 fragment center danger">
+                    Why？抽象的行为协议定义，接口与实现的分离。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>多继承</h2>
+                </div>
+                <div class="down-3">
+                    <pre>
+                                    <code data-trim>
+                                            interface A{
+                                                public void a();
+                                            }
+                                            interface B{
+                                                public void b();
+                                            }
+                                            
+                                            class C implements A,B {
+                                                public void a(){
+                                                    ...
+                                                }
+                                                public void b(){
+                                                    ...
+                                                }
+                                            }
+                                    </code>
+                                </pre>
+                </div>
+                <div class="down-3 fragment center danger">
+                    为什么Java不支持多继承多个父类但支持实现多个接口？
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>接口中的成员变量</h2>
+                </div>
+                <div class="down-9">
+                    成员变量必须是<code>public static final</code>
+                </div>
+                <div class="down-3 fragment center danger">
+                    Why？公有化，标准化、规范化。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Inner Classes</h2>
+                </div>
+                <div class="down-9">
+                    pp. 345-388
+                </div>
+
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>再看葫芦娃</h2>
+                </div>
+                <div class="center down-9">
+                    <img
+                        src="https://camo.githubusercontent.com/a5cc35d2179c5bf861f6a8eeca25fc5fa3e876a2/687474703a2f2f656e676c6973682e6372692e636e2f6d6d736f757263652f696d616765732f323030392f30362f32342f34363334636172746f6e312e6a7067" />
+
+                </div>
+            </section>
+        </div> <!-- slides -->
+    </div> <!-- reveal -->
+
+</html>
