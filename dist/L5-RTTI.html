@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en"><head><link href="lib/css/app.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"></head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>类型和自省</title>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    类型和自省
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>SOLID</h2>
+                </div>
+                <div class="down-9">
+                    高内聚: S 单一职责原则，I 接口隔离原则
+                </div>
+                <div class="down-3">
+                    低耦合: O 开闭原则，D 依赖倒置原则，L 里氏替换原则
+                </div>
+                <div class="down-5 fragment danger center biggest ">
+                    抽象
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>回顾一下抽象</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java tiny"><code data-trim>
+                        class Shape{  
+                            void draw(){
+                                System.out.println("Draw Shape");
+                            }  
+                        }  
+                        class Circle extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Circle");
+                            }  
+                        }   
+                        class Triangle extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Triangle");
+                            }  
+                        }  
+                        class Square extends Shape{  
+                            void draw(){
+                                System.out.println("Draw Square");
+                            }  
+                        }  
+                        public class Test {  
+                             public static void main(String[] args) {  
+                                 Shape[] shapes = {new Circle(), new Triangle(), new Square()};  
+                                 for(Shape s : shapes){  
+                                     s.draw();  // without knowing the concrete type of "s"
+                                 }  
+                             }  
+                        } 
+                    </code>
+                        
+                    </pre>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>What if?</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java"><code data-trim>
+                        abstract class Shape{  
+                            void draw(){
+                                System.out.println("Draw Shape");
+                            }  
+                            abstract void rotate();
+                        }  
+                        
+                        public class Test {  
+                             public static void main(String[] args) {  
+                                 Shape[] shapes = {new Circle(), new Triangle(), new Square()};  
+                                 for(Shape s : shapes){  
+                                     // if s is not a circle 
+                                     s.rotate();  // circle.rotate() means nothing!
+                                 }  
+                             }  
+                        } 
+                    </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>RTTI</h2>
+                </div>
+                <div class="down-9">
+                    如何在不破坏抽象的设计原则下，获得对象的实际类型？
+                </div>
+                <div class="down-9 biggest center danger fragment">
+                    Run-time type identification
+                </div>
+
+            </section>
+
+
+            <section>
+                <div class="down-1">
+                    <h2>The <code>Class</code> Object </h2>
+                </div>
+                <div class="down-9">
+                    每一个类都持有其对应的<code>Class</code>>类的对象的引用，其中包含着与类相关的信息
+                </div>
+                <div class="smaller down-3"><a
+                        href="https://docs.oracle.com/javase/9/docs/api/java/lang/Class.html">https://docs.oracle.com/javase/9/docs/api/java/lang/Class.html</a>
+                </div>
+                <div class="down-9">
+                    <code>Object</code>类中的<code>getClass()</code>方法能让我们获取到这个对象
+                </div>
+                <div class="smaller down-3"><a
+                        href="https://docs.oracle.com/javase/9/docs/api/java/lang/Object.html#getClass">https://docs.oracle.com/javase/9/docs/api/java/lang/Object.html#getClass</a>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2>试一下</h2>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2>思考一下</h2>
+                </div>
+                <div class="down-9">
+                    `Class`对象内的信息来自哪里？
+                </div>
+                <div class="fragment success down-7">
+                    针对每一个类，编译Java文件会生成一个二进制.class文件，这其中就保存着该类对应的Class对象的信息。 </div>
+                <div class="fragment pop down-7">
+                    Java虚拟机运行你的代码的第一步，就是先加载你的.class文件
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>三步曲</h2>
+                </div>
+                <div class="fragment danger down-7">
+                    1. 加载(Loading)。由类加载器执行，查找字节码，创建一个Class对象。</div>
+                <div class="fragment info down-5">
+                    2. 链接(Linking)。验证字节码，为静态域分配存储空间，如果必需的话，会解析这个类创建的对其他类的所有引用（比如说该类持有static域）。
+                </div>
+                <div class="fragment pop down-5">
+                    3. 初始化(Initializing)。如果该类有超类，则对其初始化，执行静态初始化器和静态初始化块。
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>换而言之</h2>
+                </div>
+                <div class="fragment danger down-7">
+                    所有的类都是在对其第一次使用时，动态加载到JVM中去的。
+                </div>
+                <div class="fragment success down-5">
+                    当程序创建第一个对类的静态成员的引用时，JVM会使用类加载器来根据类名查找.class文件（实际上很复杂，后面专门讲类加载机制） </div>
+                <div class="fragment pop down-5">
+                    构造器也是类的静态方法，使用<code>new</code>操作符创建新对象会被当作对类的静态成员的引用 </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Inside JVM</h2>
+                </div>
+                <div class="down-5 center">
+                    <img src="http://www.artima.com/insidejvm/ed2/images/fig5-7.gif" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2><code>Class</code>对象的创建</h2>
+                </div>
+                <div class="down-7">
+                    <code>Class</code>类的静态方法<code>forName(String str)</code>，可以让我们对于某个类不进行创建就得到它的<code>Class</code>对象的引用
+                </div>
+                <div>
+                    <pre class="java"><code data-trim>
+                        try {
+                            Class circleClass = Class.forName("Circle");
+                        } catch (ClassNotFoundException e) {
+                       
+                        }
+                    </code></pre>
+                </div>
+                <div class="fragment danger down-3">
+                    缺点是什么？
+                </div>
+                <div class="fragment danger down-3">
+                    可能有异常，且会触发类的static子句（静态初始化块） </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>类字面常量 (Class literals)</h2>
+                </div>
+                <div class="down-7">
+                    Class literals also provide a reference to the Class object
+                </div>
+                <div>
+                    <pre class="java"><code data-trim>
+                        Class c = Circle.class;
+                    </code></pre>
+                </div>
+                <div class="fragment danger down-3">
+                    支持编译时检查，所以不会抛出异常;不会触发类的static子句（静态初始化块） </div>
+                <div class="fragment success down-3">
+                    更简单更安全更高效</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>基本类型的Class对象</h2>
+                </div>
+                <div class="down-9">
+                    Each object of a primitive wrapper class has a standard field called TYPE that also provides a
+                    reference to the Class object
+                </div>
+
+
+                <div class="smaller down-3"><a
+                        href="https://docs.oracle.com/javase/9/docs/api/java/lang/Integer.html#TYPE">https://docs.oracle.com/javase/9/docs/api/java/lang/Integer.html#TYPE</a>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>类型检查</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                            public boolean isInstance​(Object obj)
+                        </code>
+                    </pre>
+                </div>
+                <div class="mute small">Determines if the specified Object is assignment-compatible with the object
+                    represented by this
+                    Class.
+                </div>
+
+                <div class="down-3">
+                    <pre class="java">
+                        <code data-trim>
+                            if ( Shape.class.isInstance(x) ) {
+                                Shape s = (Shape)x;
+                           }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>或者</h2>
+                </div>
+                <div class="down-5">
+                    也可以使用instanceof关键字进行类型检查 </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            if ( x instanceof Shape ) {
+                                Shape s = (Shape)x;
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>从<code>Class</code>对象创建对象</h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            try {
+                                Class<?>  circleClass = Class.forName("Circle"); 
+                                Object obj = circleClass.newInstance();
+                            } catch (ClassNotFoundException e) {
+                            
+                            }
+
+                            //or
+                            Class&lt;?&gt; circleClass = Circle.class;
+                            Object obj = circleClass.newInstance();
+                        </code>
+                    </pre>
+                </div>
+                <div class="fragment danger down-3">
+                    只能得到Object类型
+                </div>
+                <div class="fragment danger down-3">
+                    &lt;?&gt;是什么鬼 </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>创建出实际类型的对象
+                    </h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            Class&lt;Circle&gt; circleClass = Circle.class;
+                            Circle obj = circleClass.newInstance();
+                        </code>
+                    </pre>
+                </div>
+                <div>
+                    <code>Class&lt;Circle&gt;</code> --> 范型（generic type）下次再说
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>问题</h2>
+                </div>
+                <div class="down-3">
+                    以上使用的RTTI都具有一个共同的限制：在编译时，编译器必须知道所有要通过RTTI来处理的类。
+                </div>
+                <div class="down-3">
+                    但有的时候，你获取了一个对象引用，然而其对应的类并不在你的程序空间中，怎么办？比如说你从磁盘文件或者网络中获取了一串字串，并且被告知这一串字串代表了一个类，这个类在编译器为你的程序生成代码之后才会出现。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>自省（Introspection）</h2>
+                </div>
+                <div class="down-3">
+                    自省 Introspection： 自我评价、自我反省、自我批评、自我调控和自我教育
+                </div>
+                <div class="down-7">
+                    In computing, type introspection is the ability of a program to examine the type or properties of an
+                    object at runtime.
+                </div>
+                <div class="down-3 right small">
+                    -- Wikipedia
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Reflection</h2>
+                </div>
+                <div class="down-7">
+                    In computer science, reflection is the ability of a computer program to examine, introspect, and
+                    modify its own structure and behavior at runtime.
+                </div>
+                <div class="down-3 right small">
+                    -- Wikipedia
+                </div>
+
+                <div class="fragment danger down-7">
+                    Introspection是Reflection的子集。反射除了检查，还可以控制改变。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>子曰</h2>
+                </div>
+
+                <div class="down-5 center">
+                    <img
+                        src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=744a59ccbe3eb13544c7b0bd9e25cfee/58ee3d6d55fbb2fbb7562d364d4a20a44623dc91.jpg" />
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>曾子曰</h2>
+                </div>
+                <div class="row down-13 center">
+                    吾日三省吾身，为人谋而不忠乎？与朋友交而不信乎？传不习乎？
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Java Reflection</h2>
+                </div>
+                <div class="row down-5">
+                    <div class="col-30">
+                        <div class="down-9 small">
+                            Java supports introspection through its reflection library
+                        </div>
+                        <div class="down-5 small">
+                            <a href="https://www.oracle.com/technetwork/articles/java/javareflection-1536171.html">Using
+                                Java
+                                Reflection
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-70">
+                        <pre class="java">
+                            <code data-trim>
+                                import java.lang.reflect.*;
+                                
+                                public class DumpMethods {
+                                    public static void main(String args[])
+                                    {
+                                        try {
+                                            Class c = Class.forName(args[0]);
+                                            Method m[] = c.getDeclaredMethods();
+                                            for (int i = 0; i &lg; m.length; i++)
+                                            System.out.println(m[i].toString());
+                                        }
+                                        catch (Throwable e) {
+                                            System.err.println(e);
+                                        }
+                                    }
+                                }
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Java Reflection</h2>
+                </div>
+                <div class="down-5 small">
+                    Reflection enables Java code to discover information about the fields, methods and constructors of
+                    loaded classes, and to use reflected fields, methods, and constructors to operate on their
+                    underlying counterparts, within security restrictions. The API accommodates applications that need
+                    access to either the public members of a target object (based on its runtime class) or the members
+                    declared by a given class. It also allows programs to suppress default reflective access control.
+                </div>
+                <div class="down-3 right tiny">
+                    <a
+                        href="https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/index.html">https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/index.html</a>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>核心功能</h2>
+                </div>
+                <div class="down-1 pop">
+                    反射的核心是 JVM 在运行时才动态加载类或调用方法/访问属性，它不需要事先（写代码的时候或编译期）知道运行对象是谁。
+                </div>
+                <div class="down-1">
+                    <ul>
+                        <li class="down-3">
+                            在运行时判断任意一个对象所属的类；
+                        </li>
+                        <li class="down-3">
+                            在运行时构造任意一个类的对象；
+                        </li>
+                        <li class="down-3">
+                            在运行时判断任意一个类所具有的成员变量和方法
+                        </li>
+                        <li class="down-3">
+                            在运行时调用任意一个对象的方法
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="down-3 fragment danger right">
+                    重点：是运行时而不是编译时
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>有啥用</h2>
+                </div>
+                <div class="down-1">
+                    <ul>
+                        <li class="down-3">
+                            Rapid Application Development (RAD)
+                        </li>
+                        <li class="down-3">
+                            Visual approach to GUI development
+                        </li>
+                        <li class="down-3">
+                            Requires information about component at run-time
+                        </li>
+                        <li class="down-3">
+                            Remote Method Invocation (RMI)
+                        </li>
+                        <li class="down-3">
+                            Distributed objects
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="down-3 small">
+                    当我们在使用 IDE(如 Eclipse，IDEA)时，当我们输入一个对象或类并想调用它的属性或方法时，一按点号，编译器就会自动列出它的属性或方法，这里就会用到反射。
+                    更重要的用途就是<span class="danger">开发各种通用框架</span>。
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Introspection in Python</h2>
+                </div>
+                <div class="down-3">
+                    The Inspect module provides introspections mechanism
+
+                </div>
+                <div class="down-3">
+                    <a
+                        href="https://docs.python.org/3/library/inspect.html">https://docs.python.org/3/library/inspect.html</a>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>回头再看葫芦娃</h2>
+                </div>
+                <div class="center down-9">
+                    <img
+                        src="https://camo.githubusercontent.com/a5cc35d2179c5bf861f6a8eeca25fc5fa3e876a2/687474703a2f2f656e676c6973682e6372692e636e2f6d6d736f757263652f696d616765732f323030392f30362f32342f34363334636172746f6e312e6a7067" />
+
+                </div>
+            </section>
+        </div> <!-- slides -->
+    </div> <!-- reveal -->
+
+</html><script type="text/javascript" src="lib/js/app.js"></script>
