@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>泛型 Generics</title>
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    泛型 Generics
+                </div>
+            </section>
+            <section>
+                <div class="down-30 center">
+                    这可能是这门课中最难理解的一章。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>泛型</h2>
+                </div>
+                <div class="down-9 small">
+                    泛型程序设计（Generic Programming）是程序设计语言的一种风格或范式。泛型允许程序员在强类型程序设计语言中编写代码时使用一些以后才指定的类型，在实例化时作为参数指明这些类型。...
+                    Ada、Delphi、Eiffel、Java、C#、F#、Swift 和 Visual Basic .NET 称之为泛型（generics）；ML、Scala 和 Haskell
+                    称之为参数多态（parametric polymorphism）；C++ 和 D称之为模板。《Design Patterns》一书称之为参数化类型（parameterized type）。
+                </div>
+                <div class="down-3 tiny right">
+                    https://zh.wikipedia.org/wiki/%E6%B3%9B%E5%9E%8B
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Java Generics</h2>
+                </div>
+                <div class="down-9">
+                    <div class="down-1">
+                        <ul>
+                            <li class="down-3">
+                                A way to control a class type definitions
+                            </li>
+                            <li class="down-3">
+                                A way of improving the clarity of code
+                            </li>
+                            <li class="down-3">
+                                A way of avoiding <span class="strong">casts</span> in code, turning run-time errors
+                                (typically <span class="strong">ClassCastException</span>) into compile-time errors.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Without Generics</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                            class Stack{
+                                void push(Object o){...}
+                                Object pop(){...}
+                            }
+
+                            String s = "Hello";
+                            Stack st = new Stack();
+                            ...
+                            st.push(s);
+                            ...
+                            s = (String)st.pop();
+                        </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>With Generics</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    class Stack&lt;A&gt;{ // 类参数
+                                            void push(A a){...}
+                                            A pop(){...}
+                                    }
+                                    String s = "Hello";
+                                    Stack&lt;String&gt; st = new Stack&lt;String&gt;();
+                                    st.push(s);
+                                    ...
+                                    s = st.pop();
+                            </code>
+                            
+                        </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>葫芦娃中的例子</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Position {
+                                    private Object holder;
+                                    public Position(Object holder) { 
+                                        this.a = a; 
+                                    }
+                                    Object get() { 
+                                        return a; 
+                                    }
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-5 fragment danger center"><code>Postion</code>里放任意东西</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>改进一下</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                                    <code data-trim>
+                                            public class Position {
+                                                private Creature holder;
+                                                public Position(Creature holder) { 
+                                                    this.a = a; 
+                                                }
+                                                Creature get() { 
+                                                    return a; 
+                                                }
+                                            }
+                                    </code>
+                                    
+                                </pre>
+                </div>
+
+                <div class="down-5 fragment danger center">
+                    通过构造方法和get方法我们能看出<code>Position</code>里放的是<code>Creature</code></div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>但如果是这样呢？</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Position {
+                                    private Creature holder;
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-5 fragment danger center">从外部观察，何以了解<code>Position</code>里是放<code>Creature</code>的?
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>显式说明一下</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Position&lt;T&gt;{
+                                        private T holder;
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-5 fragment danger center">显式表达“某种不确定”: Position里是要放东西的，但不确定是什么东西
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>说得再明白一点</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Position&lt;T extends Creature&gt;{
+                                        private T holder;
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-5 fragment danger center">显式表达Position里是跟某种Creature
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 再定义一个Computer </h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                                        <code data-trim>
+                                                public class Computer{
+
+                                                    private HDD mHarddisk;   // 机械硬盘
+                                                    
+                                                    Computer(HDD harddisk){
+                                                        mHarddisk = harddisk;
+                                                    }
+                                                    
+                                                    public Data readDisk(){
+                                                        return mHarddisk.read();
+                                                    }
+                                                    
+                                                    public void writeDisk(Data data){
+                                                        mHarddisk.write(data);
+                                                    }
+                                                }
+                                        </code>
+                                        
+                                    </pre>
+                </div>
+
+                <div class="down-1 fragment danger center">
+                    如果安装的是SSD怎么办？</div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2> 定义一个SSDComputer？ </h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                                                <code data-trim>
+                                                        public class SSDComputer{
+
+                                                            private SSD mHarddisk;   // SSD硬盘
+                                                            
+                                                            Computer(SSD harddisk){
+                                                                mHarddisk = harddisk;
+                                                            }
+                                                            
+                                                            public Data readDisk(){
+                                                                return mHarddisk.read();
+                                                            }
+                                                            
+                                                            public void writeDisk(Data data){
+                                                                mHarddisk.write(data);
+                                                            }
+                                                        }
+                                                </code>
+                                                
+                                            </pre>
+                </div>
+
+                <div class="down-1 fragment danger center">
+                    这当然不好！</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 抽象一下 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                public abstract class Disk{};
+                                public class SSD extends Disk{};
+                                public class HHD extends Disk{};
+                                public class Computer{
+
+                                    private Disk disk;   // 抽象的硬盘
+                                    
+                                    Computer(Disk disk){
+                                        this.disk = disk;
+                                    }
+                                    
+                                    public Data readDisk(){
+                                        return disk.read();
+                                    }
+                                    
+                                    public void writeDisk(Data data){
+                                        disk.write(data);
+                                    }
+                                }
+                        </code>
+                                                    
+                    </pre>
+                </div>
+
+                <div class="down-1 fragment danger center">
+                    基于多态实现设计抽象（解耦） </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 用泛型来做 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Computer&lt;T extends Disk&gt;{
+                                    private T disk;   // 参数类
+                                    Computer(T disk){
+                                        this.disk = disk;
+                                    }
+                                    public Data readDisk(){
+                                        return disk.read();
+                                    }
+                                    public void writeDisk(Data data){
+                                        disk.write(data);
+                                    }
+                                    public T getDisk(){
+                                        return disk;
+                                    }
+                                    public void setDisk(T disk){
+                                        return this.disk = disk;
+                                    }
+                                
+                                    public static void main(String[] args) {
+                                        Computer&lt;SSD&gt; computer = new Computer&lt;SSD&gt;(new SSD());
+                                        SSD disk = computer.getDisk(); // No cast needed
+                                        //computer.setDisk(new HHD()); // error!
+                                    }
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 用泛型来做 </h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    public class GenericMethods {
+                                        public &lt;T&gt; void f(T x) {
+                                            System.out.println(x.getClass().getName());
+                                        }
+                                        public static void main(String[] args) {
+                                            GenericMethods gm = new GenericMethods();
+                                            gm.f("");
+                                            gm.f(1); //autoboxing
+                                            gm.f(1.0);
+                                            gm.f(1.0F);
+                                            gm.f(‘c’);
+                                            gm.f(gm);
+                                        }
+                                    }
+                            </code>
+                            
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2> 再看容器 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                                <code data-trim>
+                                    public class Holder&lt;T&gt; {
+                                            private T obj;
+                                            public void set(T obj){
+                                                this.obj = obj;
+                                            }
+                                            public T get(){
+                                                return obj;
+                                            }
+                                            public static void main(String[] args){
+                                                Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
+                                                holder.set(1);
+                                                //holder.set("Abc"); // error
+                                                Integer obj = holder.get(); //无须cast
+                                            }       
+                                    }
+                                </code>
+                                                            
+                            </pre>
+                </div>
+
+                <div class="down-1  large danger center">
+                    <span class="fragment"> 多完美！</span> <span class="fragment">
+                        可惜这只是编译时刻... 因为运行时的类型信息被擦掉了</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 擦除 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                                    <code data-trim>
+                                            public class Computer&lt;T extends Disk&gt;{
+                                                private T disk;   // 运行时disk是Disk类型
+                                                Computer(T disk){
+                                                    disk = disk;
+                                                }
+                                            }
+                                    </code>
+                                                                
+                                </pre>
+                </div>
+
+                <div class="down-1  large danger center">
+                    <span class="fragment">
+                        Java泛型的实现方式就是将类型参数用边界类型替换，在上面的例子中就是把T用Disk替换。这种实现方式看上去就像是把具体的类型（某种硬盘，机械的或者是固态的），擦除到了边界类型（它们的父类Disk)。</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>这两个是相同类型么？ </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                ArrayList&lt;Integer&gt; intList = new ArrayList&lt;&gt;();
+                                ArrayList rawList = new ArrayList();
+                                
+                                System.out.println(intList.getClass().getSimpleName());
+                                System.out.println(rawList.getClass().getSimpleName());
+                        </code>
+                                                    
+                    </pre>
+                </div>
+
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 擦除的后果 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                public class Holder&lt;T&gt; {
+                                    private T obj;
+                                    public void set(T obj){
+                                        this.obj = obj;
+                                    }
+                                    public T get(){
+                                        return obj;
+                                    }
+                                    public void testT(Object arg){
+                                        if (arg instanceof T){ ... } //编译错误
+                                        T var = new T(); //编译错误
+                                        T[] array = new T[100]; //编译错误
+                                        }
+                                    }
+                                }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+
+                <div class="down-1  large danger center">
+                    <span class="fragment">
+                        这劳什子有何用？！</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>T存在的意义</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                public class Holder<T> {
+                                    private T obj; //在编译时，该类中的所有的T都会被替换为边界类型Object。
+                                    public void set(T obj){
+                                        this.obj = obj;
+                                    }
+                                    public T get(){
+                                        return obj;
+                                    }
+                                    public static void main(String[] args){
+                                        Holder&lt;Integer&lt; holder = new Holder&lt;&lt;();
+                                        //编译器会检查实参是不是一个Integer，
+                                        //虽然这里的1是int类型，但是因为自动包装机制的存在，
+                                        //他会被转化为一个Integer，因此能够通过类型检查。
+                                        holder.set(1); 
+                                        //编译器也会进行类型检查，
+                                        //并且自动插入一个Object类型到Integer类型的转型操作。
+                                        Integer obj = holder.get();
+                                    }       
+                                }
+                        </code>                     
+                    </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>泛型的实际实现</h2>
+                </div>
+                <div class="down-3">对泛型的处理全部集中在编译期，在编译时，编译器会执行如下操作: </div>
+                <div class="down-1">
+                    <div class="down-1">
+                        <ul>
+                            <li class="down-3">
+                                会将泛型类的类型参数都用边界类型替换
+                            </li>
+                            <li class="down-3">
+                                对于传入对象给方法形参的指令，编译器会执行一个类型检查，看传入的对象是不是类型参数所指定的类型
+                            </li>
+                            <li class="down-3">
+                                对于返回类型参数表示对象的指令，也会执行一个类型检查，还会插入一个自动的向下转型，将对象从边界类型向下转型到类型参数所表示的类型
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 所以这些都是错的 </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                            public class Holder&lt;T&gt; {
+                                private T obj;
+                                public void set(T obj){
+                                    this.obj = obj;
+                                }
+                                public T get(){
+                                    return obj;
+                                }
+                                public void testT(Object arg){
+                                    if (arg instanceof T){ ... } //编译错误
+                                    T var = new T(); //编译错误
+                                    T[] array = new T[100]; //编译错误
+                                    }
+                                }
+                            }
+                        </code>
+                                                    
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>如果真想生成泛型对象？</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                class Holder&lt;T&gt;{
+                                    private T t;
+                                    public void init(IFactory&lt;T&gt; factory){
+                                        this.t = factory.create();  // 此处即为new T()的工厂方法的实现
+                                    }
+                                }
+                                
+                                interface IFactory&lt;T&gt;{  //接口也可以参数化
+                                    T create();
+                                }
+                                
+                                class IntegerFactory implements IFactory&lt;Integer&gt;{
+                                    public Integer create(){
+                                        return new Integer(10);
+                                    }
+                                }
+                                
+                                public class newTwithFactory{
+                                    public static void main(String[] args){
+                                        Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
+                                        holder.init(new IntegerFactory());
+                                    }
+                                }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>或者可以使用RTTI</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                    class Holder&lt;T&gt;{
+                                            private T t;
+                                            private Class&lt;T&gt; kind;
+                                            public Holder(Class&lt;T&gt; kind){
+                                                this.kind = kind;
+                                            }
+                                            public void init(){
+                                                try{
+                                                    this.t = kind.newInstance();
+                                                }catch (Exception e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                            public static void main(String[] args) {
+                                                Holder&lt;Integer&gt; holder = new Holder&lt;&gt;(Integer.class);
+                                                holder.init();
+                                            }
+                                    }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>边界 Bounds</h2>
+                </div>
+                <div class="down-3">
+                    用<code>extends</code>申明对参数类型的限制条件
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                interface HasColor{ java.awt.Color getColor(); }
+
+                                class Colored &lt;T extends HasColor&gt;{...}
+
+                                class Dimension { public int x,y,z; }
+
+                                class ColoredDimension &lt;T extends HasColor & Dimension&gt;{...} //错误！
+                                class ColoredDimension &lt;T extends Dimension & HasColor&gt;{
+                                    
+                                }
+                        </code>              
+                    </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>看看这个例子</h2>
+                </div>
+
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                class Fruit{}
+                                class Apple extends Fruit{}
+
+                                public class NonConvariantGeneric {
+                                    List&lt;Fruit&gt; flist = new ArrayList&lt;Apple&gt;(); //编译错误
+                                }
+                            </code>              
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>再看看这个例子</h2>
+                </div>
+
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                            class Fruit {}
+                            class Apple extends Fruit {}
+                            
+                            class Plate&lt;T&gt;{
+                                private T item;
+                                public Plate(T t){item=t;}
+                                public void set(T t){item=t;}
+                                public T get(){return item;}
+                            }
+                            
+                            //现在我定义一个“水果盘子”，逻辑上水果盘子当然可以装苹果。
+                            //但实际上Java编译器不允许这个操作。会报错，“装苹果的盘子”无法转换成“装水果的盘子”。
+                            Plate&lt;Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple()); //编译错误！
+                        </code>              
+                    </pre>
+                </div>
+                <div class="down-1  large danger center">
+                    <span class="fragment">
+                        “苹果” IS-A “水果”</span>
+                </div>
+                <div class="down-1  large danger center">
+                    <span class="fragment">
+                        BUT “装苹果的盘子” NOT-IS-A “装水果的盘子”！</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>协变与逆变</h2>
+                </div>
+
+                <div class="down-9">
+                    协变与逆变(Covariance and contravariance )是在计算机科学中，描述具有父/子型别关系的多个型别通过型别构造器、构造出的多个复杂型别之间是否有父/子型别关系的用语。
+                </div>
+                <div class="down-3 right tiny">
+                    https://zh.wikipedia.org/wiki/%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>通配符</h2>
+                </div>
+
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    class Fruit{}
+                                    class Apple extends Fruit{}
+                                    public class GenericsAndCovariance {
+                                        public static void main(String[] args){
+                                            //一个能放水果以及一切是水果派生类的盘子,啥水果都能放的盘子
+                                            //Plate&lt;？ extends Fruit&gt;和Plate&lt;Apple&gt;最大的区别就是：
+                                            //Plate&lt;？ extends Fruit&gt;是Plate&lt;Fruit&gt;以及Plate&lt;Apple&gt;的基类。
+                                            Plate&lt;? extends Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple());
+                                            // a list of any type that's inherited from Fruit
+                                            List&lt;? extends Fruit&gt; flist = new ArrayList&lt;Apple&gt;();
+                                        }
+                                    }
+                            </code>              
+                        </pre>
+                </div>
+
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>扩展一下</h2>
+                </div>
+
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    class Food{}
+                                    //Lev 2
+                                    class Fruit extends Food{}
+                                    class Meat extends Food{}
+                                    //Lev 3
+                                    class Apple extends Fruit{}
+                                    class Banana extends Fruit{}
+                                    class Pork extends Meat{}
+                                    class Beef extends Meat{}
+                                    //Lev 4
+                                    class RedApple extends Apple{}
+                                    class GreenApple extends Apple{}
+                            </code>              
+                        </pre>
+                </div>
+
+            </section>
+            <section>
+
+                <div class="down-3">
+                    <h2>extends</h2>
+                </div>
+
+                <div class="down-1 center">
+                    <pre class="java ">
+                        <code data-trim>
+                                Plate&lt;？ extends Fruit&gt;
+                        </code>              
+                    </pre>
+
+                    <div class="center down-1">
+                        <img src="https://itimetraveler.github.io/gallery/java-genericity/lowerBounds.png" />
+
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>But</h2>
+                </div>
+
+                <div class="down-1">
+                    <pre class="java">
+                                <code data-trim>
+                                        class Fruit{}
+                                        class Apple extends Fruit{}
+                                        public class GenericsAndCovariance {
+                                            public static void main(String[] args){
+                                            Plate&lt;? extends Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple());
+                                            
+                                                //不能存入任何元素
+                                                p.set(new Fruit());    //Error
+                                                p.set(new Apple());    //Error
+                                                //读取出来的东西只能存放在Fruit或它的基类里。
+                                                Fruit newFruit1=p.get();
+                                                Object newFruit2=p.get();
+                                                Apple newFruit3=p.get();    //Error
+                                            }
+                                        }
+                                </code>              
+                            </pre>
+                </div>
+                <div class=" large danger center">
+                    <span class="fragment">
+                        "A Plate of any type that's inherited from Fruit"的意思不是"a Plate will hold any type of Fruit"
+                    </span>
+                    <span class="fragment">
+                        , but means "some specific type which is not specify" </span>
+                </div>
+
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>super</h2>
+                </div>
+
+                <div class="down-1 center">
+                    <pre class="java ">
+                            <code data-trim>
+                                    //表达的就是相反的概念：一个能放水果以及一切是水果基类的盘子。
+                                    //Plate&lt;？ super Fruit&gt;是Plate&lt;Fruitt&gt;的基类，但不是Plate&lt;Applet&gt;的基类
+                                    Plate&lt;？ super Fruit&gt;
+                            </code>              
+                        </pre>
+
+                    <div class="center down-1">
+                        <img src="https://itimetraveler.github.io/gallery/java-genericity/upperBounds.png" />
+
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>But</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                            class Fruit{}
+                            class Apple extends Fruit{}
+                            public class GenericsAndCovariance {
+                                public static void main(String[] args){
+                                Plate&lt;? super Fruit&gt; p=new Plate&lt;Fruit&gt;(new Fruit());
+                                    //存入元素正常
+                                    p.set(new Fruit());
+                                    p.set(new Apple());
+                                    //读取出来的东西只能存放在Object类里。
+                                    Apple newFruit3=p.get();    //Error
+                                    Fruit newFruit1=p.get();    //Error
+                                    Object newFruit2=p.get();
+                                }
+                            }
+                        </code>              
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>But</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    List&lt;?&gt;
+
+                            </code>
+                            <code data-trim>
+                                    List
+
+                            </code>
+                            <code data-trim>
+                                    List&lt;Object&gt;
+                            </code>              
+                        </pre>
+                </div>
+                <div class=" large danger center">
+                    <span class="fragment">
+                        区别？ </span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Overloading</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                                <code data-trim>
+                                        public class UseList&lt;W,T&gt;{
+                                                void f(List&lt;T&gt; v){}
+                                                void f(List&lt;W&gt; v){}
+                                        }    
+                                </code>          
+                            </pre>
+                </div>
+                <div class=" large danger center">
+                    <span class="fragment">
+                        NO！</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Self-bounded types</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                                    <code data-trim>
+                                            class SelfBounded&lt;T extends SelfBounded&lt;T&gt;&gt;{
+                                                    ...
+                                            }
+                                    </code>          
+                                </pre>
+                </div>
+                <div class=" large center">
+                    😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        PP701～</span>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>从简单的开始</h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            public class BasicHolder&lt;T&gt; {
+                                T element;
+                                void set(T arg){this.element = arg;}
+                                T get(){return this.element;}
+                                void print(){
+                                    System.out.println(element.getClass().getSimpleName());
+                                }
+                            }
+                            
+                            public class SubType extends BasicHolder&lt;SubType&gt; {
+                                public static void main(String[] args){
+                                    SubType s1 = new SubType();
+                                    SubType s3 = s1.get();
+                                    s1.print();
+                                    s3.print();
+                                }
+                            }
+                        </code>          
+                    </pre>
+                </div>
+                <div class=" large danger center down-1">
+                    <span class="fragment">
+                        得到什么？ </span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>得到什么？</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                public class SubType extends BasicHolder&lt;SubType&gt; {}
+                                public class Plate extends BasicHolder&lt;Plate&gt;{}
+                                ...
+                            </code>          
+                        </pre>
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        P703: ... the generic base class becomes a kind of template for comon functionality for all its
+                        derived class</span>
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        这跟实现一个父类有什么区别？</span>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>跟普通继承关系的区别</h2>
+                </div>
+
+                <div class="down-9">
+                    ... but this functionality will use the derived type for all of its arguments and return values ...
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        干得漂亮</span>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>还有一点小问题</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                class Other{}
+                                class BasicOther extends BasicHolder&lt;Other&gt;{}
+                                
+                                public static void main(String[] args){
+                                    BasicOther b = new BasicOther(), b2 = new BasicOther();
+                                    b.set(new Other());
+                                    Other other = b.get();
+                                    b.print();// Other
+                                }
+                            </code>          
+                        </pre>
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        没完全限制</span>
+                </div>
+
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Self-bounded</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                class SelfBounded&lt;T extends SelfBounded&lt;T&gt;&gt; {
+                                    T element;
+                                    SelfBounded&lt;T&gt; set(T arg){
+                                        element = arg;
+                                        return this;
+                                    }
+                                    T get(){return element;}
+                                }
+                                
+                                class A extends SelfBounded&lt;A&gt; {}
+                                class B extends SelfBounded&lt;A&gt; {} //ok 
+                                class D;
+                                class E extends SelfBounded&lt;D&gt;{} //error
+                                
+                                public static void main(String[] args){
+                                        A a = new A();
+                                        a.set(new A());
+                                        a.print();
+                                
+                                        B b = new B(), a2 = new B();
+                                        //b.set(b2); //Error
+                                        //b.print();
+                                }
+                            </code>          
+                        </pre>
+                </div>
+                <div class=" large danger center down-3">
+                    <span class="fragment">
+                        ... forcing the generic to be used as its own bound argument
+                    </span>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>高大上一点的说法</h2>
+                </div>
+
+                <div class="down-9 center larger">
+                    Argument covariance
+                </div>
+                <div class="down-3 center larger">
+                    &
+                </div>
+                <div class="down-3 center larger">
+                    Covariant return types
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>Rewrite 葫芦娃 with Generics</h2>
+                </div>
+                <div class="center down-9">
+                    <img
+                        src="https://camo.githubusercontent.com/a5cc35d2179c5bf861f6a8eeca25fc5fa3e876a2/687474703a2f2f656e676c6973682e6372692e636e2f6d6d736f757263652f696d616765732f323030392f30362f32342f34363334636172746f6e312e6a7067" />
+
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</head>
+
+</html>
