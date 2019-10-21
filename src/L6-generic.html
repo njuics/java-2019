@@ -115,10 +115,10 @@
                                 public class Position {
                                     private Object holder;
                                     public Position(Object holder) { 
-                                        this.a = a; 
+                                        this.holder = holder; 
                                     }
                                     Object get() { 
-                                        return a; 
+                                        return holder; 
                                     }
                                 }
                         </code>
@@ -139,10 +139,10 @@
                                             public class Position {
                                                 private Creature holder;
                                                 public Position(Creature holder) { 
-                                                    this.a = a; 
+                                                    this.holder = holder; 
                                                 }
                                                 Creature get() { 
-                                                    return a; 
+                                                    return holder; 
                                                 }
                                             }
                                     </code>
@@ -487,7 +487,7 @@
                 <div class="down-1">
                     <pre class="java">
                         <code data-trim>
-                                public class Holder<T> {
+                                public class Holder&lt;T&gt; {
                                     private T obj; //在编译时，该类中的所有的T都会被替换为边界类型Object。
                                     public void set(T obj){
                                         this.obj = obj;
@@ -496,7 +496,7 @@
                                         return obj;
                                     }
                                     public static void main(String[] args){
-                                        Holder&lt;Integer&lt; holder = new Holder&lt;&lt;();
+                                        Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
                                         //编译器会检查实参是不是一个Integer，
                                         //虽然这里的1是int类型，但是因为自动包装机制的存在，
                                         //他会被转化为一个Integer，因此能够通过类型检查。
