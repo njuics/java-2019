@@ -21,13 +21,13 @@
 
       <section >
         <div class="down-3">
-          <h2>Java Generics</h2>
+          <h2>Review: Java Generics</h2>
         </div>
         <div class="down-5">
           <ul>
-            <li>A way to control a class type definitions</li><br>
-            <li>Otherwise known as <em>parameterised types</em> or <em>templates</em></li><br>
-            <li>A way of improving the clarity of code</li><br>
+            <li>A way to control a class type definitions.</li><br>
+            <li>Otherwise known as <span class="strong danger em">parameterised types</span> or <span class="strong danger em">templates</span>.</li><br>
+            <li>A way of improving the clarity of code.</li><br>
             <li>A way of avoiding <span class="strong danger">casts</span> in code, turning run-time errors (typically <code>ClassCastException</code> into compile-time errors.</li>
           </ul>
         </div>
@@ -51,8 +51,7 @@
                   st.push(s);
                   ...
                   s = (String)st.pop();
-              </code>
-              
+              </code>             
           </pre>
       </div>
       </section>  
@@ -73,9 +72,8 @@
                           st.push(s);
                           ...
                           s = st.pop();
-                  </code>
-                  
-              </pre>
+                  </code>               
+          </pre>
       </div>
       </section>
 
@@ -83,24 +81,30 @@
         <div class="down-3">
             <h2>Collections in Java</h2>
         </div>
-        <div class="down-5">
+        <div class="down-3">
+            <h4>Manipulate grouped data as a single object</h4>
+        </div>
+        <div class="down-3">
             <ul>
-              <li>Manipulate grouped data as a single object</li>
-                <ul>
-                  <li>Java provides List, Set, Map</li>
-                  <li>add, contains, remove, size, loop over, sort, ...</li>
-                </ul>  
-              <br>
-              <li>Insulate programmer from implementation</li>
-                <ul>
-                  <li>array, linked list, hash table, balanced binary tree</li>
-                </ul>
-              <br>
-              <li>A Java collection is any class that holds objects and implements the <span class="strong danger">Collection</span> interface</li>
-                <ul>
-                  <li>Collections are used along with iterators.</li>
-                </ul>
+              <li>Java provides List, Set, Map</li>
+              <li>add, contains, remove, size, loop over, sort, ...</li>
+            </ul>  
+        </div>
+        <div>
+            <h4>Insulate programmer from implementation</h4>
+        </div>
+        <div class="down-2">
+            <ul>
+               <li>array, linked list, hash table, balanced binary tree</li>
             </ul>
+        </div>
+        <div class="down-3">
+            <h4>A Java collection is any class that holds objects and implements the <span class="strong info"><code>Collection</code></span> interface</h4>
+        </div>
+        <div class="down-2">
+            <ul>
+              <li>Collections are used along with iterators.</li>
+            </ul>  
         </div>
       </section>
 
@@ -109,7 +113,7 @@
           <h2>Collection Framework</h2>
         </div>
         <div class="down-3">
-            <h5>A <span class="strong info em">collection framework</span> is a unified architecture for representing and manipulating collections. It has:</h5>
+            <h5>A <span class="strong pop em">collection framework</span> is a unified architecture for representing and manipulating collections. It has:</h5>
         </div>
         <div class="down-5">
           <ul>
@@ -125,7 +129,7 @@
             <h2>Collection Framework</h2>
          </div>
          <div class="down-5 center">
-            <img src="content/images/7/CollectionFramework.jpeg" style="width:60%"/>
+            <img src="content/images/7/CollectionFramework.jpeg" style="width:80%"/>
           </div>
        </section>
 
@@ -136,10 +140,10 @@
         </div>
         <div class="down-3">
             <h5>A <code>collection</code> is a container object that represents a group of objects, often referred to as <span class="strong danger">elements</span>.
-              <span class="danger"><code>Set</code></span> and <span class="danger"><code>List</code></span> are subinterfaces of <code>Collection</code>.</h5>
+              <code>Set</code> and <code>List</code> are subinterfaces of <code>Collection</code>.</h5>
         </div>
         <div class="down-5 center">
-          <img src="content/images/7/CollectionHierarchy.jpeg" style="width:60%" />
+          <img src="content/images/7/CollectionHierarchy.jpeg" style="width:80%" />
         </div>
       </section>
 
@@ -152,7 +156,7 @@
                 and you have to use a key to put the object into the map.</h5>
           </div>
           <div class="down-5 center">
-            <img src="content/images/7/MapHierarchy.jpeg" style="width:60%" />
+            <img src="content/images/7/MapHierarchy.jpeg" style="width:80%" />
           </div>
         </section>
 
@@ -161,16 +165,20 @@
           <div class="down-3">
             <h2>Interfaces</h2>
           </div>
-          <div class="down-5">
+          <div class="down-3">
+            <h4>An interface describes a set of methods: no constructors or instance variables</h4>
+          </div>
+          <div class="down-3">
+            <h4>Interfaces must be implemented by clasess</h4>
+          </div>
+          <div class="down-3">
+            <h4>2 or more classes implement an interface</h4>
+          </div>
+          <div class="down-3">      
             <ul>
-              <li>An interface describes a set of methods: no constructors or instance variables</li><br>
-              <li>Interfaces must be implemented by clasess</li><br>
-              <li>2 or more classes implement an interface</li>
-                <ul>
-                  <li>Classes guaranteed to have the same methods.</li>
-                  <li>Objects can be treated as the same type.</li>
-                  <li>Can use different algorithms / instance variables.</li>
-                </ul>
+              <li>Classes guaranteed to have the same methods.</li>
+              <li>Objects can be treated as the same type.</li>
+              <li>Can use different algorithms / instance variables.</li>
             </ul>
           </div>
       </section>
@@ -180,7 +188,7 @@
             <h2>Collection Interfaces</h2>
           </div>
           <div class="down-3">
-              <h4><span class="strong info"><code>Collections</code></span> also use following interfaces:</h4>
+              <h4><span class="tt strong info">Collections</span> also use following interfaces:</h4>
           </div>
           <div class="down-5">
             <ul>
@@ -197,13 +205,13 @@
             <h2>Collection Interfaces</h2>
           </div>
           <div class="down-3">
-              <h4><span class="strong"><code>Collections</code></span> also use following interfaces:</h4>
+              <h4><span class="strong"><code>Collection</code></span></h4>
           </div>
           <div class="down-3">
               <ul><li>Enables you to work with collections.</li></ul>
           </div>
           <div class="down-3">
-              <h4><span class="strong"><code>List</code></span> also use following interfaces:</h4>
+              <h4><span class="strong"><code>List</code></span></h4>
           </div>
           <div class="down-5">
                 <ul>
@@ -219,13 +227,13 @@
             <h2>Collection Interfaces</h2>
           </div>
           <div class="down-3">
-              <h4><span class="strong"><code>Set</code></span> also use following interfaces:</h4>
+              <h4><span class="strong"><code>Set</code></span></h4>
           </div>
           <div class="down-3">
                   <ul><li>Extends <span class="strong info"><code>Collection</code></span> to handle set of elements [objects], which must contain <span class="strong danger">unique elements</span></li></ul>
           </div>
           <div class="down-3">
-              <h4><span class="strong"><code>SortedSet</code></span> also use following interfaces:</h4>
+              <h4><span class="strong"><code>SortedSet</code></span></h4>
           </div>
           <div class="down-3">
                 <ul>
@@ -243,8 +251,8 @@
               <h5>The <span class="strong info"><code>Collection</code></span> interface is the root interface for manipulating a collection of objects
                 </h5>
           </div>
-          <div class="down-5 center">
-              <img src="content/images/7/Collection.jpeg" style="width:60%" />
+          <div class="down-3 center">
+              <img src="content/images/7/Collection.jpeg" style="width:70%" />
             </div>
       </section>
 
@@ -256,14 +264,14 @@
             <h5></h5>An iterator is an object that enables you to traverse through a collection and to remove elements from 
             the collection and to remove elements from the collection by calling its <code>iterator()</code> method. </h5>
         </div>
-        <div class="down-9">
+        <div class="down-3">
                 <pre class="java">
                         <code data-trim>
-                            public interface Iterator<E>{
+                            public interface Iterator&lt;E&gt;{
                                 boolean hasNext();
                                 E next();
                                 void remove(); //optional
-                              }
+                            }
                         </code>                        
                     </pre>
         </div>
@@ -286,13 +294,13 @@
             <pre class="Java">
                 <code data-trim>
                     ArrayList &lt;String&gt; list = new ArrayList&lt;String&gt;();
-                        list.add("1-FiRsT");
-                        list.add("2-SeCoND");
-                        list.add("3-ThIrD");
-                        Iterator&lt;String&gt; itr = list.iterator();
-                        while (itr.hasNext()){
-                          System.out.println(itr.next().toLowerCase());
-                        }
+                    list.add("1-FiRsT");
+                    list.add("2-SeCoND");
+                    list.add("3-ThIrD");
+                    Iterator&lt;String&gt; itr = list.iterator();
+                    while (itr.hasNext()){
+                      System.out.println(itr.next().toLowerCase());
+                    }
                 </code>
             </pre>  
         </div>
@@ -308,12 +316,12 @@
                       import java.util.*
                       public class SimpleCollection{
                         public static void main(String[] args){
-                          Collection<Integer> c = new ArrayList<Integer>();
-                          for (int i=0;i<10;i++)   
+                          Collection&lt;Integer&gt; c = new ArrayList&lt;Integer&gt;();
+                          for (int i=0;i&lt;10;i++)   
                              c.add(i); //Autoboxing
                           for(Integer i:c)  
                              System.out.println(i);
-                          Iterator<Integer> it = c.iterator();
+                          Iterator&lt;Integer&gt; it = c.iterator();
                           while (it.hasNext())  
                              System.out.println(it.next());
                         }
@@ -343,9 +351,9 @@
         </div>
         <div class="down-3">
           <ul>
-            <li>List: ArrayList, LinkedList, Vector</li>
-            <li>Map: HashMap, TreeMap</li>
-            <li>Set: TreeSet, HashSet</li>            
+            <li>List: <code>ArrayList</code>, <code>LinkedList</code>, <code>Vector</code></li>
+            <li>Map: <code>HashMap</code>, <code>TreeMap</code></li>
+            <li>Set: <code>TreeSet</code>, <code>HashSet</code></li>            
           </ul>
         </div>
     </section>
@@ -355,7 +363,7 @@
           <h4>Implementations in Java Collection Framework</h4>
         </div>
         <div class="down-5">
-            <h5>Vector(legacy), LinkedList, HashMap</h5>
+            <h5><code>Vector</code> (legacy), <code>LinkedList</code>, <code>HashMap</code></h5>
         </div>
         <div class="down-5 center">
             <img src="content/images/7/Lists.jpeg" style="width:90%" />
@@ -407,7 +415,7 @@
             <div class="down-3">
               <h2>Example</h2>
             </div>
-            <div class="down-3">
+            <div class="down-5">
                 <pre class="Java">
                     <code data-trim>
                         List list = Collections.nCopies(3, "red");
@@ -439,7 +447,7 @@
                 <ul>
                   <li>can grow as needed</li>
                   <li>easy to add/delete at any position</li>
-                  <li>API independent of implementation (ArrayList, LinkedList)</li>            
+                  <li>API independent of implementation (<code>ArrayList</code>, <code>LinkedList</code>)</li>            
                 </ul>
               </div>
           </section>
@@ -467,21 +475,21 @@
                 <h2>List Implementations</h2>
               </div>
               <div class="down-3">
-                <h4>ArrayList</h4>
+                <h4><code>ArrayList</code></h4>
               </div>
               <div class="down-3">
                 <ul>
-                  <li>a resizable-array implementation like Vector</li>
+                  <li>a resizable-array implementation like <code>Vector</code></li>
                   <li>unsynchronized, and without legacy methods</li>      
                 </ul>
               </div>
               <div class="down-3">
-                  <h4>LinkedList</h4>
+                  <h4><code>LinkedList</code></h4>
                 </div>
                 <div class="down-3">
                   <ul>
                     <li>a <span class="strong danger em">doubly-linked</span> list implementation</li>
-                    <li>May provide better performance than ArrayList, if elements frequently inserted/deleted within the List</li>
+                    <li>May provide better performance than <code>ArrayList</code>, if elements frequently inserted/deleted within the list</li>
                     <li>For queues and double-ended queues (deques)</li>            
                   </ul>
                 </div>
@@ -537,7 +545,7 @@
                   <h2>List Implementations</h2>
                 </div>
                 <div class="down-3">
-                  <h4>Vector</h4>
+                  <h4><code>Vector</code></h4>
                 </div>
                 <div class="down-3">
                   <ul>
@@ -553,10 +561,10 @@
          <div class="down-3">
             <ul>
               <li>The Java Collections Framework was introducde with Java 2. Several data structures were supported prior to Java 2. Among them 
-                are the <span class="strong info"><code>Vector</code></span> class and the <span class="strong info"><code>Stack</code></span> class.</li>   
-              <li>In Java 2, <span class="strong info"><code>Vector</code></span> is the same as ArrayList, except that 
-                Vector contains the synchronized methods for accessing and modifying the vector.</li>   
-              <li>If a thread-safe implementation is not needed, it is recommended to use <span class="strong info"><code>ArrayList</code></span> in place of Vector.</li>
+                are the <span class="info"><code>Vector</code></span> class and the <span class="info"><code>Stack</code></span> class.</li><br>   
+              <li>In Java 2, <span class="info"><code>Vector</code></span> is the same as ArrayList, except that 
+                Vector contains the synchronized methods for accessing and modifying the vector.</li><br>   
+              <li>If a thread-safe implementation is not needed, it is recommended to use <span class="info"><code>ArrayList</code></span> in place of <span class="info"><code>Vector</code></span>.</li>
             </ul>
           </div>
        </section>
@@ -602,7 +610,7 @@
             <h2>The Stack Class</h2>
           </div>
           <div>
-            <h5>The <span class="strong info"><code>Stack</code></span> class represents a "last-in, first-out" stack of objects. The elements are accessed only from the top of the stack. 
+            <h5>The <span class="info"><code>Stack</code></span> class represents a <span class="danger">"last-in, first-out"</span> stack of objects. The elements are accessed only from the top of the stack. 
               You can retrieve, insert, or remove an element from the top of the stack.</h5>
           </div>
           <div class="down-3 center">
@@ -644,11 +652,11 @@
           <div class="down-3">
             <h2>Queue</h2>
           </div>
-          <div class="down-3">
+          <div class="down-5 bigger">
              <ul>
-               <li>A <span class="strong danger">queue</span> is typically a "first-in, first-out" (FIFO) container.</li>   
-               <li>Queues are commonly used as a way to reliably transfer objects from one area of a program to another.</li>   
-               <li> A <span class="strong info"><code>LinkedList</code></span> can be used as a **Queue** implementation.</li>
+               <li>A <span class="strong danger">queue</span> is typically a <span class="danger">"first-in, first-out" (FIFO)</span> container.</li><br>   
+               <li>Queues are commonly used as a way to reliably transfer objects from one area of a program to another.</li><br>   
+               <li>A <span class="info"><code>LinkedList</code></span> can be used as a <span class="info"><code>Queue</code></span> implementation.</li>
              </ul>
            </div>
         </section>
@@ -669,10 +677,10 @@
                           public static void main(String[] args){
                             Queue&lt;Integer&gt; queue = new LinkedList&lt;Integer&gt;();
                             Random rand = new Random(47);
-                            for (int i=0;i<10;i++)
+                            for (int i=0;i&lt;10;i++)
                               queue.offer(rand.nextInt(i+10));
                             printQ(queue);
-                            Queue <Character> qc = new LinkedList<Character>();
+                            Queue &lt;Character&gt; qc = new LinkedList&lt;Character&gt;();
                             for (char c : "Brontosaurus".toCharArray())
                               qc.offer(c);
                             printQ(qc);
@@ -683,33 +691,433 @@
             </div>
         </section>
 
+        <section>
+          <div class="down-3">
+            <h2>PriorityQueue</h2>
+          </div>
+          <div class="down-3">
+             <ul>
+               <li>A <span class="strong danger em">priority queue</span> says that the element that goes next is the one with the greatest need (the highest priority). </li><br>   
+               <li>When you <span class="info em"><code>offer()</code></span> an object onto a <span class="danger em">PriorityQueue</span>, 
+                that object is sorted into the queue. The default sorting uses the natural order of the objects in the queue, but you can modify the order by providing your own <code>Comparator</code>.</li><br>   
+               <li> When you call <span class="info em"><code>peek()</code></span>, <span class="info em"><code>poll()</code></span>, or <span class="info em"><code>remove()</code></span>, the element you get will be the one with the highest priority.</li>
+             </ul>
+           </div>
+        </section>
     
+        <section>
+          <div class="down-3">
+            <h2>Set</h2>
+          </div>
+          <div class="down-3">
+            <h4>Like a List</h4>
+          </div>
+          <div class="down-3">
+            <ul>
+              <li>can grow as needed</li>
+              <li>easy to add/delete</li>      
+              <li>API independent of implementation (HashSet, TreeSet, LinkedHashSet)</li>
+            </ul>
+          </div>
+          <div class="down-3">
+              <h4>Unlike a List</h4>
+            </div>
+            <div class="down-3">
+              <ul>
+                <li>elements have no positions</li>
+                <li>duplicate entries not allowed</li>
+              </ul>
+            </div>
+        </section>
+
+        <section>
+          <div class="down-3">
+            <h2>Set Implementations</h2>
+          </div>
+          <div class="down-3">
+            <h4><code>HashSet</code></h4>
+          </div>
+          <div class="down-1">
+            <ul>
+              <li>a Set backed by a <span class="strong danger">hash table</span></li>
+            </ul>
+          </div>
+          <div class="down-3">
+              <h4><code>LinkedHashSet</code></h4>
+            </div>
+            <div class="down-1">
+              <ul>
+                <li>a Set implementated by a <span class="strong danger">linked list</span></li>
+                <li>sorted by an inserting ordinary</li>
+              </ul>
+            </div>
+            <div class="down-3">
+              <h4><code>TreeSet</code></h4>
+            </div>
+            <div class="down-1">
+              <ul>
+                <li>a <span class="strong danger">balanced binary tree</span> implementation</li>
+                <li>imposes an ordering on its elements</li>
+              </ul>
+            </div>
+        </section>
+
+        <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                    import java.util.*;
+                    public class SetTest {
+                        public static void main(String[] args) {
+                            Set&lt;String&gt; ss = new LinkedHashSet&lt;String&gt;();
+                            for (int i = 0; i &lt; args.length; i++)
+                                ss.add(args[i]);
+                            Iterator &lt;String&gt; i = ss.iterator();
+                            For (Object element: set)
+                              System.out.println(element.toString() + “”) ;
+                        }
+                    }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>The TreeSet Class</h2>
+        </div>
+        <div class="down-3">
+          <h5><code>TreeSet</code> is a concrete class that implements the <code>SortedSet</code> interface. 
+            You can use an iterator to traverse the elements in the sorted order. The elements can be sorted in two ways:</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>To use the <span class="danger em"><code>java.lang.Comparable</code></span> interface</li>
+            <li>To specify a comparator for the elements in the set if the class for the elements do not implement the 
+              <span class="info"><code>Comparable</code></span> interface , or you don't want to use the 
+              <span class="danger em"><code>compareTo</code></span> method in the class that implements the 
+              <span class="info"><code>Comparable</code></span> interface. This approach is referred to as order by comparator</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      import java.util.*;
+                      public class TestTreeSet {
+                          public static void main(String[] args) { // Create a hash set
+                              Set&lt;String&gt; set = new HashSet&lt;String&gt;();
+                              set.add("London");
+                              set.add("Paris");
+                              set.add("New York");
+                              set.add("San Francisco");
+                              set.add("Beijing");
+                              set.add("New York");
+                              for (Object element: set)
+                                System.out.print(element.toString() + " "); 
+                              System.out.println();
+                              TreeSet&lt;String&gt; treeSet = new TreeSet&lt;String&gt;(set);
+                              System.out.println(treeSet);        
+                          }
+                      }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>The Comparator Interface</h2>
+          </div>
+          <div class="down-3">
+            <h5>Sometimes you want to insert elements of different types into a tree set. 
+              The elements may not be instances of Comparable or are not comparable. You can define a comparator to compare these elements.</h5>
+          </div>
+          <div class="down-3">
+            <h5>To do so, create a class that implements the <span class="danger em"><code>java.util.Comparator</code></span> interface. 
+              The Comparator interface has two methods, compare and equals:</h5>
+          </div>
+          <div class="down-3">
+            <ul>
+              <li><span class="info"><code>public int compare(T o1, T o2)</code></span></li>
+              <li><span class="info"><code>public boolean equals(Object obj)</code></span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>TreeSet Example</h2>
+            </div>
+            <div class="down-3">
+                <pre class="Java">
+                    <code data-trim>
+                        import java.util.Comparator;
+                        public class GeometricObjectComparator implements Comparator&lt;GeometricObject&gt; {
+                            public int compare(GeometricObject o1, GeometricObject o2) {
+                                double area1 = o1.getArea();
+                                double area2 = o2.getArea();
+                                if (area1 &lt; area2)
+                                  return -1;
+                                else if (area1 == area2)
+                                  return 0;
+                                else
+                                  return 1;
+                            }
+                        }
+                    </code>
+                </pre>  
+            </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>TreeSet Example</h2>
+            </div>
+            <div class="down-3">
+                <pre class="Java">
+                    <code data-trim>
+                        import java.util.*;
+                        public class TestTreeSetWithComparator {
+                            public static void main(String[] args) {
+                                // Create a tree set for geometric objects using a comparator
+                                Set&lt;GeometricObject&gt; set = new TreeSet&lt;GeometricObject&gt;
+                                (new GeometricObjectComparator());
+                                set.add(new Rectangle(4, 5));
+                                set.add(new Circle(40));
+                                set.add(new Circle(40));
+                                set.add(new Rectangle(4, 1));
+                                // Display geometric objects in the tree set
+                                System.out.println("A sorted set of geometric objects");
+                                for (GeometricObject element: set)
+                                System.out.println("area = " + element.getArea()); 
+                            }
+                        }
+                    </code>
+                </pre>  
+            </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>Map</h2>
+            </div>
+            <div class="down-3 bigger">
+              <ul>
+                <li>An object that maps keys to values. A map cannot contain duplicate keys; each key can map to at most one value.</li>
+                <li>Table lookup abstraction:</li>
+                   <ul>
+                     <li><span class="info"><code>void put(K key, V value)</code></span></li>
+                     <li><span class="info"><code>V get(Object key)</code></span></li>
+                   </ul>
+                <li>API syntax independent of implementation (<code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>)</li>
+                <li>Iterators for keys, values, (key, value) pairs</li>
+                <li>static interface: <span class="danger"><code>Map.Entry&lt;K, V&gt;</code></span></li>
+              </ul>
+            </div>
+          </section>
+
+          <section>
+              <div class="down-3">
+                <h2>The Map Interface UML Diagram</h2>
+              </div>
+              <div class="down-3 center">
+                  <img src="content/images/7/Map.jpeg" style="width:80%" />
+                </div>
+          </section>
+
+          <section>
+              <div class="down-3">
+                <h4>HashMap, TreeMap and LinkedHashMap</h4>
+              </div>
+              <div class="down-5 bigger">
+                <ul>
+                  <li>The <code>HashMap</code> and <code>TreeMap</code> classes are two concrete implementations of the <code>Map</code> interface.</li>
+                  <li>The <code>HashMap</code> class is efficient for locating a value, inserting a mapping, and deleting a mapping</li>
+                  <li>The <code>TreeMap</code> class, implementing <code>SortedMap</code>, is efficient for traversing the keys in a sorted order</li>
+                  <li><code>LinkedHashMap</code> was introduced in JDK 1.4. It extends <code>HashMap</code> with a linked list implementation that supports an ordering of the entries in the map</li>
+                </ul>
+              </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                  <h2>TreeSet Example</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="Java">
+                        <code data-trim>
+                            import java.util.*;
+                            public class HashMapTest {
+                              public static void main(String[] args) {
+                                //map to hold student grades
+                                Map&lt;String, Integer&gt; theMap = new HashMap&lt;String, Integer&gt;();
+                                theMap.put("Korth, Evan", 100);
+                                theMap.put("Plant, Robert", 90);
+                                theMap.put("Coyne, Wayne", 92);
+                                theMap.put("Franti, Michael", 98);
+                                theMap.put("Lennon, John", 88);
+                                System.out.println(theMap);
+                                System.out.println(theMap.get("Korth, Evan"));
+                                System.out.println(theMap.get("Franti, Michael")); 
+                              }
+                            }
+                        </code>
+                    </pre>  
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                  <h2>Example</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="Java">
+                        <code data-trim>
+                            public class CountOccurrenceOfWords { 
+                              public static void main(String[] args) {
+                                String text = "Have a good day. Have a good class. " + "Have a good visit. Have
+                                fun!";
+                                // Create a hash map to hold words as key and count as value
+                                TreeMap&lt;String, Integer&gt; map = new TreeMap&lt;String, Integer&gt;();
+                                String[] words = text.split("[ .!?]");
+                                System.out.println(Arrays.toString(words));
+                                for (int i = 0; i &lt; words.length; i++) {
+                                if (words[i].length() > 1) {
+                                if (map.get(words[i]) != null) {
+                                int value = map.get(words[i]).intValue();
+                                value++;
+                                map.put(words[i], value); }
+                                else map.put(words[i], 1); } }
+                                // Get all entries into a set
+                                Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();
+                                // Get key and value from each entry
+                                for (Map.Entry&lt;String, Integer&gt; entry: entrySet)
+                                System.out.println(entry.getValue() + "\t" + entry.getKey())
+                              }
+                          }
+                        </code>
+                    </pre>  
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                  <h2>More about Arrays</h2>
+                </div>
+                <div class="down-5 bigger">
+                  <ul>
+                    <li>Arrays are first-class objects</li>
+                    <li>Differences from other types of containers:</li>
+                      <ul>
+                        <li>efficiency</li>
+                        <li>type</li>
+                        <li>the ability to hold primitives</li>
+                      </ul>
+                    <li>Be careful of <span class="danger"><code>IndexOutOfBoundsException</code></span></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section>
+                  <div class="down-3">
+                    <h2>Arrays and Generics</h2>
+                  </div>
+                  <div class="down-3">
+                      <h4>Arrays and generics do not mix well.</h4>
+                    </div>
+                  <div class="down-3">
+                      <pre class="Java">
+                          <code data-trim>
+                              Peel&lt;Banana&gt;[] peels = new Peel&lt;Banana&gt; [10]; //Illegal
+                          </code>
+                      </pre>  
+                  </div>
+                  <div class="down-3">
+                      <pre class="Java">
+                          <code data-trim>
+                              Peel[] peels = new Peel[10]; //enforce type safety
+                              List&lt;String&gt;[] ls;
+                              List[] la = new List[10];
+                              ls = (List&lt;String&gt;[])la;  //"Unchecked" warning
+                              ls[0] = new ArrayList&lt;String>&gt;();
+                              ls[1] = new ArrayList&lt;Integer&gt;(); //compile-time checking produces an error
+                          </code>
+                      </pre>  
+                  </div>
+              </section>  
+        
+              <section>
+                  <div class="down-3">
+                    <h2>Utility Classes -2</h2>
+                  </div>
+                  <div class="down-3">
+                      <h4><code>java.util.Arrays</code></h4>
+                  </div>
+                  <div class="down-3">
+                      <h4>Static methods that act on Java arrays:</h4>
+                  </div>
+                  <div class="down-3">
+                    <ul>
+                      <li>sort</li>
+                      <li>binarySearch</li>
+                      <li>equals / deepEquals</li>
+                      <li>fill</li>
+                      <li>copyOf</li>
+                      <li>asList: returns an ArrayList composed of this array's contents</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section>
+                    <div class="down-3">
+                      <h2>Summary</h2>
+                    </div>
+                    <div class="down-5 bigger">
+                      <ul>
+                        <li>Array is fixed-sized and low-level. "Prefer containers to arrays."</li>
+                        <li>A <span class="info"><code>Collection</code></span> holds single elements, and a 
+                          <span class="info"><code>Map</code></span> holds associated pairs.</li>
+                        <li>Arrays and Lists are ordered containers.</li>
+                        <li>No need to use legacy classes: <span class="info"><code>Vector</code></span>, 
+                          <span class="info"><code>Hashtable</code></span>, and <span class="info"><code>Stack</code></span> in new code.</li>
+                      </ul>
+                    </div>
+                  </section>
+
+      <section>
+          <div class="down-3">
+              <h2>Summary</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/7/Summary.jpeg" style="width:80%" />
+            </div>
+      </section>
+
        <section>
           <div class="down-3">
-            <h2>DbC vs. Exception</h2>
+            <h2>Summary</h2>
           </div>
           <div class="down-5">
             <ul>
-              <li>Exceptions are about dealing with things going wrong <font color=red>at runtime</font>.</li><br>
-              <li>DbC is about <font color=red>statically</font> defining the conditions under which code is supposed to operate.</li><br>
-              <li>The two are nicely complementary.</li><br>
+              <li>Use an <span class="info"><code>ArrayList</code></span> if you are doing a lot of random accesses, but a <span class="info"><code>LinkedList</code></span> if you will be doing a lot of insertions and removals.</li><br>
+              <li><span class="info"><code></code>HashMap</code></span>s are designed for rapid access. <span class="info"><code></code>TreeMap</code></span> keeps its keys in sorted order. <span class="info"><code></code>LinkedList</code></span> keeps its elements in insertion order and provides rapid access with hashing.</li><br>
+              <li><span class="info"><code></code>Set</code></span> only accepts one of each type of objects. <span class="info"><code></code>HashSet</code></span> provides maximally fast lookups, whereas <span class="info"><code>TreeSet</code></span> keeps the elements in sorted order. <span class="info"><code></code>LinkedHashSet</code></span> keeps elements in insertion order.</li><br>
             </ul>
-          </div>
-          <div class="down-3 row fragment">
-              <div>
-                  <div class="small fragment highlight-bg-success"><i class="fas fa-arrow-right"></i> Unchecked exceptions are “what happens when the contract is broken”.</div>
-              </div>
-          </div>
-          <div class="down-3 row fragment">
-              <div>
-                  <div class="small fragment highlight-bg-success"><i class="fas fa-arrow-right"></i> Checked exceptions are expected to happen from time to time, so are not contract violations.</div>
-              </div>
           </div>
         </section>
 
       <section class="title-slide">
-        <div class="biggest framed bordered border-2x font-passionone bg-warning">
-            How about assertion?
+        <div class="biggest framed bordered border-2x font-passionone bg-warning center">
+            Rewrite 葫芦娃 with Collection Framework
         </div>
       </section>
 
