@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>集合框架</title>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          集合框架
+        </div>
+        <div class="down-3">
+          "Holding your objects"
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>Java Generics</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>A way to control a class type definitions</li><br>
+            <li>Otherwise known as <em>parameterised types</em> or <em>templates</em></li><br>
+            <li>A way of improving the clarity of code</li><br>
+            <li>A way of avoiding <span class="strong danger">casts</span> in code, turning run-time errors (typically <code>ClassCastException</code> into compile-time errors.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>No Generics vs. Generics</h2>
+        </div>
+        <div class="down-9">
+          <pre class="java">
+              <code data-trim>
+                  class Stack{
+                      void push(Object o){...}
+                      Object pop(){...}
+                  }
+
+                  String s = "Hello";
+                  Stack st = new Stack();
+                  ...
+                  st.push(s);
+                  ...
+                  s = (String)st.pop();
+              </code>
+              
+          </pre>
+      </div>
+      </section>  
+
+      <section>
+        <div class="down-3">
+          <h2>No Generics vs. Generics</h2>
+        </div>
+        <div class="down-9">
+          <pre class="java">
+                  <code data-trim>
+                          class Stack&lt;A&gt;{ // 类参数
+                                  void push(A a){...}
+                                  A pop(){...}
+                          }
+                          String s = "Hello";
+                          Stack&lt;String&gt; st = new Stack&lt;String&gt;();
+                          st.push(s);
+                          ...
+                          s = st.pop();
+                  </code>
+                  
+              </pre>
+      </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+            <h2>Collections in Java</h2>
+        </div>
+        <div class="down-5">
+            <ul>
+              <li>Manipulate grouped data as a single object</li>
+                <ul>
+                  <li>Java provides List, Set, Map</li>
+                  <li>add, contains, remove, size, loop over, sort, ...</li>
+                </ul>  
+              <br>
+              <li>Insulate programmer from implementation</li>
+                <ul>
+                  <li>array, linked list, hash table, balanced binary tree</li>
+                </ul>
+              <br>
+              <li>A Java collection is any class that holds objects and implements the <span class="strong danger">Collection</span> interface</li>
+                <ul>
+                  <li>Collections are used along with iterators.</li>
+                </ul>
+            </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Collection Framework</h2>
+        </div>
+        <div class="down-3">
+            <h5>A <span class="strong info em">collection framework</span> is a unified architecture for representing and manipulating collections. It has:</h5>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li><span class="strong danger">Interfaces</span>: abstract data types representing collections</li><br>
+            <li><span class="strong danger">Implementations</span>: concrete implementations of the collection interfaces</li><br>
+            <li><span class="strong danger">Algorithms</span>: methods that perform useful computations, such as searching and sorting</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Collection Framework</h2>
+         </div>
+         <div class="down-5 center">
+            <img src="content/images/7/CollectionFramework.jpeg" style="width:60%"/>
+          </div>
+       </section>
+
+
+      <section>
+        <div class="down-3">
+          <h3>Java Collection Framework Hierarchy</h3>
+        </div>
+        <div class="down-3">
+            <h5>A <code>collection</code> is a container object that represents a group of objects, often referred to as <span class="strong danger">elements</span>.
+              <span class="danger"><code>Set</code></span> and <span class="danger"><code>List</code></span> are subinterfaces of <code>Collection</code>.</h5>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/7/CollectionHierarchy.jpeg" style="width:60%" />
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h3>Java Collection Framework Hierarchy</h3>
+          </div>
+          <div class="down-3">
+              <h5>An instance of <code>Map</code> represents a group of objects, each of which is associated with a key. You can get the object from a map using a key, 
+                and you have to use a key to put the object into the map.</h5>
+          </div>
+          <div class="down-5 center">
+            <img src="content/images/7/MapHierarchy.jpeg" style="width:60%" />
+          </div>
+        </section>
+
+
+      <section>
+          <div class="down-3">
+            <h2>Interfaces</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>An interface describes a set of methods: no constructors or instance variables</li><br>
+              <li>Interfaces must be implemented by clasess</li><br>
+              <li>2 or more classes implement an interface</li>
+                <ul>
+                  <li>Classes guaranteed to have the same methods.</li>
+                  <li>Objects can be treated as the same type.</li>
+                  <li>Can use different algorithms / instance variables.</li>
+                </ul>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Collection Interfaces</h2>
+          </div>
+          <div class="down-3">
+              <h4><span class="strong info"><code>Collections</code></span> also use following interfaces:</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><code>Comparator</code></li>
+              <li><code>Iterator</code></li>
+              <li><code>ListIterator</code></li>
+              <li><code>RandomAccess</code></li>
+            </ul>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Collection Interfaces</h2>
+          </div>
+          <div class="down-3">
+              <h4><span class="strong"><code>Collections</code></span> also use following interfaces:</h4>
+          </div>
+          <div class="down-3">
+              <ul><li>Enables you to work with collections.</li></ul>
+          </div>
+          <div class="down-3">
+              <h4><span class="strong"><code>List</code></span> also use following interfaces:</h4>
+          </div>
+          <div class="down-5">
+                <ul>
+                  <li>Extends <span class="strong info"><code>Collection</code></span> to handle List of elements [objects]</li><br>
+                  <li>Allows <span class="strong danger">duplicate</span> elements in the list</li><br>
+                  <li>Uses <span class="strong danger">indexing</span> technique starting with 0 to access elements</li>
+                </ul>
+            </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Collection Interfaces</h2>
+          </div>
+          <div class="down-3">
+              <h4><span class="strong"><code>Set</code></span> also use following interfaces:</h4>
+          </div>
+          <div class="down-3">
+                  <ul><li>Extends <span class="strong info"><code>Collection</code></span> to handle set of elements [objects], which must contain <span class="strong danger">unique elements</span></li></ul>
+          </div>
+          <div class="down-3">
+              <h4><span class="strong"><code>SortedSet</code></span> also use following interfaces:</h4>
+          </div>
+          <div class="down-3">
+                <ul>
+                  <li>Extends <span class="strong info"><code>Set</code></span> to handle sorted elements in a set</li><br>
+                </ul>
+          </div>
+      </section>
+
+
+      <section>
+          <div class="down-3">
+            <h2>The Collection Interface</h2>
+          </div>
+          <div class="down-3">
+              <h5>The <span class="strong info"><code>Collection</code></span> interface is the root interface for manipulating a collection of objects
+                </h5>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/7/Collection.jpeg" style="width:60%" />
+            </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>A note on iterators</h2>
+        </div>
+        <div class="down-5">
+            <h5></h5>An iterator is an object that enables you to traverse through a collection and to remove elements from 
+            the collection and to remove elements from the collection by calling its <code>iterator()</code> method. </h5>
+        </div>
+        <div class="down-9">
+                <pre class="java">
+                        <code data-trim>
+                            public interface Iterator<E>{
+                                boolean hasNext();
+                                E next();
+                                void remove(); //optional
+                              }
+                        </code>                        
+                    </pre>
+        </div>
+        <div class="down-3 row fragment">
+            <div>
+                <div class="center strong danger">Another Design Pattern</div>
+            </div>
+        </div>      
+      </section>
+
+
+      <section>
+        <div class="down-3">
+          <h2>Example</h2>
+        </div>
+        <div class="down-5">
+            <h4>Iterators provide a general way to traverse all elements in a collection.</h4>
+        </div>
+        <div class="down-3">
+            <pre class="Java">
+                <code data-trim>
+                    ArrayList &lt;String&gt; list = new ArrayList&lt;String&gt;();
+                        list.add("1-FiRsT");
+                        list.add("2-SeCoND");
+                        list.add("3-ThIrD");
+                        Iterator&lt;String&gt; itr = list.iterator();
+                        while (itr.hasNext()){
+                          System.out.println(itr.next().toLowerCase());
+                        }
+                </code>
+            </pre>  
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      import java.util.*
+                      public class SimpleCollection{
+                        public static void main(String[] args){
+                          Collection<Integer> c = new ArrayList<Integer>();
+                          for (int i=0;i<10;i++)   
+                             c.add(i); //Autoboxing
+                          for(Integer i:c)  
+                             System.out.println(i);
+                          Iterator<Integer> it = c.iterator();
+                          while (it.hasNext())  
+                             System.out.println(it.next());
+                        }
+                      }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+    <section>
+      <div class="down-3">
+        <h2>Implementations</h2>
+      </div>
+      <div class="down-3">
+        <h4>A collection class</h4>
+      </div>
+      <div class="down-3">
+        <ul>
+          <li>implements an ADT as a Java class</li>
+          <li>implements all methods of the interface</li>
+          <li>selects appropriate instance variables</li>      
+          <li>can be instantiated</li>        
+        </ul>
+      </div>
+      <div class="down-3">
+          <h4>Java implements interfaces with</h4>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>List: ArrayList, LinkedList, Vector</li>
+            <li>Map: HashMap, TreeMap</li>
+            <li>Set: TreeSet, HashSet</li>            
+          </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h4>Implementations in Java Collection Framework</h4>
+        </div>
+        <div class="down-5">
+            <h5>Vector(legacy), LinkedList, HashMap</h5>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/7/Lists.jpeg" style="width:90%" />
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>Algorithms</h2>
+        </div>
+        <div class="down-3">
+          <h4>Java has polymorphic algorithms to provide functionality for different types of collections.</h4>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>Sorting (e.g. sort)</li>
+            <li>Shuffling (e.g. shuffle)</li>
+            <li>Routine Data Manipulation (e.g. reverse, addAll)</li>
+            <li>Searching (e.g. binarySearch)</li>  
+            <li>Composition (e.g. frequency)</li>
+            <li>Finding Extreme Values (e.g. max)</li>        
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Utility Classes -1</h2>
+          </div>
+          <div class="down-3">
+            <h4><code>java.util.Collections</code> static methods:</h4>
+          </div>
+          <div class="down-3">
+            <ul>
+              <li>sort (List)</li>
+              <li>binarySearch (List, Object)</li>
+              <li>reverse (List)</li>
+              <li>shuffle (List)</li>  
+              <li>fill (List, Object)</li>
+              <li>copy (List dest, List source)</li>
+              <li>min / max (Collection)</li>
+              <li>synchronizedX, unmodifiableX factory methods</li>
+              <li>...</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>Example</h2>
+            </div>
+            <div class="down-3">
+                <pre class="Java">
+                    <code data-trim>
+                        List list = Collections.nCopies(3, "red");
+                        ArrayList arrayList = new ArrayList(list);
+                        Collections.fill(arrayList, "yellow");
+                        Collections.shuffle(arrayList);
+                    </code>
+                </pre>  
+            </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>List</h2>
+            </div>
+            <div class="down-3">
+              <h4>Like an array</h4>
+            </div>
+            <div class="down-3">
+              <ul>
+                <li>elements have positions indexed 0...size()-1</li>
+                <li>duplicate entries possible</li>      
+              </ul>
+            </div>
+            <div class="down-3">
+                <h4>Unlike an array</h4>
+              </div>
+              <div class="down-3">
+                <ul>
+                  <li>can grow as needed</li>
+                  <li>easy to add/delete at any position</li>
+                  <li>API independent of implementation (ArrayList, LinkedList)</li>            
+                </ul>
+              </div>
+          </section>
+
+          <section>
+              <div class="down-3">
+                <h4>The List Interface</h4>
+              </div>
+              <div class="down-5 center">
+                  <img src="content/images/7/List.jpeg" style="width:90%" />
+                </div>
+          </section>
+
+          <section>
+              <div class="down-3">
+                <h4>The List Iterator</h4>
+              </div>
+              <div class="down-5 center">
+                  <img src="content/images/7/ListIterator.jpeg" style="width:90%" />
+                </div>
+          </section>
+
+          <section>
+              <div class="down-3">
+                <h2>List Implementations</h2>
+              </div>
+              <div class="down-3">
+                <h4>ArrayList</h4>
+              </div>
+              <div class="down-3">
+                <ul>
+                  <li>a resizable-array implementation like Vector</li>
+                  <li>unsynchronized, and without legacy methods</li>      
+                </ul>
+              </div>
+              <div class="down-3">
+                  <h4>LinkedList</h4>
+                </div>
+                <div class="down-3">
+                  <ul>
+                    <li>a <span class="strong danger em">doubly-linked</span> list implementation</li>
+                    <li>May provide better performance than ArrayList, if elements frequently inserted/deleted within the List</li>
+                    <li>For queues and double-ended queues (deques)</li>            
+                  </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                  <h4>LinkedList</h4>
+                </div>
+                <div class="down-5 center">
+                    <img src="content/images/7/LinkedList.jpeg" style="width:90%" />
+                  </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                  <h2>Example</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="Java">
+                        <code data-trim>
+                            import java.util.*;
+                            public class TestArrayAndLinkedList {
+                            public static void main(String[] args) {
+                                List&lt;Integer&gt; arrayList = new ArrayList&lt;Integer&gt;();
+                                arrayList.add(1); // 1 is autoboxed to new Integer(1)
+                                arrayList.add(2); arrayList.add(3); arrayList.add(1); arrayList.add(4);
+                                arrayList.add(0, 10);
+                                arrayList.add(3, 30);
+                                System.out.println("A list of integers in the array list:");
+                                System.out.println(arrayList);
+                                LinkedList&lt;Object&gt; linkedList = new LinkedList&lt;Object&gt;(arrayList);
+                                linkedList.add(1, "red");
+                                linkedList.removeLast();
+                                linkedList.addFirst("green");
+                                System.out.println("Display the linked list forward:");
+                                ListIterator&lt;Object&gt; listIterator = linkedList.listIterator();
+                                while (listIterator.hasNext()) {
+                                    System.out.print(listIterator.next() + " "); }
+                                System.out.println();
+                                System.out.println("Display the linked list backward:");
+                                listIterator = linkedList.listIterator(linkedList.size());
+                                while (listIterator.hasPrevious()) {
+                                System.out.print(listIterator.previous() + " "); } }
+                            }
+                        </code>
+                    </pre>  
+                </div>
+            </section>
+            
+            <section>
+                <div class="down-3">
+                  <h2>List Implementations</h2>
+                </div>
+                <div class="down-3">
+                  <h4>Vector</h4>
+                </div>
+                <div class="down-3">
+                  <ul>
+                    <li>a synchronized resizable-array implementation of a List with additional "legacy" methods.</li>      
+                  </ul>
+                </div>
+              </section>
+      
+       <section>
+         <div class="down-3">
+           <h2>The Vector Class</h2>
+         </div>
+         <div class="down-3">
+            <ul>
+              <li>The Java Collections Framework was introducde with Java 2. Several data structures were supported prior to Java 2. Among them 
+                are the <span class="strong info"><code>Vector</code></span> class and the <span class="strong info"><code>Stack</code></span> class.</li>   
+              <li>In Java 2, <span class="strong info"><code>Vector</code></span> is the same as ArrayList, except that 
+                Vector contains the synchronized methods for accessing and modifying the vector.</li>   
+              <li>If a thread-safe implementation is not needed, it is recommended to use <span class="strong info"><code>ArrayList</code></span> in place of Vector.</li>
+            </ul>
+          </div>
+       </section>
+
+       <section>
+          <div class="down-3">
+            <h2>The Vector Class</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/7/Vector.jpeg" style="width:75%" />
+            </div>
+      </section>
+
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      import java.util.Vector;
+                      public class Polygon{ // 存储多边形顶点的Point表
+                        private Vector verties = new Vector();
+                        public void add(Point p){
+                        verties.addElement(p);
+                        }
+                        public void remove(Point p){
+                        verties.removeElement(p);
+                        }
+                        public int numVerties(){
+                        return verties.size();
+                        }
+                        // ..其它方法....
+                      }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>The Stack Class</h2>
+          </div>
+          <div>
+            <h5>The <span class="strong info"><code>Stack</code></span> class represents a "last-in, first-out" stack of objects. The elements are accessed only from the top of the stack. 
+              You can retrieve, insert, or remove an element from the top of the stack.</h5>
+          </div>
+          <div class="down-3 center">
+              <img src="content/images/7/Stack.jpeg" style="width:75%" />
+            </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+              <pre class="Java">
+                  <code data-trim>
+                      import java.util.Stack//Using Stack to keep track of who currently
+                      public class Borrow{ // has borrowed something
+                          private String itemName;
+                          private Stack hasIt = new Stack();
+                          public Borrow(String name,String owner){
+                            itemName = name; hasIt.push(owner);
+                          } //首先压进主人的名字
+                          public void borrow(String borrower){
+                            hasIt.push(borrower); }
+                          public String currentHolder(){
+                            return (String)hasIt.peek(); }
+                          public String returnIt(){
+                            String ret=(String)hasIt.pop();
+                            if(hasIt.empty()) //不小心把主人弹出
+                              hasIt.push(ret); //将主人名字入栈
+                            return ret; 
+                          } 
+                      }
+                  </code>
+              </pre>  
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Queue</h2>
+          </div>
+          <div class="down-3">
+             <ul>
+               <li>A <span class="strong danger">queue</span> is typically a "first-in, first-out" (FIFO) container.</li>   
+               <li>Queues are commonly used as a way to reliably transfer objects from one area of a program to another.</li>   
+               <li> A <span class="strong info"><code>LinkedList</code></span> can be used as a **Queue** implementation.</li>
+             </ul>
+           </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>Example</h2>
+            </div>
+            <div class="down-3">
+                <pre class="Java">
+                    <code data-trim>
+                        public class QueueDemo{
+                          public static void printQ(Queue&lt;?&gt; queue){
+                            while (queue.peek()!=null) 
+                               System.out.print(queue.remove()+"  ");
+                            System.out.println();
+                          }
+                          public static void main(String[] args){
+                            Queue&lt;Integer&gt; queue = new LinkedList&lt;Integer&gt;();
+                            Random rand = new Random(47);
+                            for (int i=0;i<10;i++)
+                              queue.offer(rand.nextInt(i+10));
+                            printQ(queue);
+                            Queue <Character> qc = new LinkedList<Character>();
+                            for (char c : "Brontosaurus".toCharArray())
+                              qc.offer(c);
+                            printQ(qc);
+                          }
+                        }
+                    </code>
+                </pre>  
+            </div>
+        </section>
+
+    
+       <section>
+          <div class="down-3">
+            <h2>DbC vs. Exception</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>Exceptions are about dealing with things going wrong <font color=red>at runtime</font>.</li><br>
+              <li>DbC is about <font color=red>statically</font> defining the conditions under which code is supposed to operate.</li><br>
+              <li>The two are nicely complementary.</li><br>
+            </ul>
+          </div>
+          <div class="down-3 row fragment">
+              <div>
+                  <div class="small fragment highlight-bg-success"><i class="fas fa-arrow-right"></i> Unchecked exceptions are “what happens when the contract is broken”.</div>
+              </div>
+          </div>
+          <div class="down-3 row fragment">
+              <div>
+                  <div class="small fragment highlight-bg-success"><i class="fas fa-arrow-right"></i> Checked exceptions are expected to happen from time to time, so are not contract violations.</div>
+              </div>
+          </div>
+        </section>
+
+      <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-warning">
+            How about assertion?
+        </div>
+      </section>
+
+      <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-success">
+            To be continued...
+        </div>
+      </section>
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html>
