@@ -181,6 +181,37 @@
      </section>
 
      <section>
+        <div class="down-3">
+          <h2>来个例子</h2>
+        </div>
+        <div class="down-3">
+          <pre class="java">
+            <code data-trim>
+              try{
+                  byte a[]=new byte[128];  //设置输入缓冲区
+                  System.out.print("请输入字符串：");
+                  int count =System.in.read(a);  //读取标准输入输出流
+                  System.out.println("输入的是：");
+                  for(int i=0;i&lt;count;i++)
+                     System.out.print(a[i]+"");  //输出数组元素的 ASCII 值
+                  System.out.println();
+                  for(int i=0;i&lt;count-1;i++)  //不显示换行符
+                      System.out.print((char)a[i]+"");  //按字符方式输出元素
+                  System.out.println();
+                  Class&lt;? extends InputStream> InClass=System.in.getClass();
+                  Class&lt;? extends PrintStream> OutClass=System.out.getClass();
+                  System.out.println("in 所在的类为："+InClass.toString());
+                  System.out.println("out 所在的类为："+OutClass.toString());
+              }
+              catch(IOException e){
+                    System.err.println(e.toString());
+              }
+            </code>
+          </pre>
+        </div>
+       </section>
+
+     <section>
       <div class="down-3">
         <h2>面向字符的输入流</h2>
       </div>
@@ -272,6 +303,37 @@
 
      <section>
       <div class="down-3">
+        <h2>读写中文的例子</h2>
+      </div>
+      <div class="down-3">
+        <pre class="java">
+          <code data-trim>
+            File firstFile = new File("chineseIn.txt");  
+		        File secondFile = new File("chineseOut.txt");  
+		        BufferedReader in = null;  
+		        BufferedWriter out = null;        
+		        try {          
+			        in = new BufferedReader(new InputStreamReader(new FileInputStream(firstFile), "UTF-8"));  
+			        out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(secondFile), "UTF-8"));  
+			        String line = "";  
+			        while((line = in.readLine())!=null){  
+				        System.out.println(line);  
+				        out.write(line+"\r\n");  
+			        }  
+		        } catch (FileNotFoundException e) {  
+			          System.out.println("File is not found!");  
+		        } catch (IOException e) {  
+			          System.out.println("Read or write Exception!");  
+		        }finally{             
+			          //TODO: clean up
+		        }
+          </code>
+        </pre>
+      </div>
+     </section>
+
+     <section>
+      <div class="down-3">
         <h2>文件与目录管理</h2>
       </div>
       <div class="down-5">
@@ -351,6 +413,29 @@
           </ul>
         </div>
        </section>
+
+       <section>
+          <div class="down-3">
+            <h2>来个例子</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                try{
+                    BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
+                    String s=in.readLine();
+                    RandomAccessFile myFile=new RandomAccessFile("test.txt","rw");
+                    myFile.seek(myFile.length());  //移动到文件结尾
+                    myFile.writeBytes(s+"\n");  //写入数据
+                    myFile.close();
+                }
+                catch(IOException e){
+                    System.out.println(e.toString());
+                }
+              </code>
+            </pre>
+          </div>
+         </section>
 
        <section>
           <div class="down-3">
@@ -435,6 +520,42 @@
               <div class="danger center">只有v1被序列化！</div>
           </div>
       </section>
+
+      <section>
+          <div class="down-3">
+            <h2>来个例子</h2>
+          </div>
+          <div class="down-1">
+            <pre class="java">
+              <code data-trim>
+                  public class SerialCtl implements Serializable {
+                    private String a;
+                    private transient String b;
+                    public SerialCtl(String aa, String bb) {
+                      a = aa;  b = bb;
+                    }
+                    public String toString() { return a + "\n" + b; }                 
+                    private void writeObject(ObjectOutputStream stream) throws IOException {
+                      stream.defaultWriteObject();
+                    }
+                    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+                      stream.defaultReadObject();
+                    }
+                    public static void main(String[] args) throws IOException, ClassNotFoundException {
+                      SerialCtl sc = new SerialCtl("Test1", "Test2");
+                      System.out.println("Before:\n" + sc);
+                      ByteArrayOutputStream buf= new ByteArrayOutputStream();
+                      ObjectOutputStream o = new ObjectOutputStream(buf);
+                      o.writeObject(sc);
+                      ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buf.toByteArray()));
+                      SerialCtl sc2 = (SerialCtl)in.readObject();
+                      System.out.println("After:\n" + sc2);
+                    }
+                  }
+              </code>
+            </pre>
+          </div>
+         </section>
 
       <section>
           <div class="down-3">
@@ -541,7 +662,7 @@
 
       <section>
           <div class="down-3">
-            <h2><code>java.nio.file.*</code> (from jdk7)</h2>
+            <h2><code>java.nio.file.*</code> (from Java 7)</h2>
           </div>
           <div class="down-5">
               <ul>
@@ -577,24 +698,61 @@
             <h2>I/O异常处理</h2>
           </div>
           <div class="down-5">
+            <h4>Before Java 7: <span class="danger em">try-catch-finally</span></h4>
+          </div>
+          <div class="down-1">
             <pre class="java">
               <code data-trim>
                   public static void main(String[] args){
-                    //code to open file
-                    BufferedReader input;
-                    try{
-                      input = new BufferedReader(new FileReader("test.txt"));
+                    InputStream input = null;
+                    try {
+                        input = new FileInputStream("file.txt");
+                        int data = input.read();
+                        while(data != -1){
+                            System.out.print((char) data);
+                            data = input.read();
+                        }
                     }
-                    catch(IOException e){
-                      System.err.println("Error opening file");
-                      return;
+                    catch(IOException ex){
+                       //do something with e... log, perhaps rethrow etc.
+                    } 
+                    finally {
+                        if(input != null){
+                            input.close();
+                        }
                     }
-                    //code to read from file
-                    //code to close file
                   } 
               </code>
             </pre>
           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>I/O异常处理</h2>
+          </div>
+          <div class="down-5">
+            <h4>After Java 7: <span class="danger em">try-with-resources</span></h4>
+          </div>
+          <div class="down-1">
+            <pre class="java">
+              <code data-trim>
+                  public static void main(String[] args) throws FileNotFoundException, IOException {
+                    try(FileInputStream input = new FileInputStream("test.txt")) {
+                          int data = input.read();
+                          while(data != -1){
+                              System.out.print((char) data);
+                              data = input.read();
+                          }
+                      }
+                  }
+              </code>
+            </pre>
+          </div>
+          <div class="down-1 row fragment">
+              <div class="small">Note: When the try block finishes the <code>FileInputStream</code> will be closed automatically. This is possible because <code>FileInputStream</code> implements 
+                the Java interface <code>java.lang.AutoCloseable</code>. All classes implementing this interface can be used inside the <span class="danger em">try-with-resources</span> construct.</div>
+            </div>
       </section>
 
       <section>
