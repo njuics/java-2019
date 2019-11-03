@@ -81,7 +81,7 @@
         <h5>source可以是键盘输入、磁盘文件、物理设备、另外一个程序，或者同一个程序中的数组或字符串</h5>
       </div>
       <div class="down-3 center">
-        <img src="content/images/8/InputStream.png" style="width:70%"/>
+        <img src="content/images/8/InputStream.jpeg" style="width:80%"/>
       </div>
      </section>
 
@@ -93,7 +93,7 @@
         <h5>destination可以是控制台、磁盘文件、物理设备、另外一个程序，或者同一个程序中的数组或字符串</h5>
       </div>
       <div class="down-3 center">
-        <img src="content/images/8/OutputStream.png" style="width:70%"/>
+        <img src="content/images/8/OutputStream.jpeg" style="width:80%"/>
       </div>
      </section>
 
@@ -151,7 +151,7 @@
         <h5>InputStream类（抽象类）中包含一套所有输入都需要的方法，可以完成最基本的从输入流读入数据的功能。</h5>
       </div>
       <div class="down-3 center">
-        <img src="content/images/8/ByteInputStreamTree.png" style="width:70%"/>
+        <img src="content/images/8/InputStream.png" style="width:80%"/>
       </div>
      </section>
 
@@ -163,7 +163,7 @@
         <h5>OutputStream类（抽象类）中包含一套所有输出都需要的方法，可以完成最基本的向输出流写入数据的功能。</h5>
       </div>
       <div class="down-3 center">
-        <img src="content/images/8/ByteOutputStreamTree.jpg" style="width:70%"/>
+        <img src="content/images/8/OutputStream.png" style="width:80%"/>
       </div>
      </section>
 
@@ -221,6 +221,16 @@
       <div class="down-3">
         <ul><li>This is preferred for text I/O because it accounts for the “local” character set and supports internationalization with little additional effort.</li></ul>
       </div>
+      <div class="down-3">
+        <pre class="java">
+          <code data-trim>
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            FileOutputStream fos = new FileOutputStream(newFilePath);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+          </code>
+        </pre>
+      </div>
      </section>
 
      <section>
@@ -245,6 +255,18 @@
       </div>
       <div class="down-3">
         <ul><li>例如：<code>BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));</code></li></ul>
+      </div>
+      <div class="down-3">
+        <pre class="java">
+          <code data-trim>
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            BufferedReader br = new BufferedReader(isr);
+            FileOutputStream fos = new FileOutputStream(newFilePath);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+            BufferedWriter bw = new BufferedWriter(osw);
+          </code>
+        </pre>
       </div>
      </section>
 
