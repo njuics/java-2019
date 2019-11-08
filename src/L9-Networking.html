@@ -71,7 +71,7 @@
         <div class="down-3">
           <ul>
             <li>The TCP and UDP protocols use ports to map incoming data to a particular process running on a computer.</li><br>
-            <li>0 - 65535</li><br>
+            <li>0 - 65535</li>
           </ul>
         </div>
         <div class="down-3">
@@ -79,8 +79,8 @@
         </div>
         <div class="down-3">
           <ul>
-            <li>URL, URLConnection, Socket, and ServerSocket</li><br>
-            <li>DatagramPacket, DatagramSocket, and MulticastSocket</li>
+            <li><code>URL, URLConnection, Socket, ServerSocket</code></li><br>
+            <li><code>DatagramPacket, DatagramSocket, MulticastSocket</code></li>
           </ul>
         </div>
       </section>
@@ -90,15 +90,15 @@
           <h2>URL</h2>
         </div>
         <div class="down-5">
-          <h4>URL is the acronym for Uniform Resource Locator. It is a reference (an address) to a resource on the Internet.</h4>
+          <h5>URL is the acronym for <span class="danger em">Uniform Resource Locator</span>. It is a reference (an address) to a resource on the Internet.</h5>
         </div>
         <div class="down-3">
-          <h4>A URL takes the form of a string that describes how to find a resource on the Internet. URLs have two main components: the protocol needed to access the resource and the location of the resource.</h4>
+          <h5>A URL takes the form of a <span class="danger">string</span> that describes how to find a resource on the Internet. URLs have two main components: the protocol needed to access the resource and the location of the resource.</h5>
         </div>
         <div class="down-3">
           <ul>
-            <li>Protocol: HTTP, FTP, Gopher, File, News</li><br>
-            <li>Resource name: Host Name; File Name; Port Number; Reference</li>
+            <li><span class="info">Protocol</span>: HTTP, FTP, Gopher, File, News</li><br>
+            <li><span class="info">Resource name</span>: Host Name; File Name; Port Number; Reference</li>
           </ul>
         </div>
       </section>
@@ -153,17 +153,13 @@
 
       <section>
         <div class="down-3">
-          <h2>Example</h2>
+          <h2>Server</h2>
         </div>
-        <div class="down-5">
-          <h4>Server</h4>
-        </div>
-        <div class="down-3">
+        <div class="down-1">
           <pre class="java">
             <code data-trim>
               import java.net.*;
-              import java.io.*;
-              
+              import java.io.*;         
               public class EchoServer {
                   public static void main(String[] args) throws IOException {               
                       if (args.length != 1) {
@@ -194,10 +190,7 @@
 
      <section>
       <div class="down-3">
-        <h2>Example</h2>
-      </div>
-      <div class="down-5">
-        <h4>Server-side programming</h4>
+        <h2>Server-side programming</h2>
       </div>
       <div class="down-5">
         <ul>
@@ -212,32 +205,22 @@
 
     <section>
       <div class="down-3">
-        <h2>Example</h2>
+        <h2>Client</h2>
       </div>
-      <div class="down-5">
-        <h4>Client</h4>
-      </div>
-      <div class="down-3">
+      <div class="down-1">
         <pre class="java">
           <code data-trim>
             import java.io.*;
-            import java.net.*;
-            
+            import java.net.*;          
             public class EchoClient {
-                public static void main(String[] args) throws IOException {                    
-                    if (args.length != 2) {
-                        System.err.println("Usage: java EchoClient <host name> <port number>");
-                        System.exit(1);
-                    }        
+                public static void main(String[] args) throws IOException {                           
                     String hostName = args[0];
                     int portNumber = Integer.parseInt(args[1]);
                     try (
                         Socket echoSocket = new Socket(hostName, portNumber);
                         PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-                        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(echoSocket.getInputStream()));
-                        BufferedReader stdIn = new BufferedReader(
-                                new InputStreamReader(System.in))
+                        BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+                        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
                     ) {
                         String userInput;
                         while ((userInput = stdIn.readLine()) != null) {
@@ -260,10 +243,7 @@
 
    <section>
     <div class="down-3">
-      <h2>Example</h2>
-    </div>
-    <div class="down-5">
-      <h4>Client-side programming</h4>
+      <h2>Client-side programming</h2>
     </div>
     <div class="down-5">
       <ul>
@@ -278,10 +258,10 @@
 
   <section>
     <div class="down-3">
-      <h2>Connection-oriented programming</h2>
+      <h3>Connection-oriented programming</h3>
     </div>
     <div class="down-5 center">
-      <img src="content/images/9/SocketProgramming.png" style="width:70%"/>
+      <img src="content/images/9/SocketProgramming.png" style="width:80%"/>
     </div>
   </section>
 
@@ -318,11 +298,8 @@
 
     <section>
         <div class="down-3">
-          <h2>Example</h2>
+          <h2>Server</h2>
         </div>
-        <div class="down-5">
-            <h4>Server</h4>
-          </div>
         <div class="down-3">
           <pre class="java">
             <code data-trim>
@@ -339,110 +316,90 @@
       </section>
 
       <section>
-          <div class="down-3">
-            <h2>Example</h2>
-          </div>
-          <div class="down-5">
-              <h4>Server</h4>
-            </div>
-          <div class="down-3">
+          <div class="down-1">
             <pre class="java">
-              <code data-trim>
-                  import java.io.*;
-                  import java.net.*;
-                  import java.util.*;
-                  
-                  public class QuoteServerThread extends Thread {
-                  
+              <code data-trim>          
+                  public class QuoteServerThread extends Thread {               
                       protected DatagramSocket socket = null;
                       protected BufferedReader in = null;
-                      protected boolean moreQuotes = true;
-                  
+                      protected boolean moreQuotes = true;               
                       public QuoteServerThread() throws IOException {
                           this("QuoteServerThread");
-                      }
-                  
+                      }             
                       public QuoteServerThread(String name) throws IOException {
                           super(name);
-                          socket = new DatagramSocket(4445);
-                  
+                          socket = new DatagramSocket(4445);                 
                           try {
                               in = new BufferedReader(new FileReader("one-liners.txt"));
                           } catch (FileNotFoundException e) {
                               System.err.println("Could not open quote file. Serving time instead.");
                           }
-                      }
-                  
-                      public void run() {
-                  
-                          while (moreQuotes) {
-                              try {
-                                  byte[] buf = new byte[256];
-                  
-                                  // receive request
-                                  DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                                  socket.receive(packet);
-                  
-                                  // figure out response
-                                  String dString = null;
-                                  if (in == null)
-                                      dString = new Date().toString();
-                                  else
-                                      dString = getNextQuote();
-                  
-                                  buf = dString.getBytes();
-                  
-                      // send the response to the client at "address" and "port"
-                                  InetAddress address = packet.getAddress();
-                                  int port = packet.getPort();
-                                  packet = new DatagramPacket(buf, buf.length, address, port);
-                                  socket.send(packet);
-                              } catch (IOException e) {
-                                  e.printStackTrace();
-                      moreQuotes = false;
-                              }
-                          }
-                          socket.close();
-                      }
-                  
+                      }           
                       protected String getNextQuote() {
                           String returnValue = null;
                           try {
                               if ((returnValue = in.readLine()) == null) {
                                   in.close();
-                      moreQuotes = false;
+                                  moreQuotes = false;
                                   returnValue = "No more quotes. Goodbye.";
                               }
                           } catch (IOException e) {
                               returnValue = "IOException occurred in server.";
                           }
                           return returnValue;
-                      }
-                  }
+                      }                
               </code>
             </pre>
           </div>
         </section>
 
         <section>
+          <div class="down-1">
+            <pre class="java">
+              <code data-trim>
+                  public void run() {             
+                    while (moreQuotes) {
+                        try {
+                            byte[] buf = new byte[256];           
+                            // receive request
+                            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                            socket.receive(packet);             
+                            // figure out response
+                            String dString = null;
+                            if (in == null)
+                                dString = new Date().toString();
+                            else
+                                dString = getNextQuote();          
+                            buf = dString.getBytes();
+                            // send the response to the client at "address" and "port"
+                            InetAddress address = packet.getAddress();
+                            int port = packet.getPort();
+                            packet = new DatagramPacket(buf, buf.length, address, port);
+                            socket.send(packet);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            moreQuotes = false;
+                        }
+                    }
+                    socket.close();
+                }
+              }
+            </code>
+          </pre>
+         </div>
+        </section>
+        
+        <section>
             <div class="down-3">
-              <h2>Example</h2>
+              <h2>Client</h2>
             </div>
-            <div class="down-5">
-                <h4>Client</h4>
-              </div>
-            <div class="down-3">
+            <div class="down-1">
               <pre class="java">
                 <code data-trim>
                     import java.io.*;
                     import java.net.*;
-
                     public class QuoteClient {
                       public static void main(String[] args) throws IOException {
-                         if (args.length != 1) {
-                              System.out.println("Usage: java QuoteClient <hostname>");
-                              return;
-                          }
                          // get a datagram socket
                         DatagramSocket socket = new DatagramSocket();
                         // send request
@@ -516,21 +473,21 @@
 
       <section>
           <div class="down-3">
-            <h2>Creating and configuring HTTP request</h2>
+            <h3>Creating and configuring HTTP request</h3>
           </div>
-          <div class="down-3">
+          <div class="down-5">
             <pre class="java">
               <code data-trim>
                   HttpClient client = HttpClientBuilder.getInstance()
-                  .addRequestFilter(new UserRequestFilter())
-                  .addResponseFilter(new UserResponseFilter())
-                  .addConnectionOptions(new ConnectionOption&lt;&gt;("Timeout", 2000))
-                  .build();
+                                      .addRequestFilter(new UserRequestFilter())
+                                      .addResponseFilter(new UserResponseFilter())
+                                      .addConnectionOptions(new ConnectionOption&lt;&gt;("Timeout", 2000))
+                                      .build();
   
                   HttpRequest clientRequest = client.build("http://example.org")
-                  .setHeader(HttpHeader.ACCEPT, "text/plain")
-                  .setMethod(HttpMethod.GET)
-                  .build();
+                                              .setHeader(HttpHeader.ACCEPT, "text/plain")
+                                              .setMethod(HttpMethod.GET)
+                                              .build();
               </code>
             </pre>
           </div>
@@ -568,15 +525,14 @@
               <div class="down-3">
                 <h2>Filters</h2>
               </div>
-              <div class="down-5">
+              <div class="down-3">
                 <h4>Filters are used in order to provide capabilities as logging, authentication, etc.</h4>
               </div>
-              <div class="down-3">
+              <div class="down-1">
                 <pre class="java">
                   <code data-trim>
                       public class UserAgentFilter implements HttpRequestFilter {
                         private final String userAgent;
-            
                         public UserAgentFilter() {
                             userAgent = "Profile/" + System.getProperty("microedition.profiles") +
                                         " Configuration/" + System.getProperty("microedition.configuration");
@@ -588,10 +544,9 @@
                                 request.getHeaders().setHeaderValue(HttpHeader.USER_AGENT, userAgent);
                             }
                         }
-                      }
-            
-                    HttpClientBuilder clientBuilder = HttpClientBuilder.getInstance()
-                            .addRequestFilter(new UserAgentFilter());
+                      } 
+                      HttpClientBuilder clientBuilder = HttpClientBuilder.getInstance()
+                                                     .addRequestFilter(new UserAgentFilter());
                   </code>
                 </pre>
               </div>
