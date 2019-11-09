@@ -555,7 +555,34 @@
               </code>
             </pre>
           </div>
-         </section>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h2>序列化控制</h2>
+        </div>
+        <div class="down-3">
+            <ul>
+              <li><code>writeObject</code>和<code>readObject</code>是<span class="danger">private</span>的且是<span class="danger">void</span>的</li><br>
+              <li>Java调用<code>ObjectOutputStream</code>类检查其是否有私有的，无返回值的<code>writeObject</code>方法，如果有，其会委托该方法进行对象序列化。</li>
+            </ul>
+        </div>
+        <div class="down-1">
+            <pre class="java">
+              <code data-trim>
+              writeObjectMethod = getPrivateMethod(cl, "writeObject",
+                  new Class&lt;?&gt;[] { ObjectOutputStream.class },
+                  Void.TYPE);
+              readObjectMethod = getPrivateMethod(cl, "readObject",
+                  new Class&lt;?&gt;[] { ObjectInputStream.class },
+                  Void.TYPE);
+              readObjectNoDataMethod = getPrivateMethod(
+                  cl, "readObjectNoData", null, Void.TYPE);
+              hasWriteObjectData = (writeObjectMethod != null);
+              </code>
+            </pre>
+          </div>
+      </section>
 
       <section>
           <div class="down-3">
@@ -572,6 +599,22 @@
               </ul>
             </div>
       </section>
+
+      <section>
+        <div class="down-3">
+          <h2>Serializable vs. Externalizable</h2>
+        </div>
+          <div class="down-3">
+            <ul>
+              <li><code>Serializable</code>是标识接口，实现该接口，无需重写任何方法</li><br>
+              <li><code>Serializable</code>提供了两种方式进行对象的序列化：（1）采用默认序列化方式，将非<code>transatient</code>和非<code>static</code>的属性进行序列化；
+                （2）编写<code>readObject</code>和<code>writeObject</code>完成部分属性的序列化</li><br>
+              <li><code>Externalizable</code>接口的实现方式一定要有默认的无参构造函数</li><br>
+              <li>采用<code>Externalizable</code>无需产生序列化ID（<code>serialVersionUID</code>），而<code>Serializable</code>接口则需要</li><br>
+              <li>相比较<code>Serializable</code>, <code>Externalizable</code>序列化、反序列更加快速，占用相比较小的内存</li>
+            </ul>
+          </div>
+    </section>
 
       <section>
           <div class="down-3">
