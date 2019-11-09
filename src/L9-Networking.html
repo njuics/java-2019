@@ -57,7 +57,7 @@
         </div>
         <div class="down-3">
           <ul>
-            <li>TCP is a connection-based protocol that provides a reliable flow of data between two computers.</li><br>
+            <li>TCP is a connection-based protocol that provides a <font color=red>reliable</font> flow of data between two computers.</li><br>
           </ul>
         </div>
         <div class="down-3">
@@ -65,7 +65,7 @@
         </div>
         <div class="down-3">
           <ul>
-            <li>UDP is a protocol that sends independent packets of data, called datagrams, from one computer to another with no guarantees about arrival. UDP is not connection-based like TCP.</li><br>
+            <li>UDP is a protocol that sends independent packets of data, called datagrams, from one computer to another with <font color=red>no guarantees about arrival</font>. UDP is not connection-based like TCP.</li><br>
           </ul>
         </div>
       </section>
@@ -141,6 +141,49 @@
           </pre>
         </div>
        </section>
+
+       <section >
+          <div class="down-3">
+            <h2>InetAddress</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>The <code>InetAddress</code> class is a little unusual in that it doesn't have any public constructors. </li><br>
+              <li>Instead you pass the host name or string format of the dotted quad address to the static <code>InetAddress.getByName()</code> method.</li><br>
+              <li>You can ask <code>InetAddress</code> object for its host name as a string, its IP address as a string, its IP address as a byte array, and whether or not it's a multicast address.</li>
+            </ul>
+          </div>
+        </section>
+
+       <section>
+          <div class="down-3">
+            <h2>InetAddress</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  import java.net.*;
+                  public class IPAddresses {
+                    public static void main (String args[]) {
+                      try {
+                        InetAddress[] addresses = InetAddress.getAllByName("www.apple.com");
+                        for (int i = 0; i &lt; addresses.length; i++) {
+                          System.out.println(addresses[i]);
+                        }
+                        InetAddress me = InetAddress.getLocalHost();
+                        System.out.println(me);
+                        System.out.println("My name is " + me.getHostName());
+                        System.out.println("My address is " + me.getHostAddress());
+                      }
+                      catch (UnknownHostException ex) {
+                        System.out.println("Could not find the host!");
+                      }   
+                    } 
+                  }
+              </code>
+            </pre>
+          </div>
+         </section>
 
        <section >
         <div class="down-3">
@@ -432,13 +475,26 @@
 
           <section>
               <div class="down-3">
+                  <h2>Broadcasting</h2>
+              </div>
+              <div class="down-5">
+                <ul>
+                  <li>A multicast address is a logical identifier for a group of hosts in a computer network, that are available to process datagrams or frames intended to be multicast for a designated network service.</li><br>
+                  <li>The group includes the addresses from <span class="danger">224.0.0.0</span> to <span class="danger">239.255.255.255</span>.</li><br>
+                  <li>Address assignments from within this range are specified in <a href="https://tools.ietf.org/html/rfc5771">RFC 5771</a>.</li>
+                </ul>
+              </div>
+          </section>
+
+          <section>
+              <div class="down-3">
                 <h2>Broadcasting</h2>
               </div>
               <div class="down-3">
                 <pre class="java">
                   <code data-trim>
                       MulticastSocket socket = new MulticastSocket(4446);
-                      InetAddress group = InetAddress.getByName("203.0.113.0");
+                      InetAddress group = InetAddress.getByName("230.0.0.1");
                       socket.joinGroup(group);      
                       DatagramPacket packet;
                       for (int i = 0; i &lt; 5; i++) {
@@ -461,42 +517,47 @@
           </div>
           <div class="down-5">
               <ul>
-                 <li>Package: <code>com.oracle.httpclient</code></li><br>
+                 <li>Old Package: <code>com.oracle.httpclient</code></li><br>
                  <li>Goal: a Java based framework for communication with Web Services.</li><br>
+                 <li>New Package from Java 11: <code>java.net.http</code></li><br>
               </ul>
            </div>
       </section>
 
       <section>
           <div class="down-3">
-             <h2>HTTP Client APIs</h2>
+             <h3>HTTP Client and WebSocket APIs</h3>
+          </div>
+          <div class="down-5">
+            <h5>Provides high-level client interfaces to HTTP (versions 1.1 and 2) and low-level client interfaces to WebSocket. The main types defined are:</h5>
           </div>
           <div class="down-5">
               <ul>
-                 <li>easy way of creating and configuring of HTTP requests</code></li><br>
-                 <li>synchronous and asynchronous executing of request</li><br>
-                 <li>performing request pre-processing and response post-processing</li>
+                 <li><code>HttpClient</code></li><br>
+                 <li><code>HttpRequest</code></li><br>
+                 <li><code>HttpResponse</code></li><br>
+                 <li><code>WebSocket</code></li>
               </ul>
            </div>
       </section>
 
       <section>
           <div class="down-3">
-            <h3>Creating and configuring HTTP request</h3>
+            <h2>HTTP Client</h2>
           </div>
           <div class="down-5">
+            <h4>Synchronous example</h4>
+          </div>
+          <div class="down-3">
             <pre class="java">
               <code data-trim>
-                  HttpClient client = HttpClientBuilder.getInstance()
-                                      .addRequestFilter(new UserRequestFilter())
-                                      .addResponseFilter(new UserResponseFilter())
-                                      .addConnectionOptions(new ConnectionOption&lt;&gt;("Timeout", 2000))
-                                      .build();
-  
-                  HttpRequest clientRequest = client.build("http://example.org")
-                                              .setHeader(HttpHeader.ACCEPT, "text/plain")
-                                              .setMethod(HttpMethod.GET)
-                                              .build();
+                  HttpClient client = HttpClient.newHttpClient();
+                  HttpRequest request = HttpRequest.newBuilder()
+                                        .uri(URI.create("https://www.baidu.com"))
+                                        .build();                
+                  HttpResponse&lt;String&gt; response =
+                          client.send(request, HttpResponse.BodyHandlers.ofString());               
+                  System.out.println(response.body());  
               </code>
             </pre>
           </div>
@@ -504,64 +565,78 @@
 
         <section>
             <div class="down-3">
-              <h2>Request invocation</h2>
+              <h2>HTTP Client</h2>
+            </div>
+            <div class="down-5">
+              <h4>Synchronous example</h4>
             </div>
             <div class="down-3">
               <pre class="java">
                 <code data-trim>
-                    HttpResponse response = clientRequest.invoke();
-                    if (HttpResponse.OK == response.getResponseCode()) {
-                        // handle the response
-                    }         
-            
-                    clientRequest.invoke(
-                            new HttpResponseListener() {
-                                @Override
-                                public void handle(HttpResponse response) {
-                                    // handle the response
-                                }
-                                @Override
-                                public void failed(HttpClientException cause) {
-                                    // handle the exception
-                                }
-                    });
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                                          .uri(URI.create("https://www.baidu.com"))
+                                          .build();                
+                    HttpResponse&lt;String&gt; response =
+                            client.send(request, HttpResponse.BodyHandlers.ofString());               
+                    System.out.println(response.body());  
                 </code>
               </pre>
             </div>
           </section>
-
+  
           <section>
               <div class="down-3">
-                <h2>Filters</h2>
+                <h2>HTTP Client</h2>
+              </div>
+              <div class="down-5">
+                <h4>Asynchronous example</h4>
               </div>
               <div class="down-3">
-                <h4>Filters are used in order to provide capabilities as logging, authentication, etc.</h4>
-              </div>
-              <div class="down-1">
                 <pre class="java">
                   <code data-trim>
-                      public class UserAgentFilter implements HttpRequestFilter {
-                        private final String userAgent;
-                        public UserAgentFilter() {
-                            userAgent = "Profile/" + System.getProperty("microedition.profiles") +
-                                        " Configuration/" + System.getProperty("microedition.configuration");
-                        }
-            
-                        @Override
-                        public void filter(ProcessedHttpRequest request, HttpRequestProcessingContext processingContext) {
-                            if (!request.getHeaders().contains(HttpHeader.USER_AGENT)) {
-                                request.getHeaders().setHeaderValue(HttpHeader.USER_AGENT, userAgent);
-                            }
-                        }
-                      } 
-                      HttpClientBuilder clientBuilder = HttpClientBuilder.getInstance()
-                                                     .addRequestFilter(new UserAgentFilter());
+                      HttpClient client = HttpClient.newHttpClient();
+                      HttpRequest request = HttpRequest.newBuilder()
+                                            .uri(URI.create("https://www.baidu.com"))
+                                            .build();               
+                      CompletableFuture&lt;String&gt; result = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                                                          .thenApply(HttpResponse::body);
+                      System.out.println(result.get());  
                   </code>
                 </pre>
               </div>
             </section>
 
-
+          <section>
+              <div class="down-3">
+                <h2>WebSocket</h2>
+              </div>
+              <div class="down-3">
+                <pre class="java">
+                  <code data-trim>
+                      HttpClient client = HttpClient.newHttpClient();
+                      WebSocket webSocket = client.newWebSocketBuilder()
+                        .buildAsync(URI.create("ws://localhost:8080/echo"), new WebSocket.Listener() {
+                      
+                         @Override
+                         public CompletionStage&lt;?&gt; onText(WebSocket webSocket, CharSequence data, boolean last) {
+                          // request one more
+                          webSocket.request(1);
+                      
+                          // Print the message when it's available
+                          return CompletableFuture.completedFuture(data)
+                            .thenAccept(System.out::println);
+                         }
+                        }).join();
+                      webSocket.sendText("hello ", false);
+                      webSocket.sendText("world ",true);
+                      
+                      TimeUnit.SECONDS.sleep(10);
+                      webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "ok").join();  
+                  </code>
+                </pre>
+              </div>
+            </section>
 
       <section class="title-slide">
         <div class="biggest framed bordered border-2x font-passionone bg-warning center">
