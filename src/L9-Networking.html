@@ -562,28 +562,6 @@
             </pre>
           </div>
         </section>
-
-        <section>
-            <div class="down-3">
-              <h2>HTTP Client</h2>
-            </div>
-            <div class="down-5">
-              <h4>Synchronous example</h4>
-            </div>
-            <div class="down-3">
-              <pre class="java">
-                <code data-trim>
-                    HttpClient client = HttpClient.newHttpClient();
-                    HttpRequest request = HttpRequest.newBuilder()
-                                          .uri(URI.create("https://www.baidu.com"))
-                                          .build();                
-                    HttpResponse&lt;String&gt; response =
-                            client.send(request, HttpResponse.BodyHandlers.ofString());               
-                    System.out.println(response.body());  
-                </code>
-              </pre>
-            </div>
-          </section>
   
           <section>
               <div class="down-3">
@@ -602,6 +580,35 @@
                       CompletableFuture&lt;String&gt; result = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                                                           .thenApply(HttpResponse::body);
                       System.out.println(result.get());  
+                  </code>
+                </pre>
+              </div>
+            </section>
+
+            <section>
+              <div class="down-3">
+                <h2>HTTP/2</h2>
+              </div>
+              <div class="down-5">
+                <pre class="java">
+                  <code data-trim>
+                    HttpClient.newBuilder()
+                              .followRedirects(HttpClient.Redirect.NEVER)
+                              .version(HttpClient.Version.HTTP_2)
+                              .build()
+                              .sendAsync(HttpRequest.newBuilder()
+                                          .uri(new URI("https://http2.akamai.com/demo"))
+                                          .GET()
+                                          .build(),
+                                         HttpResponse.BodyHandlers.ofString())
+                                          .whenComplete((resp,t) -> {
+                                             if(t != null){
+                                                t.printStackTrace();
+                                             }else{
+                                                System.out.println(resp.version());
+                                                System.out.println(resp.statusCode());
+                                             }
+                                          }).join();  
                   </code>
                 </pre>
               </div>
