@@ -838,6 +838,7 @@
                                     
                                         public int next() {
                                             ++currentEvenValue; // Danger point here!
+                                            Thread.yield();
                                             ++currentEvenValue;
                                             return currentEvenValue;
                                         }
