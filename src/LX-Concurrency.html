@@ -110,21 +110,20 @@
             </section>
 
             <section>
-                    <div class="down-3">
-                        <h2>JVM Threads</h2>
+                <div class="down-3">
+                    <h2>JVM Threads</h2>
+                </div>
+                <div class="down-5 center">
+                    <div class="center down-1">
+                        <img src="https://equinoxrar.files.wordpress.com/2014/08/threads1.png" />
                     </div>
-                    <div class="down-5 center">
-                        <div class="center down-1">
-                            <img
-                                src="https://equinoxrar.files.wordpress.com/2014/08/threads1.png" />
-                        </div>
-                </section>
+            </section>
 
 
-                <section>
-                    <div class="down-30 center larger">
-                        基础篇 </div>
-                </section>
+            <section>
+                <div class="down-30 center larger">
+                    基础篇 </div>
+            </section>
 
 
 
@@ -195,7 +194,7 @@
                             
                         </pre>
                 </div>
-            <div class="down-1">Thread对象像是运载火箭，Runnable的实现对象就是一个荷载（payload）</div>
+                <div class="down-1">Thread对象像是运载火箭，Runnable的实现对象就是一个荷载（payload）</div>
             </section>
 
             <section>
@@ -258,7 +257,7 @@
                                 </pre>
                 </div>
 
-                <div class="down-5 fragment center">
+                <div class="down-5 center">
                     直接启动多个<code>Thread</code></div>
             </section>
 
@@ -266,7 +265,7 @@
                 <div class="down-3">
                     <h2>或者用ExecutorService启动</h2>
                 </div>
-                <div class="down-9">
+                <div class="down-3">
                     <pre class="java">
                         <code data-trim>
                             public class CachedThreadPool {
@@ -282,7 +281,8 @@
                     </pre>
                 </div>
 
-                <div class="down-5 fragment danger center"><code>CachedThreadPool</code>根据需要创建新线程的线程池，如果现有线程没有可用的，则创建一个新线程并添加到池中，如果有被使用完但是还没销毁的线程，就复用该线程
+                <div class="down-1  center">
+                    <code>CachedThreadPool</code>根据需要创建新线程的线程池，如果现有线程没有可用的，则创建一个新线程并添加到池中，如果有被使用完但是还没销毁的线程，就复用该线程
                 </div>
             </section>
             <section>
@@ -292,16 +292,16 @@
                 <div class="down-9">
                     <ul>
                         <li>
-                                在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。
+                            在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。
                         </li>
                         <li>
-                                在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。
+                            在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。
                         </li>
                         <li>
-                                所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁。
+                            所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁。
                         </li>
                         <li>
-                                如何利用已有对象来服务就是一个需要解决的关键问题，其实这就是一些"池化资源"技术产生的原因。
+                            如何利用已有对象来服务就是一个需要解决的关键问题，其实这就是一些"池化资源"技术产生的原因。
                         </li>
                     </ul>
 
@@ -309,177 +309,211 @@
             </section>
             <section>
                 <div class="down-3">
-                    <h2>说得再明白一点</h2>
+                    <h2>或者另一种策略</h2>
                 </div>
-                <div class="down-9">
+                <div class="down-3">
                     <pre class="java">
                         <code data-trim>
-                                public class Position&lt;T extends Creature&gt;{
-                                        private T holder;
+                                public class FixedThreadPool {
+                                    public static void main(String[] args) {
+                                        // Constructor argument is number of threads:
+                                        ExecutorService exec = Executors.newFixedThreadPool(5);
+                                        for (int i = 0; i < 5; i++)
+                                            exec.execute(new LiftOff());
+                                        exec.shutdown();
+                                    }
                                 }
                         </code>
                         
                     </pre>
                 </div>
 
-                <div class="down-5 fragment danger center">显式表达Position里是跟某种Creature
+                <div class="down-1 small center">
+                    创建一个固定线程数的线程池，在任何时候最多只有n个线程被创建。如果在所有线程都处于活动状态时，有其他任务提交，他们将等待队列中直到线程可用。如果任何线程由于执行过程中的故障而终止，将会有一个新线程将取代这个线程执行后续任务。
+                </div>
+                <div class="down-1 small danger fragment center">如果需要获得异步执行的任务的结果怎么办？
                 </div>
             </section>
 
             <section>
-                <div class="down-3">
-                    <h2> 再定义一个Computer </h2>
+                <div class="down-1">
+                    <h2> Callable</h2>
                 </div>
-                <div class="down-3">
-                    <pre class="java">
+                <div class="down-1">
+                    <pre class="java tiny">
                                         <code data-trim>
-                                                public class Computer{
-
-                                                    private HDD mHarddisk;   // 机械硬盘
-                                                    
-                                                    Computer(HDD harddisk){
-                                                        mHarddisk = harddisk;
+                                                public interface Callable&lt;V&gt; {
+                                                    V call() throws Exception;
+                                                }
+                                                class TaskWithResult implements Callable&lt;String&gt; {
+                                                    private int id;
+                                                
+                                                    public TaskWithResult(int id) {
+                                                        this.id = id;
                                                     }
-                                                    
-                                                    public Data readDisk(){
-                                                        return mHarddisk.read();
+                                                
+                                                    public String call() {
+                                                        return "result of TaskWithResult " + id;
                                                     }
-                                                    
-                                                    public void writeDisk(Data data){
-                                                        mHarddisk.write(data);
+                                                }
+                                                
+                                                public class CallableDemo {
+                                                    public static void main(String[] args) {
+                                                        ExecutorService exec = Executors.newCachedThreadPool();
+                                                        ArrayList&lt;Future&lt;String&gt;&gt; results =
+                                                                new ArrayList&lt;Future&lt;String&gt;&gt;();
+                                                        for (int i = 0; i &lt; 10; i++)
+                                                            results.add(exec.submit(new TaskWithResult(i)));
+                                                        for (Future&lt;String&gt; fs : results)
+                                                            try {
+                                                                // get() blocks until completion:
+                                                                System.out.println(fs.get());
+                                                            } catch (InterruptedException e) {
+                                                                System.out.println(e);
+                                                                return;
+                                                            } catch (ExecutionException e) {
+                                                                System.out.println(e);
+                                                            } finally {
+                                                                exec.shutdown();
+                                                            }
                                                     }
                                                 }
                                         </code>
                                         
                                     </pre>
                 </div>
-
-                <div class="down-1 fragment danger center">
-                    如果安装的是SSD怎么办？</div>
             </section>
             <section>
                 <div class="down-3">
-                    <h2> 定义一个SSDComputer？ </h2>
+                    <h2> Future </h2>
                 </div>
-                <div class="down-3">
+                <div class="down-1">
                     <pre class="java">
                                                 <code data-trim>
-                                                        public class SSDComputer{
-
-                                                            private SSD mHarddisk;   // SSD硬盘
-                                                            
-                                                            Computer(SSD harddisk){
-                                                                mHarddisk = harddisk;
+                                                        class MyCallable implements Callable&lt;String&gt;{
+                                                                @Override
+                                                                public String call() throws Exception {
+                                                                    System.out.println("做一些耗时的任务...");
+                                                                    Thread.sleep(5000);
+                                                                    return "OK";
+                                                                }
                                                             }
                                                             
-                                                            public Data readDisk(){
-                                                                return mHarddisk.read();
-                                                            }
+                                                            public class FutureSimpleDemo {
+                                                                public static void main(String[] args) throws InterruptedException, ExecutionException {
+                                                                    ExecutorService executorService = Executors.newCachedThreadPool();
+                                                                    Future&lt;String&gt; future = executorService.submit(new MyCallable());
                                                             
-                                                            public void writeDisk(Data data){
-                                                                mHarddisk.write(data);
+                                                                    System.out.println("dosomething...");
+                                                                    System.out.println("得到异步任务返回结果：" + future.get());
+                                                                    System.out.println("Completed!");
+                                                                }
                                                             }
-                                                        }
                                                 </code>
-                                                
                                             </pre>
                 </div>
-
-                <div class="down-1 fragment danger center">
-                    这当然不好！</div>
+                <div class=" fragment danger center small">
+                    当调用<code>future.get()</code>方法以获得结果时，当前线程就开始阻塞，直接<code>call()</code>方法结束返回结果。</div>
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2> 抽象一下 </h2>
+                    <h2> SLEEP </h2>
                 </div>
                 <div class="down-1">
                     <pre class="java">
                         <code data-trim>
-                                public abstract class Disk{};
-                                public class SSD extends Disk{};
-                                public class HHD extends Disk{};
-                                public class Computer{
-
-                                    private Disk disk;   // 抽象的硬盘
-                                    
-                                    Computer(Disk disk){
-                                        this.disk = disk;
-                                    }
-                                    
-                                    public Data readDisk(){
-                                        return disk.read();
-                                    }
-                                    
-                                    public void writeDisk(Data data){
-                                        disk.write(data);
-                                    }
-                                }
-                        </code>
-                                                    
-                    </pre>
-                </div>
-
-                <div class="down-1 fragment danger center">
-                    基于多态实现设计抽象（解耦） </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2> 用泛型来做 </h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                                public class Computer&lt;T extends Disk&gt;{
-                                    private T disk;   // 参数类
-                                    Computer(T disk){
-                                        this.disk = disk;
-                                    }
-                                    public Data readDisk(){
-                                        return disk.read();
-                                    }
-                                    public void writeDisk(Data data){
-                                        disk.write(data);
-                                    }
-                                    public T getDisk(){
-                                        return disk;
-                                    }
-                                    public void setDisk(T disk){
-                                        return this.disk = disk;
-                                    }
-                                
-                                    public static void main(String[] args) {
-                                        Computer&lt;SSD&gt; computer = new Computer&lt;SSD&gt;(new SSD());
-                                        SSD disk = computer.getDisk(); // No cast needed
-                                        //computer.setDisk(new HHD()); // error!
-                                    }
-                                }
-                        </code>
-                        
-                    </pre>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2> 泛型方法 </h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                            <code data-trim>
-                                    public class GenericMethods {
-                                        public &lt;T&gt; void f(T x) {
-                                            System.out.println(x.getClass().getName());
+                                public class SleepingTask extends LiftOff {
+                                    public void run() {
+                                        try {
+                                            while (countDown-- > 0) {
+                                                System.out.print(status());
+                                                // Old-style: Thread.sleep(100);
+                                                TimeUnit.MILLISECONDS.sleep(100);
+                                            }
+                                        } catch (InterruptedException e) {
+                                            System.err.println("Interrupted");  //可能被打断
                                         }
+                                    }
+                                    public static void main(String[] args) {
+                                        ExecutorService exec = Executors.newCachedThreadPool();
+                                        for (int i = 0; i &lt; 5; i++)
+                                            exec.execute(new SleepingTask());
+                                        exec.shutdown();
+                                    }
+                                }
+                        </code>                 
+                    </pre>
+                </div>
+
+                <div class="center small">
+                    运行结果看起来很均衡，但实际并不完全如此... </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Yeild 让位  </h2>
+                </div>
+                <div class="down-5">
+                    <code>yield</code>和<code>sleep</code>的主要区别是
+                </div>
+                <div class="down-3">
+                    <ul>
+                        <li>
+                            yield方法会临时暂停当前正在执行的线程，来让有同样优先级的正在等待的线程有机会执行 </li>
+                        <li>
+                            如果没有正在等待的线程，或者所有正在等待的线程的优先级都比较低，那么该线程会继续运行 </li>
+                        <li>
+                            执行了yield方法的线程什么时候会继续运行由线程调度器来决定，不同的厂商可能有不同的行为 </li>
+                        <li>
+                            yield方法不保证当前的线程会暂停或者停止，但是可以保证当前线程在调用yield方法时会放弃CPU。 </li>
+                    </ul>
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2> Priority </h2>
+                </div>
+                <div>
+                    <pre class="java tiny">
+                            <code data-trim>
+                                    public class SimplePriorities implements Runnable {
+                                        private int countDown = 5;
+                                        private volatile double d; // No optimization 后面再解释
+                                        private int priority;
+                                    
+                                        public SimplePriorities(int priority) {
+                                            this.priority = priority;
+                                        }
+                                    
+                                        public String toString() {
+                                            return Thread.currentThread() + ": " + countDown;
+                                        }
+                                    
+                                        public void run() {
+                                            Thread.currentThread().setPriority(priority);
+                                            while (true) {
+                                                // An expensive, interruptable operation:
+                                                for (int i = 1; i < 100000; i++) {
+                                                    d += (Math.PI + Math.E) / (double) i;
+                                                    if (i % 1000 == 0)
+                                                        Thread.yield();
+                                                }
+                                                System.out.println(this);
+                                                if (--countDown == 0) return;
+                                            }
+                                        }
+                                    
                                         public static void main(String[] args) {
-                                            GenericMethods gm = new GenericMethods();
-                                            gm.f("");
-                                            gm.f(1); //autoboxing
-                                            gm.f(1.0);
-                                            gm.f(1.0F);
-                                            gm.f(‘c’);
-                                            gm.f(gm);
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            for (int i = 0; i < 5; i++)
+                                                exec.execute(
+                                                        new SimplePriorities(Thread.MIN_PRIORITY));
+                                            exec.execute(
+                                                    new SimplePriorities(Thread.MAX_PRIORITY));
+                                            exec.shutdown();
                                         }
                                     }
                             </code>
@@ -489,254 +523,324 @@
             </section>
             <section>
                 <div class="down-3">
-                    <h2> 再看容器 </h2>
+                    <h2> Deamon 线程 </h2>
                 </div>
-                <div class="down-1">
+                <div class="">
                     <pre class="java">
                                 <code data-trim>
-                                    public class Holder&lt;T&gt; {
-                                            private T obj;
-                                            public void set(T obj){
-                                                this.obj = obj;
+                                        public class SimpleDaemons implements Runnable {
+                                            public void run() {
+                                                try {
+                                                    while (true) {
+                                                        TimeUnit.MILLISECONDS.sleep(100);
+                                                        print(Thread.currentThread() + " " + this);
+                                                    }
+                                                } catch (InterruptedException e) {
+                                                    print("sleep() interrupted");
+                                                }
                                             }
-                                            public T get(){
-                                                return obj;
+                                            public static void main(String[] args) throws Exception {
+                                                for (int i = 0; i &lt; 10; i++) {
+                                                    Thread daemon = new Thread(new SimpleDaemons());
+                                                    daemon.setDaemon(true); // Must call before start()
+                                                    daemon.start();
+                                                }
+                                                print("All daemons started");
+                                                TimeUnit.MILLISECONDS.sleep(99);
                                             }
-                                            public static void main(String[] args){
-                                                Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
-                                                holder.set(1);
-                                                //holder.set("Abc"); // error
-                                                Integer obj = holder.get(); //无须cast
-                                            }       
-                                    }
-                                </code>
-                                                            
+                                        }
+                                </code>                   
                             </pre>
                 </div>
-
-                <div class="down-1  large danger center">
-                    <span class="fragment"> 多完美！</span> <span class="fragment">
-                        可惜这只是编译时刻... 因为运行时的类型信息被擦掉了</span>
+                <div class="smaller danger center">
+                    后台运行线程，当所有非后台线程结束时，应用退出，所有Deamon线程被杀😢
                 </div>
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2> 擦除 </h2>
+                    <h2>小结一下 </h2>
                 </div>
-                <div class="down-1">
-                    <pre class="java">
+
+                <div class="down-5">
+                    Java关于线程编程的抽象
+                </div>
+                <div class="down-3">
+                    <code>Thread</code>对象像是运载火箭，<code>Runnable</code>/<code>Callable</code>的实现对象就是一个荷载（payload）
+
+                </div>
+
+                <div class="down-5  large danger center">
+                    Runnable/Callable --> Task
+                </div>
+                <div class="down-1  large danger center">
+                    Thread --> let tasks go </div>
+            </section>
+
+
+
+            <section>
+                <div class="down-30 center larger">
+                    中级篇</div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Join </h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
                                     <code data-trim>
-                                            public class Computer&lt;T extends Disk&gt;{
-                                                private T disk;   // 运行时disk是Disk类型
-                                                Computer(T disk){
-                                                    disk = disk;
+                                            class Sleeper extends Thread {
+                                                private int duration;
+                                            
+                                                public Sleeper(String name, int sleepTime) {
+                                                    super(name);
+                                                    duration = sleepTime;
+                                                    start();
+                                                }
+                                            
+                                                public void run() {
+                                                    try {
+                                                        sleep(duration);
+                                                    } catch (InterruptedException e) {
+                                                        print(getName() + " was interrupted. " +
+                                                                "isInterrupted(): " + isInterrupted());
+                                                        return;
+                                                    }
+                                                    print(getName() + " has awakened");
                                                 }
                                             }
                                     </code>
                                                                 
                                 </pre>
-                </div>
-
-                <div class="down-1  large danger center">
-                    <span class="fragment">
-                        Java泛型的实现方式就是将类型参数用边界类型替换，在上面的例子中就是把T用Disk替换。这种实现方式看上去就像是把具体的类型（某种硬盘，机械的或者是固态的），擦除到了边界类型（它们的父类Disk)。</span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>这两个是相同类型么？ </h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                                ArrayList&lt;Integer&gt; intList = new ArrayList&lt;&gt;();
-                                ArrayList rawList = new ArrayList();
-                                
-                                System.out.println(intList.getClass().getSimpleName());
-                                System.out.println(rawList.getClass().getSimpleName());
-                        </code>
-                                                    
-                    </pre>
-                </div>
-
-
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2> 擦除的后果 </h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                            <code data-trim>
-                                public class Holder&lt;T&gt; {
-                                    private T obj;
-                                    public void set(T obj){
-                                        this.obj = obj;
-                                    }
-                                    public T get(){
-                                        return obj;
-                                    }
-                                    public void testT(Object arg){
-                                        if (arg instanceof T){ ... } //编译错误
-                                        T var = new T(); //编译错误
-                                        T[] array = new T[100]; //编译错误
-                                        }
-                                    }
-                                }
-                            </code>
-                                                        
-                        </pre>
-                </div>
-
-                <div class="down-1  large danger center">
-                    <span class="fragment">
-                        这劳什子有何用？！</span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>T存在的意义</h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                                public class Holder&lt;T&gt; {
-                                    private T obj; //在编译时，该类中的所有的T都会被替换为边界类型Object。
-                                    public void set(T obj){
-                                        this.obj = obj;
-                                    }
-                                    public T get(){
-                                        return obj;
-                                    }
-                                    public static void main(String[] args){
-                                        Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
-                                        //编译器会检查实参是不是一个Integer，
-                                        //虽然这里的1是int类型，但是因为自动包装机制的存在，
-                                        //他会被转化为一个Integer，因此能够通过类型检查。
-                                        holder.set(1); 
-                                        //编译器也会进行类型检查，
-                                        //并且自动插入一个Object类型到Integer类型的转型操作。
-                                        Integer obj = holder.get();
-                                    }       
-                                }
-                        </code>                     
-                    </pre>
-                </div>
-            </section>
-            <section>
-                <div class="down-3">
-                    <h2>泛型的实际实现</h2>
-                </div>
-                <div class="down-3">对泛型的处理全部集中在编译期，在编译时，编译器会执行如下操作: </div>
-                <div class="down-1">
-                    <div class="down-1">
-                        <ul>
-                            <li class="down-3">
-                                会将泛型类的类型参数都用边界类型替换
-                            </li>
-                            <li class="down-3">
-                                对于传入对象给方法形参的指令，编译器会执行一个类型检查，看传入的对象是不是类型参数所指定的类型
-                            </li>
-                            <li class="down-3">
-                                对于返回类型参数表示对象的指令，也会执行一个类型检查，还会插入一个自动的向下转型，将对象从边界类型向下转型到类型参数所表示的类型
-                            </li>
-                        </ul>
                     </div>
-                </div>
-
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2> 所以这些都是错的 </h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                            public class Holder&lt;T&gt; {
-                                private T obj;
-                                public void set(T obj){
-                                    this.obj = obj;
-                                }
-                                public T get(){
-                                    return obj;
-                                }
-                                public void testT(Object arg){
-                                    if (arg instanceof T){ ... } //编译错误
-                                    T var = new T(); //编译错误
-                                    T[] array = new T[100]; //编译错误
-                                    }
-                                }
-                            }
-                        </code>
-                                                    
-                    </pre>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>如果真想生成泛型对象？</h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                            <code data-trim>
-                                class Holder&lt;T&gt;{
-                                    private T t;
-                                    public void init(IFactory&lt;T&gt; factory){
-                                        this.t = factory.create();  // 此处即为new T()的工厂方法的实现
-                                    }
-                                }
-                                
-                                interface IFactory&lt;T&gt;{  //接口也可以参数化
-                                    T create();
-                                }
-                                
-                                class IntegerFactory implements IFactory&lt;Integer&gt;{
-                                    public Integer create(){
-                                        return new Integer(10);
-                                    }
-                                }
-                                
-                                public class newTwithFactory{
-                                    public static void main(String[] args){
-                                        Holder&lt;Integer&gt; holder = new Holder&lt;&gt;();
-                                        holder.init(new IntegerFactory());
-                                    }
-                                }
-                            </code>
-                                                        
-                        </pre>
-                </div>
-            </section>
-            <section>
-                <div class="down-3">
-                    <h2>或者可以使用RTTI</h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                            <code data-trim>
-                                    class Holder&lt;T&gt;{
-                                            private T t;
-                                            private Class&lt;T&gt; kind;
-                                            public Holder(Class&lt;T&gt; kind){
-                                                this.kind = kind;
-                                            }
-                                            public void init(){
-                                                try{
-                                                    this.t = kind.newInstance();
-                                                }catch (Exception e){
-                                                    e.printStackTrace();
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                    <code data-trim>
+                                            class Joiner extends Thread {
+                                                private Sleeper sleeper;
+                                            
+                                                public Joiner(String name, Sleeper sleeper) {
+                                                    super(name);
+                                                    this.sleeper = sleeper;
+                                                    start();
+                                                }
+                                            
+                                                public void run() {
+                                                    try {
+                                                        sleeper.join();
+                                                    } catch (InterruptedException e) {
+                                                        print("Interrupted");
+                                                    }
+                                                    print(getName() + " join completed");
                                                 }
                                             }
-                                            public static void main(String[] args) {
-                                                Holder&lt;Integer&gt; holder = new Holder&lt;&gt;(Integer.class);
-                                                holder.init();
+                                            
+                                            public class Joining {
+                                                public static void main(String[] args) {
+                                                    Sleeper
+                                                            sleepy = new Sleeper("Sleepy", 1500),
+                                                            grumpy = new Sleeper("Grumpy", 1500);
+                                                    Joiner
+                                                            dopey = new Joiner("Dopey", sleepy),
+                                                            doc = new Joiner("Doc", grumpy);
+                                                    grumpy.interrupt();
+                                                }
                                             }
+                                    </code>
+                                                                
+                                </pre>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Uncaught Exceptions </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                    public class ExceptionThread implements Runnable {
+                                        public void run() {
+                                            throw new RuntimeException();
+                                        }
+                                    
+                                        public static void main(String[] args) {
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            exec.execute(new ExceptionThread());
+                                        }
+                                    }
+                                    
+                                    public class NaiveExceptionHandling {
+                                        public static void main(String[] args) {
+                                            try {
+                                                ExecutorService exec =
+                                                        Executors.newCachedThreadPool();
+                                                exec.execute(new ExceptionThread());
+                                            } catch (RuntimeException ue) {
+                                                // This statement will NOT execute!
+                                                System.out.println("Exception has been handled!");
+                                            }
+                                        }
+                                    }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+
+                <div class="down-1  large danger center">
+                    Exception in thread "pool-1-thread-1" java.lang.RuntimeException
+                    at concurrency.ExceptionThread.run(ExceptionThread.java:7)
+                    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+                    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+                    at java.lang.Thread.run(Thread.java:745)
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>UncaughtExceptionHandler</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                        <code data-trim>
+                                                class ExceptionThread2 implements Runnable {
+                                                    public void run() {
+                                                        Thread t = Thread.currentThread();
+                                                        System.out.println("run() by " + t);
+                                                        System.out.println(
+                                                                "eh = " + t.getUncaughtExceptionHandler());
+                                                        throw new RuntimeException();
+                                                    }
+                                                }
+                                                
+                                                class MyUncaughtExceptionHandler implements
+                                                        Thread.UncaughtExceptionHandler {
+                                                    public void uncaughtException(Thread t, Throwable e) {
+                                                        System.out.println("caught " + e);
+                                                    }
+                                                }
+                                        </code>
+                                                                    
+                                    </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                        <code data-trim>
+                                                class HandlerThreadFactory implements ThreadFactory {
+                                                    public Thread newThread(Runnable r) {
+                                                        System.out.println(this + " creating new Thread");
+                                                        Thread t = new Thread(r);
+                                                        System.out.println("created " + t);
+                                                        t.setUncaughtExceptionHandler(
+                                                                new MyUncaughtExceptionHandler());
+                                                        System.out.println(
+                                                                "eh = " + t.getUncaughtExceptionHandler());
+                                                        return t;
+                                                    }
+                                                }
+                                                
+                                                public class CaptureUncaughtException {
+                                                    public static void main(String[] args) {
+                                                        ExecutorService exec = Executors.newCachedThreadPool(
+                                                                new HandlerThreadFactory());
+                                                        exec.execute(new ExceptionThread2());
+                                                        exec.shutdown();
+                                                    }
+                                                }
+                                        </code>
+                                                                    
+                                    </pre>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>或者简单一点</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                                <code data-trim>
+                                        class HandlerThreadFactory implements ThreadFactory {
+                                            public Thread newThread(Runnable r) {
+                                                System.out.println(this + " creating new Thread");
+                                                Thread t = new Thread(r);
+                                                System.out.println("created " + t);
+                                                t.setUncaughtExceptionHandler(
+                                                        new MyUncaughtExceptionHandler());
+                                                System.out.println(
+                                                        "eh = " + t.getUncaughtExceptionHandler());
+                                                return t;
+                                            }
+                                        }
+                                        
+                                        public class CaptureUncaughtException {
+                                            public static void main(String[] args) {
+                                                ExecutorService exec = Executors.newCachedThreadPool(
+                                                        new HandlerThreadFactory());
+                                                exec.execute(new ExceptionThread2());
+                                                exec.shutdown();
+                                            }
+                                        }
+                                </code>
+                                                            
+                            </pre>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 资源共享问题 </h2>
+                </div>
+                <div class="down-9">
+                    一个葫芦娃在战场上可以随意走，多个葫芦娃在战场上是随意走，那就会撞头。
+
+                </div>
+                <div class="down-5">
+                    因为一个空间位置，是不能共享的。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>示例</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                    public abstract class IntGenerator {
+                                        private volatile boolean canceled = false;
+                                    
+                                        public abstract int next();
+                                    
+                                        // Allow this to be canceled:
+                                        public void cancel() {
+                                            canceled = true;
+                                        }
+                                    
+                                        public boolean isCanceled() {
+                                            return canceled;
+                                        }
+                                    }
+                                    
+                                    public class EvenGenerator extends IntGenerator {
+                                        private int currentEvenValue = 0;
+                                    
+                                        public int next() {
+                                            ++currentEvenValue; // Danger point here!
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        }
                                     }
                             </code>
                                                         
@@ -745,111 +849,159 @@
             </section>
             <section>
                 <div class="down-3">
-                    <h2>边界 Bounds</h2>
-                </div>
-                <div class="down-3">
-                    用<code>extends</code>申明对参数类型的限制条件
+                    <h2>EvenChecker</h2>
                 </div>
                 <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                                interface HasColor{ java.awt.Color getColor(); }
-
-                                class Colored &lt;T extends HasColor&gt;{...}
-
-                                class Dimension { public int x,y,z; }
-
-                                class ColoredDimension &lt;T extends HasColor & Dimension&gt;{...} //错误！
-                                class ColoredDimension &lt;T extends Dimension & HasColor&gt;{
+                    <pre class="java tiny">
+                            <code data-trim>
+                                    public class EvenChecker implements Runnable {
+                                        private IntGenerator generator;
+                                        private final int id;
                                     
-                                }
-                        </code>              
-                    </pre>
+                                        public EvenChecker(IntGenerator g, int ident) {
+                                            generator = g;
+                                            id = ident;
+                                        }
+                                        public void run() {
+                                            while (!generator.isCanceled()) {
+                                                int val = generator.next();
+                                                if (val % 2 != 0) {
+                                                    System.out.println(val + " not even!");
+                                                    generator.cancel(); // Cancels all EvenCheckers
+                                                }
+                                            }
+                                        }
+                                        // Test any type of IntGenerator:
+                                        public static void test(IntGenerator gp, int count) {
+                                            System.out.println("Press Control-C to exit");
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            for (int i = 0; i &lt; count; i++)
+                                                exec.execute(new EvenChecker(gp, i));
+                                            exec.shutdown();
+                                        }
+                                        // Default value for count:
+                                        public static void test(IntGenerator gp) {
+                                            test(gp, 10);
+                                        }   
+                                        public static void main(String[] args) {
+                                            EvenChecker.test(new EvenGenerator());
+                                        }
+                                    
+                                    }
+                            </code>
+                                                        
+                        </pre>
                 </div>
             </section>
             <section>
                 <div class="down-3">
-                    <h2>看看这个例子</h2>
+                    <h2>解决方法</h2>
+                </div>
+                <div class="down-3">
+                    对资源加锁，使得对资源的访问顺序化，确保在某一时刻只有一个任务在使用共享资源（使其互斥）
+                </div>
+                <div class="down-3 center">
+                    Mutual Exclusion （Mutex）
+
+                </div>
+
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Synchronized</h2>
                 </div>
 
                 <div class="down-9">
                     <pre class="java">
                             <code data-trim>
-                                class Fruit{}
-                                class Apple extends Fruit{}
-
-                                public class NonConvariantGeneric {
-                                    List&lt;Fruit&gt; flist = new ArrayList&lt;Apple&gt;(); //编译错误
-                                }
+                                    public class SynchronizedEvenGenerator extends IntGenerator {
+                                        private int currentEvenValue = 0;
+                                    
+                                        public synchronized int next() {
+                                            ++currentEvenValue;
+                                            Thread.yield(); 
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        }
+                                    
+                                        public static void main(String[] args) {
+                                            EvenChecker.test(new SynchronizedEvenGenerator());
+                                        }
+                                    }
                             </code>              
                         </pre>
                 </div>
             </section>
             <section>
                 <div class="down-3">
-                    <h2>再看看这个例子</h2>
+                    <h2>Lock</h2>
                 </div>
 
                 <div class="down-1">
                     <pre class="java">
                         <code data-trim>
-                            class Fruit {}
-                            class Apple extends Fruit {}
-                            
-                            class Plate&lt;T&gt;{
-                                private T item;
-                                public Plate(T t){item=t;}
-                                public void set(T t){item=t;}
-                                public T get(){return item;}
-                            }
-                            
-                            //现在我定义一个“水果盘子”，逻辑上水果盘子当然可以装苹果。
-                            //但实际上Java编译器不允许这个操作。会报错，“装苹果的盘子”无法转换成“装水果的盘子”。
-                            Plate&lt;Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple()); //编译错误！
+                                public class MutexEvenGenerator extends IntGenerator {
+                                    private int currentEvenValue = 0;
+                                    private Lock lock = new ReentrantLock();
+                                
+                                    public int next() {
+                                        //加锁
+                                        lock.lock();
+                                        try {
+                                            ++currentEvenValue;
+                                            Thread.yield();
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        } finally {
+                                            //一定要用try-catch的finally去释放锁
+                                            lock.unlock();
+                                        }
+                                    }
+                                    public static void main(String[] args) {
+                                        EvenChecker.test(new MutexEvenGenerator());
+                                    }
+                                } 
                         </code>              
                     </pre>
                 </div>
-                <div class="down-1  large danger center">
-                    <span class="fragment">
-                        “苹果” IS-A “水果”</span>
+                <div class="smaller center">
+
+                    <code>ReentrantLock</code>允许尝试加锁：<code>lock.tryLock(2, TimeUnit.SECONDS)</code>，若失败做其他处理。
+
                 </div>
-                <div class="down-1  large danger center">
-                    <span class="fragment">
-                        BUT “装苹果的盘子” NOT-IS-A “装水果的盘子”！</span>
-                </div>
+
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2>协变与逆变</h2>
+                    <h2>Critical Sections 临界区</h2>
                 </div>
-
-                <div class="down-9">
-                    协变与逆变(Covariance and contravariance )是在计算机科学中，描述具有父/子型别关系的多个型别通过型别构造器、构造出的多个复杂型别之间是否有父/子型别关系的用语。
-                </div>
-                <div class="down-3 right tiny">
-                    https://zh.wikipedia.org/wiki/%E5%8D%8F%E5%8F%98%E4%B8%8E%E9%80%86%E5%8F%98
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>通配符</h2>
-                </div>
-
-                <div class="down-9">
+                <div>
                     <pre class="java">
                             <code data-trim>
-                                    class Fruit{}
-                                    class Apple extends Fruit{}
-                                    public class GenericsAndCovariance {
-                                        public static void main(String[] args){
-                                            //一个能放水果以及一切是水果派生类的盘子,啥水果都能放的盘子
-                                            //Plate&lt;？ extends Fruit&gt;和Plate&lt;Apple&gt;最大的区别就是：
-                                            //Plate&lt;？ extends Fruit&gt;是Plate&lt;Fruit&gt;以及Plate&lt;Apple&gt;的基类。
-                                            Plate&lt;? extends Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple());
-                                            // a list of any type that's inherited from Fruit
-                                            List&lt;? extends Fruit&gt; flist = new ArrayList&lt;Apple&gt;();
+                                    synchronized(syncObject){
+                                        //balabala
+                                    }
+                            </code>              
+                        </pre>
+                    <pre class="java">
+                            <code data-trim>
+                                    class PairManager1 extends PairManager {
+                                        public synchronized void increment() {  // Synchronize the entire method
+                                            p.incrementX();
+                                            p.incrementY();
+                                            store(getPair());
+                                        }
+                                    }
+                                    class PairManager2 extends PairManager {
+                                        public void increment() {
+                                            Pair temp;
+                                            synchronized (this) {   // Use a critical section:
+                                                p.incrementX();
+                                                p.incrementY();
+                                                temp = getPair();
+                                            }
+                                            store(temp);
                                         }
                                     }
                             </code>              
@@ -859,358 +1011,320 @@
             </section>
             <section>
                 <div class="down-3">
-                    <h2>扩展一下</h2>
+                    <h2>Lock on Object</h2>
                 </div>
 
-                <div class="down-9">
-                    <pre class="java">
-                            <code data-trim>
-                                    class Food{}
-                                    //Lev 2
-                                    class Fruit extends Food{}
-                                    class Meat extends Food{}
-                                    //Lev 3
-                                    class Apple extends Fruit{}
-                                    class Banana extends Fruit{}
-                                    class Pork extends Meat{}
-                                    class Beef extends Meat{}
-                                    //Lev 4
-                                    class RedApple extends Apple{}
-                                    class GreenApple extends Apple{}
-                            </code>              
-                        </pre>
-                </div>
-
-            </section>
-            <section>
-
-                <div class="down-3">
-                    <h2>extends</h2>
-                </div>
-
-                <div class="down-1 center">
-                    <pre class="java ">
-                        <code data-trim>
-                                Plate&lt;？ extends Fruit&gt;
-                        </code>              
-                    </pre>
-
-                    <div class="center down-1">
-                        <img src="https://itimetraveler.github.io/gallery/java-genericity/lowerBounds.png" />
-
-                    </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>But</h2>
-                </div>
-
-                <div class="down-1">
-                    <pre class="java">
-                                <code data-trim>
-                                        class Fruit{}
-                                        class Apple extends Fruit{}
-                                        public class GenericsAndCovariance {
-                                            public static void main(String[] args){
-                                            Plate&lt;? extends Fruit&gt; p=new Plate&lt;Apple&gt;(new Apple());
-                                            
-                                                //不能存入任何元素
-                                                p.set(new Fruit());    //Error
-                                                p.set(new Apple());    //Error
-                                                //读取出来的东西只能存放在Fruit或它的基类里。
-                                                Fruit newFruit1=p.get();
-                                                Object newFruit2=p.get();
-                                                Apple newFruit3=p.get();    //Error
-                                            }
-                                        }
-                                </code>              
-                            </pre>
-                </div>
-                <div class=" large danger center">
-                    <span class="fragment">
-                        "A Plate of any type that's inherited from Fruit"的意思不是"a Plate will hold any type of Fruit"
-                    </span>
-                    <span class="fragment">
-                        , but means "some specific type which is not specify" </span>
-                </div>
-
-            </section>
-
-            <section>
-
-                <div class="down-3">
-                    <h2>super</h2>
-                </div>
-
-                <div class="down-1 center">
-                    <pre class="java ">
-                            <code data-trim>
-                                    //表达的就是相反的概念：一个能放水果以及一切是水果基类的盘子。
-                                    //Plate&lt;？ super Fruit&gt;是Plate&lt;Fruitt&gt;的基类，但不是Plate&lt;Applet&gt;的基类
-                                    Plate&lt;？ super Fruit&gt;
-                            </code>              
-                        </pre>
-
-                    <div class="center down-1">
-                        <img src="https://itimetraveler.github.io/gallery/java-genericity/upperBounds.png" />
-
-                    </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>But</h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                        <code data-trim>
-                            class Fruit{}
-                            class Apple extends Fruit{}
-                            public class GenericsAndCovariance {
-                                public static void main(String[] args){
-                                Plate&lt;? super Fruit&gt; p=new Plate&lt;Fruit&gt;(new Fruit());
-                                    //存入元素正常
-                                    p.set(new Fruit());
-                                    p.set(new Apple());
-                                    //读取出来的东西只能存放在Object类里。
-                                    Apple newFruit3=p.get();    //Error
-                                    Fruit newFruit1=p.get();    //Error
-                                    Object newFruit2=p.get();
-                                }
-                            }
-                        </code>              
-                    </pre>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>But</h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                            <code data-trim>
-                                    List&lt;?&gt;
-
-                            </code>
-                            <code data-trim>
-                                    List
-
-                            </code>
-                            <code data-trim>
-                                    List&lt;Object&gt;
-                            </code>              
-                        </pre>
-                </div>
-                <div class=" large danger center">
-                    <span class="fragment">
-                        区别？ </span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>Overloading</h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                                <code data-trim>
-                                        public class UseList&lt;W,T&gt;{
-                                                void f(List&lt;T&gt; v){}
-                                                void f(List&lt;W&gt; v){}
-                                        }    
-                                </code>          
-                            </pre>
-                </div>
-                <div class=" large danger center">
-                    <span class="fragment">
-                        NO！</span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>Self-bounded types</h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                                    <code data-trim>
-                                            class SelfBounded&lt;T extends SelfBounded&lt;T&gt;&gt;{
-                                                    ...
-                                            }
-                                    </code>          
-                                </pre>
-                </div>
-                <div class=" large center">
-                    😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢😢
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        PP701～</span>
-                </div>
-            </section>
-            <section>
-                <div class="down-3">
-                    <h2>从简单的开始</h2>
-                </div>
-                <div class="down-5">
-                    <pre class="java">
-                        <code data-trim>
-                            public class BasicHolder&lt;T&gt; {
-                                T element;
-                                void set(T arg){this.element = arg;}
-                                T get(){return this.element;}
-                                void print(){
-                                    System.out.println(element.getClass().getSimpleName());
-                                }
-                            }
-                            
-                            public class SubType extends BasicHolder&lt;SubType&gt; {
-                                public static void main(String[] args){
-                                    SubType s1 = new SubType();
-                                    SubType s3 = s1.get();
-                                    s1.print();
-                                    s3.print();
-                                }
-                            }
-                        </code>          
-                    </pre>
-                </div>
-                <div class=" large danger center down-1">
-                    <span class="fragment">
-                        得到什么？ </span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>得到什么？</h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                            <code data-trim>
-                                public class SubType extends BasicHolder&lt;SubType&gt; {}
-                                public class Plate extends BasicHolder&lt;Plate&gt;{}
-                                ...
-                            </code>          
-                        </pre>
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        P703: ... the generic base class becomes a kind of template for comon functionality for all its
-                        derived class</span>
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        这跟实现一个父类有什么区别？</span>
-                </div>
-            </section>
-            <section>
-                <div class="down-3">
-                    <h2>跟普通继承关系的区别</h2>
-                </div>
-
-                <div class="down-9">
-                    ... but this functionality will use the derived type for all of its arguments and return values ...
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        干得漂亮</span>
-                </div>
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>还有一点小问题</h2>
-                </div>
-                <div class="down-9">
-                    <pre class="java">
-                            <code data-trim>
-                                class Other{}
-                                class BasicOther extends BasicHolder&lt;Other&gt;{}
-                                
-                                public static void main(String[] args){
-                                    BasicOther b = new BasicOther(), b2 = new BasicOther();
-                                    b.set(new Other());
-                                    Other other = b.get();
-                                    b.print();// Other
-                                }
-                            </code>          
-                        </pre>
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        没完全限制</span>
-                </div>
-
-            </section>
-            <section>
-                <div class="down-3">
-                    <h2>Self-bounded</h2>
-                </div>
-                <div class="down-1">
-                    <pre class="java">
-                            <code data-trim>
-                                class SelfBounded&lt;T extends SelfBounded&lt;T&gt;&gt; {
-                                    T element;
-                                    SelfBounded&lt;T&gt; set(T arg){
-                                        element = arg;
-                                        return this;
-                                    }
-                                    T get(){return element;}
-                                }
-                                
-                                class A extends SelfBounded&lt;A&gt; {}
-                                class B extends SelfBounded&lt;A&gt; {} //ok 
-                                class D;
-                                class E extends SelfBounded&lt;D&gt;{} //error
-                                
-                                public static void main(String[] args){
-                                        A a = new A();
-                                        a.set(new A());
-                                        a.print();
-                                
-                                        B b = new B(), a2 = new B();
-                                        //b.set(b2); //Error
-                                        //b.print();
-                                }
-                            </code>          
-                        </pre>
-                </div>
-                <div class=" large danger center down-3">
-                    <span class="fragment">
-                        ... forcing the generic to be used as its own bound argument
-                    </span>
-                </div>
-
-            </section>
-
-            <section>
-                <div class="down-3">
-                    <h2>高大上一点的说法</h2>
-                </div>
-
-                <div class="down-9 center larger">
-                    Argument covariance
-                </div>
-                <div class="down-3 center larger">
-                    &
-                </div>
-                <div class="down-3 center larger">
-                    Covariant return types
-                </div>
-            </section>
-
-            <section>
-
-                <div class="down-3">
-                    <h2>Rewrite 葫芦娃 with Generics</h2>
-                </div>
-                <div class="center down-9">
+                <div class="center down-1">
                     <img
-                        src="https://camo.githubusercontent.com/a5cc35d2179c5bf861f6a8eeca25fc5fa3e876a2/687474703a2f2f656e676c6973682e6372692e636e2f6d6d736f757263652f696d616765732f323030392f30362f32342f34363334636172746f6e312e6a7067" />
+                        src="http://4.bp.blogspot.com/-kRUcoXzDmAM/T48eQOjNzuI/AAAAAAAAA38/TaU6Eub90uA/s1600/Object-Monitor-Threads.PNG" />
 
+                </div>
+
+            </section>
+            <section>
+
+                <div class="down-3">
+                    <h2>Thread local Storage</h2>
+                </div>
+
+                <div class="center down-1">
+                    <img src="https://i.stack.imgur.com/Dhws6.jpg" />
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>示例</h2>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class Accessor implements Runnable {
+                                                        private final int id;
+                                                    
+                                                        public Accessor(int idn) {
+                                                            id = idn;
+                                                        }
+                                                    
+                                                        public void run() {
+                                                            while (!Thread.currentThread().isInterrupted()) {
+                                                                ThreadLocalVariableHolder.increment();
+                                                                System.out.println(this);
+                                                                Thread.yield();
+                                                            }
+                                                        }
+                                                    
+                                                        public String toString() {
+                                                            return "#" + id + ": " +
+                                                                    ThreadLocalVariableHolder.get();
+                                                        }
+                                                    }
+                                                    
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    public class ThreadLocalVariableHolder {
+                                                        private static ThreadLocal&lt;Integer&gt; value =
+                                                                new ThreadLocal&lt;Integer&gt;() {
+                                                                    private Random rand = new Random(47);
+                                                    
+                                                                    protected synchronized Integer initialValue() {
+                                                                        return rand.nextInt(10000);
+                                                                    }
+                                                                };
+                                                    
+                                                        public static void increment() {
+                                                            value.set(value.get() + 1);
+                                                        }
+                                                    
+                                                        public static int get() {
+                                                            return value.get();
+                                                        }
+                                                    
+                                                        public static void main(String[] args) throws Exception {
+                                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                                            for (int i = 0; i &lt; 5; i++)
+                                                                exec.execute(new Accessor(i));
+                                                            TimeUnit.SECONDS.sleep(3);  // Run for a while
+                                                            exec.shutdownNow();         // All Accessors will quit
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>从竞争到协作</h2>
+                </div>
+
+                <div class="down-9 center">
+                    <pre class="java ">
+                            <code data-trim>
+                                    wait();
+                                    notify();
+                                    notifyAll();
+                            </code>              
+                        </pre>
+
+                    <div class="center down-1">
+                        <code>Object</code>类型上的三个方法
+
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>还是看个例子</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class Car {
+                                                        private boolean waxOn = false;
+                                                    
+                                                        public synchronized void waxed() {
+                                                            waxOn = true; // Ready to buff
+                                                            notifyAll();
+                                                        }
+                                                    
+                                                        public synchronized void buffed() {
+                                                            waxOn = false; // Ready for another coat of wax
+                                                            notifyAll();
+                                                        }
+                                                    
+                                                        public synchronized void waitForWaxing()
+                                                                throws InterruptedException {
+                                                            while (waxOn == false)
+                                                                wait();
+                                                        }
+                                                    
+                                                        public synchronized void waitForBuffing()
+                                                                throws InterruptedException {
+                                                            while (waxOn == true)
+                                                                wait();
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class WaxOn implements Runnable {
+                                                        private Car car;
+                                                    
+                                                        public WaxOn(Car c) {
+                                                            car = c;
+                                                        }
+                                                    
+                                                        public void run() {
+                                                            try {
+                                                                while (!Thread.interrupted()) {
+                                                                    printnb("Wax On! ");
+                                                                    TimeUnit.MILLISECONDS.sleep(200);
+                                                                    car.waxed();
+                                                                    car.waitForBuffing();
+                                                                }
+                                                            } catch (InterruptedException e) {
+                                                                print("Exiting via interrupt");
+                                                            }
+                                                            print("Ending Wax On task");
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>接上页</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                                <code data-trim>
+                                                        class WaxOff implements Runnable {
+                                                            private Car car;
+                                                        
+                                                            public WaxOff(Car c) {
+                                                                car = c;
+                                                            }
+                                                        
+                                                            public void run() {
+                                                                try {
+                                                                    while (!Thread.interrupted()) {
+                                                                        car.waitForWaxing();
+                                                                        printnb("Wax Off! ");
+                                                                        TimeUnit.MILLISECONDS.sleep(200);
+                                                                        car.buffed();
+                                                                    }
+                                                                } catch (InterruptedException e) {
+                                                                    print("Exiting via interrupt");
+                                                                }
+                                                                print("Ending Wax Off task");
+                                                            }
+                                                        }
+                                                </code>
+                                                                            
+                                            </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                                <code data-trim>
+                                                        public class WaxOMatic {
+                                                            public static void main(String[] args) throws Exception {
+                                                                Car car = new Car();
+                                                                ExecutorService exec = Executors.newCachedThreadPool();
+                                                                exec.execute(new WaxOff(car));
+                                                                exec.execute(new WaxOn(car));
+                                                                TimeUnit.SECONDS.sleep(5); // Run for a while...
+                                                                exec.shutdownNow(); // Interrupt all tasks
+                                                            }
+                                                        }
+                                                </code>
+                                                                            
+                                            </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>线程状态</h2>
+                </div>
+
+                <div class="center down-1">
+                    <img
+                        src="https://www.w3resource.com/w3r_images/java-threadclass-methods-and-threadstates-jimage1.png" />
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>wait和sleep的区别</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            调用wait方法时，线程在等待的时候会释放掉它所获得的monitor，但是调用Thread.sleep()方法时，线程在等待的时候仍然会持有monitor或者锁，wait方法应在同步代码块中调用，但是sleep方法不需要
+                        </li>
+                        <li>
+                            Thread.sleep()方法是一个静态方法，作用在当前线程上；但是wait方法是一个实例方法，并且只能在其他线程调用本实例的notify()方法时被唤醒 </li>
+
+                    </ul>
+
+                </div>
+                <div class=" large danger center">
+                    如果需要暂停线程一段特定的时间就使用sleep()方法，如果要实现线程间通信就使用wait()方法。
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-30 center larger">
+                    高级篇</div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>高级设施</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            CountDownLatch
+                        </li>
+                        <li>
+                            CyclicBarrier </li>
+                        <li>
+                            DelayQueue
+                        </li>
+                        <li>
+                            PriorityBlockingQueue
+                        </li>
+                        <li>
+                            ScheduledExector
+                        </li>
+                        <li>
+                            Semaphore
+                        </li>
+                        <li>
+                            Exchanger
+                        </li>
+                    </ul>
+
+                </div>
+                <div class=" large center">请看书
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-30 center larger">
+                    让你的葫芦娃们抖动起来！
                 </div>
             </section>
         </div>
