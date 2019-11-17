@@ -121,24 +121,51 @@
                 </section>
 
 
+                <section>
+                    <div class="down-30 center larger">
+                        基础篇 </div>
+                </section>
+
+
+
             <section>
                 <div class="down-3">
-                    <h2>Without Generics</h2>
+                    <h2>Runnable接口定义“任务”</h2>
                 </div>
-                <div class="down-9">
-                    <pre class="java">
+                <div class="down-1">
+                    <pre class="java tiny">
                         <code data-trim>
-                            class Stack{
-                                void push(Object o){...}
-                                Object pop(){...}
+                            ublic class LiftOff implements Runnable {
+                                protected int countDown = 10; // Default
+                                private static int taskCount = 0;
+                                private final int id = taskCount++;
+                            
+                                public LiftOff() {
+                                }
+                            
+                                public LiftOff(int countDown) {
+                                    this.countDown = countDown;
+                                }
+                            
+                                public String status() {
+                                    return "#" + id + "(" +
+                                            (countDown > 0 ? countDown : "Liftoff!") + "), ";
+                                }
+                            
+                                public void run() {
+                                    while (countDown-- > 0) {
+                                        System.out.print(status());
+                                        Thread.yield(); //后面解释
+                                    }
+                                }
                             }
-
-                            String s = "Hello";
-                            Stack st = new Stack();
-                            ...
-                            st.push(s);
-                            ...
-                            s = (String)st.pop();
+                            
+                            public class MainThread {
+                                public static void main(String[] args) {
+                                    LiftOff launch = new LiftOff();
+                                    launch.run();
+                                }
+                            }
                         </code>
                         
                     </pre>
@@ -147,109 +174,137 @@
 
             <section>
                 <div class="down-3">
-                    <h2>With Generics</h2>
+                    <h2>Thread</h2>
                 </div>
-                <div class="down-9">
+                <div class="down-5">
+                    <code> java.lang.Thread</code>
+
+                </div>
+                <div class="down-3">
                     <pre class="java">
                             <code data-trim>
-                                    class Stack&lt;A&gt;{ // 类参数
-                                            void push(A a){...}
-                                            A pop(){...}
+                                public class BasicThreads {
+                                    public static void main(String[] args) {
+                                        //把任务装进线程里
+                                        Thread t = new Thread(new LiftOff());
+                                        t.start();
+                                        System.out.println("Waiting for LiftOff");
                                     }
-                                    String s = "Hello";
-                                    Stack&lt;String&gt; st = new Stack&lt;String&gt;();
-                                    st.push(s);
-                                    ...
-                                    s = st.pop();
+                                }
                             </code>
                             
                         </pre>
                 </div>
+            <div class="down-1">Thread对象像是运载火箭，Runnable的实现对象就是一个荷载（payload）</div>
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2>葫芦娃中的例子</h2>
+                    <h2>或者</h2>
                 </div>
-                <div class="down-9">
-                    <pre class="java">
-                        <code data-trim>
-                                public class Position {
-                                    private Object holder;
-                                    public Position(Object holder) { 
-                                        this.holder = holder; 
-                                    }
-                                    Object get() { 
-                                        return holder; 
+                <div class="down-3">
+                    <pre class="java tiny">
+                        <code data-trim> 
+                            public class SimpleThread extends Thread {
+                                private int countDown = 5;
+                                private static int threadCount = 0;
+                            
+                                public SimpleThread() {
+                                    // Store the thread name:
+                                    super(Integer.toString(++threadCount));
+                                    start();
+                                }
+                            
+                                public String toString() {
+                                    return "#" + getName() + "(" + countDown + "), ";
+                                }
+                            
+                                public void run() {
+                                    while (true) {
+                                        System.out.print(this);
+                                        if (--countDown == 0)
+                                            return;
                                     }
                                 }
+                            
+                                public static void main(String[] args) {
+                                    for (int i = 0; i &lt; 5; i++)
+                                        new SimpleThread();
+                                }
+                            }
                         </code>
                         
                     </pre>
                 </div>
-
-                <div class="down-5 fragment danger center"><code>Postion</code>里放任意东西</div>
+                <div class="down-1 fragment small center">实际上<code>public class Thread implements Runnable</code></div>
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2>改进一下</h2>
+                    <h2>多线程，走起</h2>
                 </div>
                 <div class="down-9">
                     <pre class="java">
                                     <code data-trim>
-                                            public class Position {
-                                                private Creature holder;
-                                                public Position(Creature holder) { 
-                                                    this.holder = holder; 
-                                                }
-                                                Creature get() { 
-                                                    return holder; 
-                                                }
+                                        public class MoreBasicThreads {
+                                            public static void main(String[] args) {
+                                                for (int i = 0; i < 5; i++)
+                                                    new Thread(new LiftOff()).start();
+                                                System.out.println("Waiting for LiftOff");
                                             }
+                                        }
                                     </code>
                                     
                                 </pre>
                 </div>
 
-                <div class="down-5 fragment danger center">
-                    通过构造方法和get方法我们能看出<code>Position</code>里放的是<code>Creature</code></div>
+                <div class="down-5 fragment center">
+                    直接启动多个<code>Thread</code></div>
             </section>
 
             <section>
                 <div class="down-3">
-                    <h2>但如果是这样呢？</h2>
+                    <h2>或者用ExecutorService启动</h2>
                 </div>
                 <div class="down-9">
                     <pre class="java">
                         <code data-trim>
-                                public class Position {
-                                    private Creature holder;
+                            public class CachedThreadPool {
+                                public static void main(String[] args) {
+                                    ExecutorService exec = Executors.newCachedThreadPool();
+                                    for (int i = 0; i < 5; i++)
+                                        exec.execute(new LiftOff());
+                                    exec.shutdown();
                                 }
+                            }
                         </code>
                         
                     </pre>
                 </div>
 
-                <div class="down-5 fragment danger center">从外部观察，何以了解<code>Position</code>里是放<code>Creature</code>的?
+                <div class="down-5 fragment danger center"><code>CachedThreadPool</code>根据需要创建新线程的线程池，如果现有线程没有可用的，则创建一个新线程并添加到池中，如果有被使用完但是还没销毁的线程，就复用该线程
                 </div>
             </section>
             <section>
                 <div class="down-3">
-                    <h2>显式说明一下</h2>
+                    <h2>线程池？</h2>
                 </div>
                 <div class="down-9">
-                    <pre class="java">
-                        <code data-trim>
-                                public class Position&lt;T&gt;{
-                                        private T holder;
-                                }
-                        </code>
-                        
-                    </pre>
-                </div>
+                    <ul>
+                        <li>
+                                在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。
+                        </li>
+                        <li>
+                                在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。
+                        </li>
+                        <li>
+                                所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁。
+                        </li>
+                        <li>
+                                如何利用已有对象来服务就是一个需要解决的关键问题，其实这就是一些"池化资源"技术产生的原因。
+                        </li>
+                    </ul>
 
-                <div class="down-5 fragment danger center">显式表达“某种不确定”: Position里是要放东西的，但不确定是什么东西
                 </div>
             </section>
             <section>
