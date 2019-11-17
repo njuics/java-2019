@@ -16,13 +16,6 @@
                     并发 Concurrency
                 </div>
             </section>
-            <section>
-                <div class="down-30 center">
-                    The world is concurrent.</div>
-                <div class="down-3 right">
-                    -- Joe Armstrong
-                </div>
-            </section>
 
             <section>
                 <div class="down-30 right">
@@ -32,6 +25,17 @@
                     -- Leibniz
                 </div>
             </section>
+
+
+
+            <section>
+                <div class="down-30 center">
+                    The world is concurrent.</div>
+                <div class="down-3 right">
+                    -- Joe Armstrong
+                </div>
+            </section>
+
 
             <section>
                 <div class="down-30 center larger">
@@ -447,17 +451,17 @@
                 </div>
 
                 <div class="center small">
-                    运行结果看起来很均衡，但实际并不完全如此... </div>
+                    运行结果看起来应该平稳，但实际并不完全如此... </div>
             </section>
 
             <section>
                 <div class="down-3">
                     <h2> Yeild 让位  </h2>
                 </div>
-                <div class="down-5">
+                <!-- <div class="down-5">
                     <code>yield</code>和<code>sleep</code>的主要区别是
-                </div>
-                <div class="down-3">
+                </div> -->
+                <div class="down-9">
                     <ul>
                         <li>
                             yield方法会临时暂停当前正在执行的线程，来让有同样优先级的正在等待的线程有机会执行 </li>
@@ -496,7 +500,7 @@
                                             Thread.currentThread().setPriority(priority);
                                             while (true) {
                                                 // An expensive, interruptable operation:
-                                                for (int i = 1; i < 100000; i++) {
+                                                for (int i = 1; i &lg; 100000; i++) {
                                                     d += (Math.PI + Math.E) / (double) i;
                                                     if (i % 1000 == 0)
                                                         Thread.yield();
@@ -508,7 +512,7 @@
                                     
                                         public static void main(String[] args) {
                                             ExecutorService exec = Executors.newCachedThreadPool();
-                                            for (int i = 0; i < 5; i++)
+                                            for (int i = 0; i &lg; 5; i++)
                                                 exec.execute(
                                                         new SimplePriorities(Thread.MIN_PRIORITY));
                                             exec.execute(
@@ -677,7 +681,8 @@
                                             exec.execute(new ExceptionThread());
                                         }
                                     }
-                                    
+                            </code>
+                            <code  data-trim>
                                     public class NaiveExceptionHandling {
                                         public static void main(String[] args) {
                                             try {
@@ -763,7 +768,7 @@
                     </div>
                 </div>
             </section>
-            <section>
+            <!-- <section>
                 <div class="down-3">
                     <h2>或者简单一点</h2>
                 </div>
@@ -796,7 +801,7 @@
                             </pre>
                 </div>
 
-            </section>
+            </section> -->
 
             <section>
                 <div class="down-3">
