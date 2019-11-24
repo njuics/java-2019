@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>图形化</title>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          GUI编程
+        </div>
+        <div class="down-3 center">
+          "Make simple things easy, and difficult things possible."
+        </div>
+        <div class="down-3">
+          <a href="https://docs.oracle.com/javase/tutorial/uiswing/index.html"> [UI Swing] </a>
+          <a href="https://docs.oracle.com/javase/tutorial/2d/index.html"> [2D] </a>
+          <a href="https://docs.oracle.com/javase/8/javase-clienttechnologies.htm"> [Java Client] </a>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>JAVA GUI......过时了吗？</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/Java2D.jpeg" style="width:60%"/>
+        </div>
+      </section>
+      
+      <section>
+        <div class="down-3">
+          <h3>JAVA GUI......过时了吗？</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/SwingSet.jpeg" style="width:60%"/>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>JAVA GUI......过时了吗？</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/JavaFX-Modena.png" style="width:60%"/>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>JAVA GUI......过时了吗？</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/JavaFX-Ensemble8.png" style="width:60%"/>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>JAVA GUI......过时了吗？</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/minecraft.jpg" style="width:75%"/>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>Java GUI APIs</h2>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>Java 1.0: AWT APIs</li><br>
+            <li>Java 1.1: AWT APIs extensive</li><br>
+            <li>Java 2: JFC - Java Foundation Classes</li><br>
+              <ul><li>AWT; Swing; Java2D APIs</li><br></ul>
+            <li>Java 7 +: JavaFX</li>
+          </ul>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>图形界面设计基础</h2>
+        </div>
+        <div class="down-5">
+          <h5>AWT: Abstract Window Toolkit，依赖于主平台绘制用户界面组件</h5>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li><code>java.awt.*</code></li>
+          </ul>
+        </div>
+        <div class="down-3">
+          <h5>Swing: AWT的改良版，在主平台提供的窗口中绘制和管理界面组件</h5>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li><code>javax.swing.*</code></li>
+            <li><code>java.awt.event.*</code></li>
+          </ul>
+        </div>
+        <div class="down-3">
+          <h5>JavaFX: 应用于创建Rich Internet Applications (RIAs)</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li><code>javafx.application.*</code></li>
+            <li><code>javafx.scene.*</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>AWT</h2>
+        </div>
+        <div class="down-5">
+          <h4>- The AWT is written in ... C</h4>
+        </div>
+        <div class="down-3">
+          <h4>- For every AWT component, there is a native peer.</h4>
+        </div>
+        <div class="down-3">
+          <h4>- Flaws</h4>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>Graphic OS's vary in behavior</li><br>
+            <li>Performance - using native controls is actually slower</li>
+          </ul>
+        </div>
+        <div class="down-3">
+          <h4>- AWT controls are called <font color=red>HeavyWeight</font></h4>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>Swing APIs</h2>
+        </div>
+        <div class="down-5">
+          <h5>三种类或接口</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li><code>javax.swing.JComponent</code> 及其子类（J-）</li><br>
+            <li>提供重要服务的非可见支持类（no J-）</li><br>
+            <li>相关接口</li>
+          </ul>
+        </div>
+        <div class="down-3">
+          <h5>轻量级组件 vs 重量级组件</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>重量级组件：在底层的本地窗口支持操作系统中有一个对等组件</li><br>
+            <li>轻量级组件：没有本地对等组件</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>AWT vs. Swing</h3>
+        </div>
+        <div class="down-5 center">
+          <img src="content/images/11/SwingAWT.jpeg" style="width:60%"/>
+        </div>
+      </section>
+
+       <section >
+          <div class="down-3">
+            <h2>组件和容器</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>组件(Component)是图形界面的基本元素，用户可以直接操作，例如按钮。容器(Container)是图形界面的复合元素，容器可以包含组件，例如面板。 </li><br>
+              <li>为了统一管理组件和容器，为所有组件类定义超类，把组件的共有操作都定义在Component类中。同样，为所有容器类定义超类Container类，把容器的共有操作都定义在Container类中。例如，Container类中定义了add()方法，大多数容器都可以用add()方法向容器添加组件。</li><br>
+              <li>Component、Container和Graphics类是AWT库中的关键类。为能层次地构造复杂的图形界面，容器被当作特殊的组件，可以把容器放入另一个容器中。</li>
+            </ul>
+          </div>
+        </section>
+      
+        <section>
+          <div class="down-3">
+            <h3>GUI Class Hierarchy</h3>
+          </div>
+          <div class="down-5 center">
+            <img src="content/images/11/GuiHierarchy.jpeg" style="width:60%"/>
+          </div>
+          <div class="down-3 row fragment">
+              <div>
+                  <div class="center strong danger">Composite设计模式！</div>
+              </div>
+            </div>  
+        </section>
+
+        <section>
+          <div class="down-3">
+            <h3>Container Classes</h3>
+          </div>
+          <div class="down-5 center">
+            <img src="content/images/11/ContainerClasses.jpeg" style="width:60%"/>
+          </div>
+        </section>
+
+        <section>
+          <div class="down-3">
+            <h3>Swing GUI Components</h3>
+          </div>
+          <div class="down-5 center">
+            <img src="content/images/11/SwingGUI.jpeg" style="width:60%"/>
+          </div>
+        </section> 
+
+       <section >
+        <div class="down-3">
+          <h2>事件驱动程序设计</h2>
+        </div>
+        <div class="down-5">
+          <h4>事件</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>图形界面上的事件是指在某个组件上发生用户操作。</li>
+          </ul>
+        </div>
+        <div class="down-5">
+          <h4>事件源</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>产生事件的组件为事件源。</li>
+          </ul>
+        </div>
+        <div class="down-5">
+          <h4>监视器</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>对事件作监视的对象称为监视器，监视器提供响应事件的处理方法。为了让监视器与事件对象关联起来，需要对事件对象作监视器注册，告诉系统事件对象的监视器。</li>
+          </ul>
+        </div>
+      </section>
+
+     <section>
+      <div class="down-3">
+        <h2>事件驱动程序设计</h2>
+      </div>
+      <div class="down-5">
+        <h4>事件处理</h4>
+      </div>
+      <div class="down-5">
+        <ul>
+          <li>Java 1.0 Hierarchical event model</li><br>
+          <li>Java 1.1 Delegation event model</li><br>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="down-3">
+        <h2>Event Classes</h2>
+      </div>
+      <div class="down-5">
+        <h4><code>java.util.EventObject</code></h4>
+      </div>
+      <div class="down-5 center">
+        <img src="content/images/11/EventClasses.jpeg" style="width:70%"/>
+      </div>
+    </section>
+
+    <section>
+      <div class="down-3">
+        <h2>组件和事件类型</h2>
+      </div>
+      <div class="down-5 center">
+        <img src="content/images/11/CompEvents.jpeg" style="width:60%"/>
+      </div>
+    </section>
+
+    <section>
+      <div class="down-3">
+        <h2>监听器类型</h2>
+      </div>
+      <div class="down-5 center">
+        <img src="content/images/11/Listeners.jpeg" style="height:500px;width:600px"/>
+      </div>
+    </section>
+
+    <section>
+      <div class="down-3">
+        <h2>Delegation Model</h2>
+      </div>
+      <div class="down-5 center">
+        <img src="content/images/11/DEM.png" style="width:60%"/>
+      </div>
+      <div class="down-3 row fragment">
+        <div>
+            <div class="center smaller strong danger">当事件源对象发生了某一事件后，事件信息将被打包为<code>ActionEvent</code>类，
+              并发送给事件监听器，而后事件监听器将做出相应的处理（执行<code>actionPerformed()</code>函数）。
+              实现了特定接口的事件监听器为了对事件源对象的某一特定事件进行监测，因此必须进行注册。即告知事件源对象已被监听。</div>
+        </div>
+      </div>  
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>Example</h2>
+        </div>
+        <div class="down-3">
+          <pre class="java">
+            <code data-trim>
+               /* 
+                * 事件监听的四步： 
+                * 1.要有事件源对象：button 
+                * 2.要发生某种事件（类）：ActionEvent，封装了事件的信息 
+                * 3.要有监听器（接口）：Monitor  接到事件后进行处理 
+                * 4.要把监听器注册到事件源对象上 b.addActionListener(mo); 
+                * 事件与监听器一一对应 
+                * 取决于事件源对象能添加哪种事件（注册哪种事件） 
+                */ 
+                import java.awt.BorderLayout;  
+                import java.awt.Button;  
+                import java.awt.Frame;  
+                import java.awt.event.ActionEvent;  
+                import java.awt.event.ActionListener;  
+                
+                
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>Example</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+            public class TestActionEvent {  
+              public static void main(String[] args) {  
+                  Frame f = new Frame("Test");  
+                  Button b = new Button("Press me");  
+                  Monitor mo = new Monitor();  
+                  b.addActionListener(mo);  
+                  b.setActionCommand("GAME OVER!");
+                  f.add(b, BorderLayout.CENTER);  
+                  f.pack();  
+                  f.setVisible(true);  
+              }   
+            }  
+  
+           class Monitor implements ActionListener {  
+              @Override  
+              public void actionPerformed(ActionEvent e) {  
+                  System.out.println("a button has been pressed\n" + 
+                  "The relative info is:" + e.getActionCommand());  
+              }    
+            }   
+              </code>
+            </pre>
+          </div>
+      </section>
+
+   <section>
+      <div class="down-3">
+        <h2>监听器类型</h2>
+      </div>
+      <div class="down-5 center">
+         <img src="content/images/11/DelegationAdapter.jpeg" style="width:60%"/>
+      </div>
+   </section>
+
+   <section>
+      <div class="down-3">
+        <h2>Example</h2>
+      </div>
+      <div class="down-5">
+        <pre class="java">
+          <code data-trim>
+              class Terminator extends WindowAdapter {
+                public void windowClosing (WindowEvent e) {
+                  system.exit(0);
+                }
+              }
+          </code>
+        </pre>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>示例: Containers (top level)</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Containers1.jpeg" style="width:40%"/>
+        </div>
+     </section>
+
+     <section>
+        <div class="down-3">
+          <h2>示例: Containers (general)</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Containers2.jpeg" style="width:60%"/>
+        </div>
+     </section>
+
+     <section>
+        <div class="down-3">
+          <h2>示例: Containers (special)</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Containers3.jpeg" style="width:60%"/>
+        </div>
+     </section>
+
+     <section>
+        <div class="down-3">
+          <h2>示例: Basic Controls</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/BasicControls.jpeg" style="width:60%"/>
+        </div>
+     </section>
+
+     <section>
+        <div class="down-3">
+          <h2>示例: Uneditable Displays</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Uneditable.jpeg" style="width:50%"/>
+        </div>
+     </section>
+
+     <section>
+        <div class="down-3">
+          <h3>示例: Editable Formatted Displays</h3>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Editable.jpeg" style="width:60%"/>
+        </div>
+     </section>
+
+   <section>
+    <div class="down-3">
+      <h2>框架窗口</h2>
+    </div>
+    <div class="down-5">
+      <h4>三种窗口：</h4>
+    </div>
+    <div class="down-5">
+      <ul>
+        <li><code>Applet</code>窗口：<code>Applet</code>类管理这个窗口，当应用程序程序启动时，由系统创建和处理；</li><br>
+        <li>框架窗口(<code>JFrame</code>)：这是通常意义上的窗口，它支持窗口周边的框架、标题栏，以及最小化、最大化和关闭按钮；</li><br>
+        <li>一种无边框窗口(<code>JWindow</code>)：没有标题栏，没有框架，只是一个空的矩形。</li><br>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+      <div class="down-3">
+        <h2>标签和按钮</h2>
+      </div>
+      <div class="down-5">
+        <ul>
+          <li>标签(<code>JLabel</code>)是最简单的Swing组件。标签对象的作用是对位于其后的界面组件作说明。可以设置标签的属性，即前景色，背景色、字体等，但不能动态地编辑标签中的文本。</li><br>
+          <li>按钮(<code>JButton</code>)在界面设计中用于激发动作事件。按钮可显示文本，当按钮被激活时，能激发动作事件。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>面板</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>面板是一种通用容器，<code>JPanel</code>的作用是实现界面的层次结构，在它上面放入一些组件，也可以在上面绘画，将放有组件和有画的<code>JPanel</code>再放入另一个容器里。<code>JPanel</code>的默认布局为<code>FlowLayout</code>。</li><br>
+            <li><code>JScrollPane</code>是带有滚动条的面板。<code>JScrollPane</code>是<code>Container</code>类的子类，也是一种容器，但是只能添加一个组件。<code>JScrollPane</code>的一般用法是先将一些组件添加到一个<code>JPanel</code>中，然后再把这个<code>JPanel</code>添加到<code>JScrollPane</code>中。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>布局设计</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><code>FlowLayout</code>：依次放置组件。（panel，applet）</li><br>
+              <li><code>BorderLayout</code>：将组件放置在边界上。(window, frame)</li><br>
+              <li><code>CardLayout</code>：将组件像扑克牌一样叠放，而每次只能显示其中一个组件。</li><br>
+              <li><code>GridLayout</code>：将显示区域按行、列划分成一个个相等的格子，组件依次放入这些格子中。</li><br>
+              <li><code>GridBagLayout</code>：将显示区域划分成许多矩形小单元，每个组件可占用一个或多个小单元。</li>
+            </ul>
+          </div>
+        </section>
+
+    <section>
+        <div class="down-3">
+          <h2>如何选择</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>用最大空间显示每个组件：<code>BorderLayout</code>, <code>GridBagLayout</code></li><br>
+            <li>按照组件大小在一行中紧缩显示一排组件：<code>FlowLayout</code></li><br>
+            <li>在一行或一列中显示一样大小的组件：<code>GridLayout</code></li><br>
+          </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>布局示例</h2>
+        </div>
+        <div class="down-5 center">
+           <img src="content/images/11/Layout.jpeg" style="width:60%"/>
+        </div>
+     </section>
+
+      <section>
+          <div class="down-3">
+             <h3>文本框和文本区</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>文本框(<code>JTextField</code>)是界面中用于输入和输出一行文本的框。<code>JTextField</code>类用来建立文本框。与文本框相关的接口是<code>ActionListener</code>。</li><br>
+                 <li>文本区(<code>JTextArea</code>)是窗体中一个放置文本的区域。文本区与文本框的主要区别是文本区可存放多行文本。javax.swing包中的<code>JTextArea</code>类用来建立文本区。<code>JTextArea</code>组件没有事件。</li><br>
+                 <li>常用文本框和文本区实现数据的输入和输出：<code>getText()</code>和<code>setText()</code></li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>选择框和单选按钮</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>选择框(<code>JCheckBox</code>)的选中与否开状是一个小方框，被选中则在框中打勾。当在一个容器中有多个选择框，同时可以有多个选择框被选中，这样的选择框也称复选框。与选择框相关的接口是<code>ItemListener</code>，事件类是<code>ItemEvent</code>。</li><br>
+                 <li>单选按钮(<code>JRadioButton</code>)的功能与单选框相似。使用单选按钮的方法是将一些单选按钮用<code>ButtonGroup</code>对象分组，使同一组的单选按钮只允许有一个被选中。单选按钮与单选框的差异是显示的样式不同，单选按钮是一个圆形的按钮，单选框是一个小方框。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>列表</h3>
+          </div>
+          <div class="down-5">
+            <h5>列表(<code>JList</code>)在界面中表现为列表框，是<code>JList</code>类或它的子类的对象。程序可以在列表框中加入多个文本选择项条目。列表事件的事件源有两种：</h5>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>1. 鼠标双击某个选项：双击选项是动作事件，与该事件相关的接口是<code>ActionListener</code>，注册监视器的方法是<code>addActionListener()</code>，接口方法是<code>actionPerformed(ActionEvent e)</code>。</li><br>
+                 <li>2. 鼠标单击某个选项：单击选项是选项事件，与选项事件相关的接口是<code>ListSelectionListener</code>，注册监视器的方法是<code>addListSelectionListener</code>，接口方法是<code>valueChanged(ListSelectionEvent e)</code>。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>组合框</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>组合框(<code>JComboBox</code>)是文本框和列表的组合，可以在文本框中输入选项，也可以单击下拉按钮从显示的列表中进行选择。</li><br>
+                 <li>在<code>JComboBox</code>对象上发生事件分为两类。一是用户选定项目，事件响应程序获取用户所选的项目。二是用户输入项目后按回车键，事件响应程序读取用户的输入。第一类事件的接口是<code>ItemListener</code>；第二类事件是输入事件，接口是<code>ActionListener</code>。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>菜单</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>有两种类型的菜单：下拉式菜单和弹出式菜单。</li><br>
+                 <li>在下拉式菜单或弹出式菜单中选择一个选项就产生一个<code>ActionEvent</code>事件。该事件被发送给那个选项的监视器，事件的意义由监视器解释。</li><br>
+                 <li>一个菜单条可以放多个菜单(<code>JMenu</code>)，每个菜单又可以有许多菜单项(<code>JMenuItem</code>)。</li><br>
+                 <li>菜单的事件源是用鼠标点击某个菜单项。处理该事件的接口是<code>ActionListener</code>，要实现的接口方法是<code>actionPerformed(ActionEvent e)</code>，获得事件源的方法<code>getSource()</code>。</li><br>
+                 <li>菜单也可以包含具有持久的选择状态的选项，这种特殊的菜单可由<code>JCheckBoxMenuItem</code>类来定义。</li>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>对话框</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>对话框是一个临时窗口，可以在其中放置用于得到用户输入的控件。在Swing中，有两个对话框类，它们是<code>JDialog</code>类和<code>JOptionPane</code>类。<code>JDialog</code>类提供构造并管理通用对话框；<code>JOptionPane</code>类给一些常见的对话框提供许多便于使用的选项</li><br>
+                 <li><code>JDialog</code>类是对话框的基类，对话框依赖其他窗口，当它所依赖的窗口消失或最小化时，对话框也将消失；窗口还原时，对话框又会自动恢复。对话框的默认布局为<code>BorderLayout</code>布局。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>滚动条</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>滚动条(<code>JScrollBar</code>)也称为滑块，用来表示一个相对值，该值代表指定范围内的一个整数。</li><br>
+                 <li><code>JScrollBar</code>类对象的事件类型是<code>AdjustmentEvent</code>；类要实现的接口是<code>AdjustmentListener</code>，
+                  接口方法是<code>adjustmentValueChanged()</code>；注册监视器的方法是<code>addAdjustmentListener()</code>；获取事件源对象的方法是<code>getAdjustable()</code>。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>鼠标事件</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>鼠标事件的事件源往往与容器相关，当鼠标进入容器、离开容器，或者在容器中单击鼠标、拖动鼠标时都会发生鼠标事件。java语言为处理鼠标事件提供两个接口：<code>MouseListener</code>，<code>MouseMotionListener</code>接口。</li><br>
+                 <li><code>MouseListener</code>接口能处理5种鼠标事件：按下鼠标，释放鼠标，点击鼠标、鼠标进入、鼠标退出。</li><br>
+                 <li><code>MouseMotionListener</code>接口处理拖动鼠标和鼠标移动两种事件。</li>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>键盘事件</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>键盘事件的事件源一般与组件相关，当一个组件处于激活状态时，按下、释放或敲击键盘上的某个键时就会发生键盘事件。</li><br>
+                 <li>键盘事件的接口是<code>KeyListener</code>，注册键盘事件监视器的方法是<code>addKeyListener</code>(监视器)。</li><br>
+                 <li>管理键盘事件的类是<code>KeyEvent</code>，该类提供方法：
+                    <code>public int getKeyCode()</code>，获得按动的键码。</li>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>绘图基础</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>要在平面上显示文字和绘图，首先要确定一个平面坐标系。Java语言约定，显示屏上一个长方形区域为程序绘图区域，坐标原点(0,0）位于整个区域的左上角。一个坐标点（x,y）对应屏幕窗口中的一个像素，是整数。</li><br>
+                 <li>在<code>java.awt</code>包中，类<code>Graphics</code>提供的功能有：建立字体、设定显示颜色、显示图像和文本，绘制和填充各种几何图形。</li><br>
+                 <li>在某个组件中绘图，一般应该为这个组件所属的子类重写<code>paint()</code>方法，在该重写的方法中进行绘图。</li>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>Graphics类的绘图方法</h3>
+          </div>
+          <div class="down-5">
+            <h4><code>Graphics</code>类提供基本的几何图形绘制方法，主要有：画线段、画矩形、画圆、画带颜色的图形、画椭圆、画圆弧、画多边形等。</h4>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>Graphics2D类的绘图方法</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>Java语言在<code>Graphics</code>类提供绘制各种基本的几何图形的基础上，扩展Graphics类提供一个<code>Graphics2D</code>类，它拥用更强大的二维图形处理能力，提供、坐标转换、颜色管理以及文字布局等更精确的控制。</li><br>
+                 <li><code>Graphics2D</code>定义了几种方法，用于添加或改变图形的状态属性。可以通过设定和修改状态属性，指定画笔宽度和画笔的连接方式；设定平移、旋转、缩放或修剪变换图形；以及设定填充图形的颜色和图案等。图形状态属性用特定的对象存储。</li><br>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>图像处理基础</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>图像是由一组像素构成，用二进制形式保存的图片。Java语言支持GIF、JPEG和BMP这3种主要图像文件格式。Java语言的图像处理功能被封装在<code>Image</code>类中。</li><br>
+                 <li>载入图像文件的方法有两个：</li>
+                   <div class="down-3">
+                     <pre class="java">
+                       <code data-trim>
+                          Image getImage(URL url) //url指明图像所在位置和文件名。
+                          Image getImage(URL url,String name) //url指明图像所在位置，name是文件名。
+                       </code>
+                     </pre>
+                   </div>
+                <li>组件也可以使用<code>Toolkit</code>提供的静态方法<code>getDefaultToolkit()</code>获得一个缺省的<code>Toolkit</code>对象,并用它加载图像。此时，载入图像的代码常写成这样：</li>
+                   <div>
+                      <pre class="java">
+                         <code data-trim>
+                            Image img = Toolkit.getDefaultToolkit().getImage(url);
+                         </code>
+                       </pre>
+                   </div>
+              </ul>
+           </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>图像缓冲技术</h2>
+          </div>
+          <div class="down-5">
+            <h4>缓冲技术不仅可以解决闪烁问题，并且由于在计算机内存中创建图像，程序可以对图像进行像素级处理，完成复杂的图像变换后再显示。</h4>
+          </div>
+          <div class="down-3">
+              <h4><code>BufferedImage</code>类</h4>
+            </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  BufferedImage bimage = (BufferedImage)this.createImage(this.getWidth(),this.getHeight());
+                  Graphics2D g2d = bimge.createGraphics();                
+              </code>
+            </pre>
+          </div>
+        </section>
+  
+      <section>
+            <div class="down-3">
+               <h3>多媒体</h3>
+            </div>
+            <div class="down-5">
+                <ul>
+                   <li>可以用Java程序播放幻灯片、动画、视频、声音等</li><br>
+                   <li><code>javax.swing.Timer</code>: a source component that fires an
+                      <code>ActionEvent</code> at a predefined rate.</li><br>
+                   <li>结合多线程编程技术</li>
+                </ul>
+             </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+             <h3>JavaFX</h3>
+          </div>
+          <div class="down-5">
+              <ul>
+                 <li>JavaFX is a set of graphics and media packages that enables developers to design, create, test, debug, and deploy <span class="em danger">rich client applications</span> that operate consistently across diverse platforms.</li><br>
+                 <li>to build network-aware applications that are deployed across multiple platforms and display information in a high-performance modern user interface that features audio, video, graphics, and animation.</li><br>
+              </ul>
+           </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+           <h3>JavaFX key features</h3>
+        </div>
+        <div class="down-5">
+            <ul>
+               <li>Java APIs</li><br>
+               <li>FXML and Scene Builder</li><br>
+               <li>WebView</li><br>
+               <li>Swing interoperability</li><br>
+               <li>Built-in UI controls and CSS</li><br>
+               <li>3D Graphics Features</li><br>
+               <li>Canvas API, Pringting API, Rich Text Support, Multitouch Support...</li>
+            </ul>
+         </div>
+  </section>
+
+  <section>
+      <div class="down-3">
+        <h2>JavaFX Architecture</h2>
+      </div>
+      <div class="down-5 center">
+         <img src="content/images/11/jfxar_dt_001_arch-diag.png" style="width:70%"/>
+      </div>
+   </section>
+
+   <section>
+      <div class="down-3">
+        <h2>JavaFX Samples</h2>
+      </div>
+      <div class="down-5">
+        <pre class="java">
+          <code data-trim>
+              import javafx.application.Application;
+              import javafx.scene.Group;
+              import javafx.scene.Scene;
+              import javafx.scene.shape.Circle;
+              import javafx.stage.Stage;
+              
+              public class MyApp extends Application {
+                  public void start(Stage stage) {
+                      Circle circ = new Circle(40, 40, 30);
+                      Group root = new Group(circ);
+                      Scene scene = new Scene(root, 400, 300);
+              
+                      stage.setTitle("My JavaFX Application");
+                      stage.setScene(scene);
+                      stage.show();
+                  }          
+                  public static void main(String[] args) {
+                      launch(args);
+                  }
+              }
+          </code>
+        </pre>
+      </div>
+    </section>
+
+
+    <section>
+        <div class="down-3">
+           <h3>JavaFX Application Lifecycle</h3>
+        </div>
+        <div class="down-5">
+          <h5>The entry point for JavaFX applications is the Application class.</h5>
+        </div>
+        <div class="down-1">
+            <ul>
+                <li>1. Constructs an instance of the specified Application class</li>
+                <li>2. Calls the <code>init()</code> method</li>
+                <li>3. Calls the <code>start(javafx.stage.Stage)</code> method</li>
+                <li>4. Waits for the application to finish, which happens when either of the following occur:</li>
+                  <ul>
+                    <li>the application calls <code>Platform.exit()</code></li>
+                    <li>the last window has been closed and the implicitExit attribute on Platform is true</li>
+                  </ul>
+                <li>5. Built-in UI controls and CSS</li>
+                <li>6. Calls the <code>stop()</code> method</li>
+             </ul>
+         </div>
+  </section>
+
+  <section>
+      <div class="down-3">
+        <h2>Scene</h2>
+      </div>
+      <div class="down-5 center">
+         <img src="content/images/11/helloworld_scenegraph.png" style="width:50%"/>
+      </div>
+   </section>
+
+   <section>
+      <div class="down-3">
+         <h3>Stage</h3>
+      </div>
+      <div class="down-5">
+          <ul>
+             <li>The JavaFX <code>Stage</code> class is the top level JavaFX container.</li><br>
+             <li>The primary <code>Stage</code> is constructed by the platform. Additional Stage objects may be constructed by the application.</li><br>
+             <li>Stage objects must be constructed and modified on the JavaFX Application Thread.</li><br>
+          </ul>
+       </div>
+  </section>
+
+  <section>
+      <div class="down-3">
+        <h2>Colorful Samples</h2>
+      </div>
+      <div class="down-5">
+        <h4>Are you ready for JavaFX?</h4>
+      </div>
+   </section>
+
+      <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-warning center">
+            让你的葫芦娃们在丰富多彩的图形界面里和妖精们战斗！
+        </div>
+      </section>
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html>
