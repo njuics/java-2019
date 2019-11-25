@@ -181,8 +181,14 @@
           <div class="down-5">
             <ul>
               <li>组件(Component)是图形界面的基本元素，用户可以直接操作，例如按钮。容器(Container)是图形界面的复合元素，容器可以包含组件，例如面板。 </li><br>
+<<<<<<< HEAD
               <li>为了统一管理组件和容器，为所有组件类定义超类，把组件的共有操作都定义在Component类中。同样，为所有容器类定义超类Container类，把容器的共有操作都定义在Container类中。例如，Container类中定义了add()方法，大多数容器都可以用add()方法向容器添加组件。</li><br>
               <li>Component、Container和Graphics类是AWT库中的关键类。为能层次地构造复杂的图形界面，容器被当作特殊的组件，可以把容器放入另一个容器中。</li>
+=======
+              <li>为了统一管理组件和容器，为所有组件类定义超类，把组件的共有操作都定义在<code>Component</code>类中。同样，为所有容器类定义超类<code>Container</code>类，把容器的共有操作都定义在<code>Container</code>类中。
+                例如，<code>Container</code>类中定义了<code>add()</code>方法，大多数容器都可以用<code>add()</code>方法向容器添加组件。</li><br>
+              <li><code>Component</code>、<code>Container</code>和<code>Graphics</code>类是AWT库中的关键类。为能层次地构造复杂的图形界面，容器被当作特殊的组件，可以把容器放入另一个容器中。</li>
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
             </ul>
           </div>
         </section>
@@ -303,7 +309,11 @@
       </div>
       <div class="down-3 row fragment">
         <div>
+<<<<<<< HEAD
             <div class="center smaller strong danger">当事件源对象发生了某一事件后，事件信息将被打包为<code>ActionEvent</code>类，
+=======
+            <div class="smaller danger">当事件源对象发生了某一事件后，事件信息将被打包为<code>ActionEvent</code>类，
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
               并发送给事件监听器，而后事件监听器将做出相应的处理（执行<code>actionPerformed()</code>函数）。
               实现了特定接口的事件监听器为了对事件源对象的某一特定事件进行监测，因此必须进行注册。即告知事件源对象已被监听。</div>
         </div>
@@ -392,6 +402,22 @@
                 }
               }
           </code>
+<<<<<<< HEAD
+=======
+          <code data-trim>
+            //An example of using an anonymous inner class.
+            public class MyClass extends Applet {
+                ...
+                    someObject.addMouseListener(new MouseAdapter() {
+                        public void mouseClicked(MouseEvent e) {
+                            ...//Event listener implementation goes here...
+                        }
+                    });
+                ...
+                }
+            }
+          </code>
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
         </pre>
       </div>
     </section>
@@ -534,7 +560,11 @@
           <div class="down-5">
               <ul>
                  <li>文本框(<code>JTextField</code>)是界面中用于输入和输出一行文本的框。<code>JTextField</code>类用来建立文本框。与文本框相关的接口是<code>ActionListener</code>。</li><br>
+<<<<<<< HEAD
                  <li>文本区(<code>JTextArea</code>)是窗体中一个放置文本的区域。文本区与文本框的主要区别是文本区可存放多行文本。javax.swing包中的<code>JTextArea</code>类用来建立文本区。<code>JTextArea</code>组件没有事件。</li><br>
+=======
+                 <li>文本区(<code>JTextArea</code>)是窗体中一个放置文本的区域。文本区与文本框的主要区别是文本区可存放多行文本。<code>javax.swing</code>包中的<code>JTextArea</code>类用来建立文本区。<code>JTextArea</code>组件没有事件。</li><br>
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
                  <li>常用文本框和文本区实现数据的输入和输出：<code>getText()</code>和<code>setText()</code></li><br>
               </ul>
            </div>
@@ -818,11 +848,19 @@
            <h3>JavaFX Application Lifecycle</h3>
         </div>
         <div class="down-5">
+<<<<<<< HEAD
           <h5>The entry point for JavaFX applications is the Application class.</h5>
         </div>
         <div class="down-1">
             <ul>
                 <li>1. Constructs an instance of the specified Application class</li>
+=======
+          <h5>The entry point for JavaFX applications is the <code>Application</code> class.</h5>
+        </div>
+        <div class="down-1">
+            <ul>
+                <li>1. Constructs an instance of the specified <code>Application</code> class</li>
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
                 <li>2. Calls the <code>init()</code> method</li>
                 <li>3. Calls the <code>start(javafx.stage.Stage)</code> method</li>
                 <li>4. Waits for the application to finish, which happens when either of the following occur:</li>
@@ -862,9 +900,24 @@
       <div class="down-3">
         <h2>Colorful Samples</h2>
       </div>
+<<<<<<< HEAD
       <div class="down-5">
         <h4>Are you ready for JavaFX?</h4>
       </div>
+=======
+      <div class="row">
+          <div class="down-5 col-50">
+             <img src="content/images/11/colorfulcircles.png" style="width:90%"/>
+          </div>
+          <div class="down-5 col-50">
+              <img src="content/images/11/scenegraph_finish.png" style="width:90%"/>
+           </div>
+      </div>
+      <div class="down-3 row fragment">
+        <div>
+            <div class="center strong danger">Are you ready for JavaFX?</div>
+        </div>
+>>>>>>> 2ca00e50da56586404cd80aa38a37846637777c7
    </section>
 
       <section class="title-slide">
