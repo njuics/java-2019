@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>设计模式</title>
+<link href="lib/css/app.css" rel="stylesheet"><link href="https:/use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"></head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide">
+        <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+          设计模式
+        </div>
+        <div class="down-3 center">
+          "模式是某外在环境下，对特定问题的惯用解决方案。"
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>回顾设计模式</h2>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>SRP：单一职责原则</li><br>
+            <li>OCP：开放-封闭原则</li><br>
+            <li>LSP：Liskov替换法则</li><br>
+            <li>DIP：依赖倒置原则</li><br>
+            <li>ISP：接口隔离原则</li><br>
+            <li>CARP：合成/聚合复用原则</li><br>
+            <li>LoD：最少知识原则</li>
+          </ul>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>原则 vs. 模式</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>模式都最大化地遵循这些原则</li><br>
+            <li>通过原则、策略“推导”出模式</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section >
+        <div class="down-3">
+          <h2>Design Pattern: Why?</h2>
+        </div>
+        <div class="down-5">
+          <h5>直接目的：满足对优秀、简单而且可重用的解决方案的需要</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>掌握解决反复出现的问题的办法</li><br>
+            <li>沟通的手段（设计词汇，文档）</li><br>
+          </ul>
+        </div>
+        <div class="down-3">
+          <h5>从这些实践证明是成功的设计中学习“设计”</h5>
+        </div>
+        <div class="down-3">
+          <ul>
+            <li>反复阅读/反复应用/反复揣摩</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="down-3">
+          <h3>Design Pattern: What?</h3>
+        </div>
+        <div class="down-5">
+          <em class="small">Each pattern describes a problem which 
+            occurs over and over again in our environment and then 
+            describes the core of the solution to that problem, 
+            in such a way that you can use this solution a million 
+            times over, without ever doing it the same way twice.</em>
+          <div class="right smaller down-3">- Christopher Alexander, 《A Pattern Language》</div>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">模式本质上是设计经验的文档化。</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h3>Design Pattern: What?</h3>
+          </div>
+          <div class="down-3 center">
+            <em class="small">Gamma, Erich, R. Helm, R. Johnson, and J. Vlissides. 
+              Design patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley, 1994</em>
+          </div>
+          <div class="down-1 center">
+              <img src="content/images/12/DesignPatterns.jpg" style="width:30%"/>
+          </div>
+        </section>
+
+        <section>
+          <div class="down-3">
+            <h3>Design Pattern: What?</h3>
+          </div>
+          <div class="down-5 center">
+            <ul>
+              <li>In the book “Design Patterns”, the design patterns are descriptions 
+                of communicating objects and classes that are customized to solve a 
+                general design problem in a particular context.</li><br>
+              <li>Design patterns represent solutions to problems that arise when 
+                developing software within a particular context.</li><br>
+            </ul>
+          </div>  
+        </section>
+
+       <section >
+        <div class="down-3">
+          <h2>指导模式设计的三个概念</h2>
+        </div>
+        <div class="down-5">
+          <h4>复用是目标</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>两种重要的复用手段：Inheritance & Composition</li>
+          </ul>
+        </div>
+        <div class="down-5">
+          <h4>接口与实现分离</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>接口保持不变，分离带来灵活性</li>
+            <li>多态性（polymorphism）</li>
+          </ul>
+        </div>
+        <div class="down-5">
+          <h4>解耦</h4>
+        </div>
+        <div class="down-1">
+          <ul>
+            <li>降低复杂性</li>
+          </ul>
+        </div>
+      </section>
+
+    <section>
+        <div class="down-3">
+          <h2>遇到过哪些设计模式了？</h2>
+        </div>
+        <div class="down-3">
+          <pre class="java">
+            <code data-trim>
+                public interface Iterator&lt;E&gt;{
+                    boolean hasNext();
+                    &lt;E&gt; next();
+                    void remove();
+                }              
+            </code>
+          </pre>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">这是迭代器模式</div>
+            </div>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>遇到过哪些设计模式了？</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+                  PrinterWriter out = new PrintWriter(new BufferedWriter(new FileWriter("demo.out")));
+              </code>
+            </pre>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger">这是装饰器模式</div>
+              </div>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>遇到过哪些设计模式了？</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  Panel center = new Panel();
+                  center.setLayout(new BorderLayout());
+                  center.add(new Button("south"), BorderLayout.SOUTH);
+              </code>
+            </pre>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger">这是组合模式</div>
+              </div>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>遇到过哪些设计模式了？</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  class Terminator extends WindowAdapter {
+                    public void windowClosing (WindowEvent e) {
+                      system.exit(0);
+                    }
+                  }
+              </code>
+            </pre>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger">这是默认适配器模式</div>
+              </div>
+          </div>
+      </section>
+
+   <section>
+      <div class="down-3">
+        <h2>遇到过哪些设计模式了？</h2>
+      </div>
+      <div class="down-3">
+        <pre class="java">
+          <code data-trim>
+              public class TestActionEvent {  
+                public static void main(String[] args) {  
+                    Frame f = new Frame("Test");  
+                    Button b = new Button("Press me");  
+                    Monitor mo = new Monitor();  
+                    b.addActionListener(mo);  
+                    b.setActionCommand("GAME OVER!");
+                    f.add(b, BorderLayout.CENTER);  
+                    f.pack();  f.setVisible(true);  
+                }               
+            }    
+            class Monitor implements ActionListener {               
+                @Override  
+                public void actionPerformed(ActionEvent e) {  
+                    System.out.println("a button has been pressed\n" + "The relative info is:" + e.getActionCommand());  
+                }             
+            }
+          </code>
+        </pre>
+      </div>
+      <div class="down-1 row fragment">
+          <div>
+              <div class="center danger">这是观察者模式</div>
+          </div>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>遇到过哪些设计模式了？</h2>
+        </div>
+        <div class="down-3">
+          <pre class="java">
+            <code data-trim>
+                import javafx.application.Application;
+                import javafx.scene.Group;
+                import javafx.scene.Scene;
+                import javafx.scene.shape.Circle;
+                import javafx.stage.Stage;      
+                public class MyApp extends Application {
+                    public void start(Stage stage) {
+                        Circle circ = new Circle(40, 40, 30);
+                        Group root = new Group(circ);
+                        Scene scene = new Scene(root, 400, 300);    
+                        stage.setTitle("My JavaFX Application");
+                        stage.setScene(scene); stage.show();
+                    }
+                    public static void main(String[] args) {
+                        launch(args);
+                    }
+                }
+            </code>
+          </pre>
+        </div>
+        <div class="down-1 row fragment">
+            <div>
+                <div class="center danger">这是模版方法模式</div>
+            </div>
+        </div>
+    </section>
+    
+
+   <section>
+    <div class="down-3">
+      <h2>模式分类</h2>
+    </div>
+    <div class="down-5">
+      <ul>
+        <li>Creational（创建型）</li><br>
+        <li>Structural（结构型）</li><br>
+        <li>Behavioral（行为型）</li><br>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+      <div class="down-3">
+        <h2>创建型设计模式</h2>
+      </div>
+      <div class="down-5">
+        <h4>创建模式是对类的实例化过程的抽象化</h4>
+      </div>
+      <div class="down-5">
+        <ul>
+          <li>怎样创建对象，创建哪些对象，如何组合和表示这些对象？</li><br>
+          <li>创建模式描述了怎样构造和封装这些动态决定。</li><br>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>创建型设计模式</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Simple Factory 简单工厂</li><br>
+            <li>Factory Method 工厂方法</li><br>
+            <li>Abstract Factory 抽象工厂</li><br>
+            <li>Builder 构造者</li><br>
+            <li>Prototype 原型</li><br>
+            <li>Singleton 单例</li><br>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>简单工厂</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/12/AbsFac.png" style="width:60%"/>
+          </div>
+      </section>
+
+    <section>
+        <div class="down-3">
+          <h2>原型</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Java 语言的构件模型直接支持Prototype模式</li><br>
+            <li><code>java.lang.Object</code> 根类： <code>protected Object clone();</code></li><br>
+            <li><code>java.lang.Cloneable</code> 接口</li><br>
+          </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>原型</h2>
+        </div>
+        <div class="down-5">
+          <h4>实现clone操作</h4>
+        </div>
+        <div class="down-3">
+            <ul>
+              <li>shallow copy vs. deep copy</li><br>
+              <li>Save & Load</code></li><br>
+            </ul>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">可以使用序列化实现深拷贝</div>
+            </div>
+        </div>
+     </section>
+
+      <section>
+          <div class="down-3">
+             <h3>单例</h3>
+          </div>
+          <div class="down-5">
+            <h4>一个类仅有一个实例，自行实例化并向整个系统提供一个访问它的全局访问点</h4>
+          </div>
+          <div class="down-5">
+              <ul>
+                <li>懒汉式 Lazy Mode</li><br>
+                <li>饿汉式 Eager Mode</li>
+              </ul>
+           </div>
+           <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger">多线程使用下需要注意的问题！</div>
+              </div>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>懒汉式</h2>
+          </div>
+          <div class="down-3">
+            <pre class="java">
+              <code data-trim>
+                  public class LazySingleton {
+                    private static LazySingleton instance = null;
+                    protected LazySingleton(){
+                      System.out.println("Singleton's consturct method is invoked. " +
+                          "This method should not be public");
+                    }
+                    //is it thread-safe? how to?
+                    public static LazySingleton getInstance(){
+                      if (instance == null){
+                        instance = new LazySingleton();
+                      }
+                      return instance;
+                    }
+                    public void operation(){
+                      System.out.println("LazySignleton.operation() is executed");
+                    }
+                  }               
+              </code>
+            </pre>
+          </div>
+   </section>
+
+   <section>
+      <div class="down-3">
+        <h2>饿汉式</h2>
+      </div>
+      <div class="down-5">
+        <pre class="java">
+          <code data-trim>
+              public class EagerSingleton {
+                //is it thread-safe? 
+                  private static final EagerSingleton instance = new EagerSingleton() ;
+                  
+                  private EagerSingleton() {}
+                  
+                  public static EagerSingleton getInstance()
+                  {
+                      return instance ;
+                  }
+                public void operation(){
+                  System.out.println("EagerSignleton.operation() is executed");
+                }
+              }
+          </code>
+        </pre>
+      </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>线程安全</h2>
+        </div>
+        <div class="down-5">
+          <pre class="java">
+            <code data-trim>
+                public class ThreadSafeSingleton {
+                  private static ThreadSafeSingleton instance = null;
+                  protected ThreadSafeSingleton(){
+                    System.out.println("Singleton's consturct method is invoked. " +
+                        "This method should not be public");
+                  }
+                  //double-check locking
+                  public static ThreadSafeSingleton getInstance(){
+                    if (instance == null){
+                      synchronized (ThreadSafeSingleton.class){
+                        if(instance == null){
+                          instance = new ThreadSafeSingleton();		
+                        }
+                      }
+                    }
+                    return instance;
+                  }
+                  public void operation(){
+                    System.out.println("ThreadSafeSingleton.operation() is executed");
+                  }
+                }
+            </code>
+          </pre>
+        </div>
+      </section>
+
+
+      <section>
+          <div class="down-3">
+            <h2>结构型设计模式</h2>
+          </div>
+          <div class="down-5">
+            <h4>结构模式描述如何将类或者对象结合在一起形成更大的结构</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>类的结构模式：结构型模式使用继承机制来组合接口或实现。</li><br>
+              <li>对象的结构模式：结构型对象模式描述了如何对一些对象进行组合，从而实现新功能的一些方法。可以在运行时刻改变对象的组合关系。</li><br>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+            <div class="down-3">
+              <h2>结构型设计模式</h2>
+            </div>
+            <div class="down-5">
+              <ul>
+                <li>Adapter 适配器</li><br>
+                <li>Bridge 桥接</li><br>
+                <li>Composite 组合</li><br>
+                <li>Decorator 装饰器</li><br>
+                <li>Facade 门面</li><br>
+                <li>Flyweight 享元</li><br>
+                <li>Proxy 代理</li><br>
+              </ul>
+            </div>
+          </section>
+    
+    <section>
+        <div class="down-3">
+            <h2>适配器</h2>
+          </div>
+          <div class="down-5">
+            <h4>将一个类的接口转换成客户希望的另外一个接口。（转换匹配，重用功能）</h4>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>类适配器</li><br>
+              <li>对象适配器</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>类适配器</h2>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/ClassAdapter.png" style="width:60%"/>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>对象适配器</h2>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/ObjectAdapter.png" style="width:60%"/>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>默认适配器</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>适配器模式的特例</li><br>
+              <li>缺省适配模式为一个接口提供缺省实现，这样子类型可以从这个缺省实现进行扩展，而不必从原有接口扩展。</li><br>
+            </ul>
+          </div>
+          <div class="down-5">
+              <pre class="java">
+                <code data-trim>
+                    public abstract class WindowAdapter extends Object implements WindowListener, WindowStateListener, WindowFocusListener{
+                      public void windowClosed(WindowEvent e){}
+                        public void windowClosing(WindowEvent e){}
+                        ...
+                     }
+                </code>
+              </pre>
+            </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>组合模式</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>将对象组合成树形结构以表示“部分-整体”的层次结构，Composite使得用户对单个对象和组合对象的使用具有一致性。</li><br>
+              <li>本质：统一leaf对象和composite对象</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>组合模式</h2>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/Composite.png" style="width:60%"/>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>装饰器模式</h2>
+        </div>
+        <div class="down-5">
+          <h4>动态地给一个对象添加一些额外的职责</h4>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/Decorator.png" style="width:60%"/>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">动态组合比静态继承更灵活</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>代理模式</h2>
+        </div>
+        <div class="down-5">
+          <h4>为其它对象提供一种代理以控制对这个对象的访问</h4>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/Proxy.png" style="width:60%"/>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>代理模式</h2>
+        </div>
+        <div class="down-5">
+          <h4>常见代理</h4>
+        </div>
+          <div class="down-5">
+            <ul>
+              <li>Remote Proxy：为一个对象在不同的地址空间提供局部代表</li><br>
+              <li>Virtual Proxy：根据需要创建开销很大的对象</li><br>
+              <li>Protection Proxy：控制对原始对象的访问，用于对象应该有不同访问权限的时候</li><br>
+              <li>Smart Reference：取代了简单的指针，在访问对象时执行一些附加操作—引用计数，加锁，将第一次引用的持久对象装入内存…</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Java动态代理</h2>
+        </div>
+        <div class="down-5">
+          <h4><code>java.lang.reflect.Proxy</code></h4>
+        </div>
+        <div class="down-3">
+            <ul>
+              <li>Java动态代理机制的主类，提供了一组静态方法来为一组接口动态地生成代理类机器对象</li>
+            </ul>
+        </div>
+        <div class="down-3">
+          <h4><code>java.lang.reflect.InvocationHandler</code></h4>
+        </div>
+        <div class="down-3">
+            <ul>
+              <li>调用处理器接口，它自定义了一个<code>invoke</code>方法，用于集中处理在动态代理类对象上的方法调用，通常在该方法中实现对委托类的代理访问</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Java动态代理</h2>
+        </div>
+        <div class="down-5">
+            <pre class="java">
+              <code data-trim>
+                  // InvocationHandlerImpl 实现了 InvocationHandler 接口，并能实现方法调用从代理类到委托类的分
+                  //派转发 其内部通常包含指向委托类实例的引用，用于真正执行分派转发过来的方法调用
+                  InvocationHandler handler = new InvocationHandlerImpl(..); 
+                  
+                  // 通过 Proxy 为包括 Interface 接口在内的一组接口动态创建代理类的类对象
+                  Class clazz = Proxy.getProxyClass(classLoader, new Class[] { Interface.class, ... }); 
+                  
+                  // 通过反射从生成的类对象获得构造函数对象
+                  Constructor constructor = clazz.getConstructor(new Class[] { InvocationHandler.class }); 
+                  // 通过构造函数对象创建动态代理类实例
+                  Interface Proxy = (Interface)constructor.newInstance(new Object[] { handler }); 
+              </code>
+            </pre>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>行为型设计模式</h2>
+        </div>
+        <div class="down-5">
+          <h4>行为模式是对在不同的对象之间划分责任和算法的抽象化。行为模式不仅仅是关于类和对象的，而且关注它们之间的通信模式。</h4>
+        </div>
+          <div class="down-5">
+            <ul>
+              <li>类的行为模式：使用继承关系在几个类之间分配行为 – Interpreter, Template Method</li><br>
+              <li>对象的行为模式：使用对象的聚合来分配行为</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h2>行为型设计模式</h2>
+        </div>
+        <div class="down-5">
+          <ul>
+            <li>Chain of Responsibility 责任链</li>
+            <li>Command 命令</li>
+            <li>Interpreter 解释器</li>
+            <li>Iterator 迭代器</li>
+            <li>Mediator 中介</li>
+            <li>Memento 备忘录</li>
+            <li>Observer 观察者</li>
+            <li>Strategy 策略</li>
+            <li>Template Method 模版方法</li>
+            <li>Visitor 访问者</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+              <h2>责任链</h2>
+          </div>
+          <div class="down-5">
+            <h5>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。
+              将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</h5>
+          </div>
+          <div class="down-3">
+            <h5>优点</h5>
+          </div>
+          <div class="down-3">
+              <ul>
+                <li>降低耦合度：对象仅需知道请求会被“正确”地处理。接收者和发送者都没有对方的明确信息</li><br>
+                <li>增强了给对象指派职责的灵活性</li><br>
+              </ul>
+          </div>
+          <div class="down-3">
+            <h5>缺点：不保证被接受</h5>
+          </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+              <h2>责任链</h2>
+          </div>
+          <div class="down-5">
+            <h4>Event Bubbling</h4>
+          </div>
+          <div class="down-5">
+              <pre class="java">
+                <code data-trim>
+                    public boolean action(Event event, Object obj){
+                      if (event.target == btnOK){ doOkBtnAction();}
+                      else if (event.target == btnExit) { doExitBtnAction();}
+                      else { return super.action(event.obj);}
+                      return true;
+                   } 
+                </code>
+              </pre>
+            </div>
+      </section>
+
+      <section>
+          <div class="down-3">
+            <h2>命令模式</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化</li><br>
+              <li>对请求排队或记录请求日志，以及支持undo和redo操作</li><br>
+              <li>可将多个Command装配成一个复合Command</li><br>
+            </ul>
+          </div>
+        </section>
+
+    <section>
+        <div class="down-3">
+            <h2>命令模式</h2>
+          </div>
+          <div class="down-5">
+            <h4>抽象出待执行的动作以参数化某对象，可以代替“回调”函数</h4>
+          </div>
+          <div class="down-3 center">
+              <img src="content/images/12/Command.png" style="width:60%"/>
+          </div>
+          <div class="down-1 row fragment">
+              <div>
+                  <div class="center danger">使用aCommand将anInvoker和aReceiver解耦</div>
+              </div>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>迭代器模式</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>提供一种方法顺序访问一个聚合对象中各个元素, 而又不需暴露该对象的内部表示。</li><br>
+              <li>本质：控制访问聚合对象中的元素！</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>迭代器模式</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/12/Iterator.png" style="width:60%"/>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>不同的实现</h2>
+        </div>
+        <div class="down-5">
+          <h4>宽接口 vs. 窄接口</h4>
+        </div>
+          <div class="down-3">
+            <ul>
+              <li>宽接口：一个聚集的接口提供了可以用来修改聚集元素的方法</li><br>
+              <li>窄接口：一个聚集的接口没有提供修改聚集元素的方法</li><br>
+            </ul>
+          </div>
+          <div class="down-5">
+              <h4>白箱聚集 vs. 黑箱聚集</h4>
+            </div>
+              <div class="down-3">
+                <ul>
+                  <li>白箱聚集：聚集对象为所有对象提供同一个接口(宽接口)</li><br>
+                  <li>黑箱聚集：聚集对象为迭代子对象提供一个宽接口，而为其它对象提供一个窄接口。同时保证聚集对象的封装和迭代子功能的实现。</li><br>
+                </ul>
+              </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>观察者模式</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>也称为publish/subscribe</li><br>
+              <li>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</li><br>
+            </ul>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>观察者模式</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/12/Observer1.png" style="width:80%"/>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>观察者模式</h2>
+          </div>
+          <div class="down-5 center">
+              <img src="content/images/12/Observer2.png" style="width:80%"/>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger smaller">注意：发出改变请求的Observer对象并不立即更新,
+                    而是将其推迟到它从目标得到一个通知之后。Notify不总是由目标对象调用。它也可被一个观察者或其它对象调用。</div>
+              </div>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Java Observer</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li><code>java.util.Observer </code>(interface)</li>
+              <li><code>java.util.Observable </code>(class)</li>
+            </ul>
+          </div>
+          <div class="down-1 center">
+              <img src="content/images/12/JavaObserver.png" style="width:60%"/>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Java Observer</h2>
+        </div>
+        <div class="down-5">
+            <pre class="java">
+              <code data-trim>
+                  import java.util.Observable;
+
+                  public class Watched extends Observable {
+                    private String data = "";
+                    
+                    public String retrieveData(){
+                      return data;
+                    }
+                    
+                    public void changeData(String data){
+                      if(!this.data.equals(data)){
+                        this.data = data;
+                        setChanged();			
+                      }	
+                      notifyObservers();
+                    }
+                  }
+              </code>
+            </pre>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>Java Observer</h2>
+        </div>
+        <div class="down-5">
+            <pre class="java">
+              <code data-trim>
+                  import java.util.Observable;
+                  import java.util.Observer;
+                  
+                  public class Watcher implements Observer {               
+                    public Watcher(Watched w){
+                      w.addObserver(this);
+                    }
+                    
+                    public void update(Observable obj, Object arg) {
+                      System.out.println("Data has been changed to "+((Watched)obj).retrieveData()+"");                
+                    }                  
+                  }
+              </code>
+            </pre>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>模版方法</h2>
+        </div>
+        <div class="down-5">
+            <h4>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。
+              Template Method使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</h4>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>模版方法</h2>
+          </div>
+          <div class="down-5">
+            <ul>
+              <li>固定算法骨架</li><br>
+              <li>模板方法导致一种反向的控制结构</li><br>
+              <li>子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑！</li>
+            </ul>
+          </div>
+          <div class="down-5 row fragment">
+              <div>
+                  <div class="center danger">DIP原则，LSP原则</div>
+              </div>
+          </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+          <h3>Summary</h3>
+        </div>
+        <div class="down-5">
+          <em class="small">It is possible to make buildings by stringing together patterns, 
+            in a rather loose way. A building made like this, is an assembly of patterns. 
+            It is not dense. It is not profound. But it is also possible to put patterns 
+            together in such a way that many patterns overlap in the same physical space: 
+            the building is very dense; it has many meanings captured in a small space; 
+            and through this density, it becomes profound.</em>
+          <div class="right smaller down-3">- Christopher Alexander, 《A Pattern Language》</div>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">纸上得来终觉浅，绝知此事要躬行。</div>
+            </div>
+        </div>
+      </section>
+
+
+    <section class="title-slide">
+        <div class="biggest framed bordered border-2x col-80 font-passionone bg-warning">
+            <bspan class="center">葫芦娃大战妖精 --> </bspan><br>
+            <bspan class="right-30">植物大战僵尸！</bspan>
+        </div>
+    </section>
+
+    </div> <!-- slides -->
+  </div> <!-- reveal -->
+
+</html><script type="text/javascript" src="lib/js/app.js"></script>
