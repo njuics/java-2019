@@ -319,7 +319,7 @@
         <h2>创建型设计模式</h2>
       </div>
       <div class="down-5">
-        <h4>创建模式是对类的实例化过程的抽象化</h4>
+        <h5>创建模式是对类的实例化过程的抽象化</h5>
       </div>
       <div class="down-5">
         <ul>
@@ -346,8 +346,23 @@
       </section>
 
       <section>
+        <div class="down-3">
+          <h2>简单工厂</h2>
+        </div>
+        <div class="down-5">
+            <h5>由一个工厂对象决定创建出哪一种产品类的实例。</h5>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/SimFac.png" style="width:60%"/>
+        </div>
+    </section>
+
+      <section>
           <div class="down-3">
-            <h2>简单工厂</h2>
+            <h2>抽象工厂</h2>
+          </div>
+          <div class="down-5">
+              <h5>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类 – 客户端不必指定产品的具体类型，创建多个产品族中的产品对象。</h5>
           </div>
           <div class="down-5 center">
               <img src="content/images/12/AbsFac.png" style="width:60%"/>
@@ -359,10 +374,18 @@
           <h2>原型</h2>
         </div>
         <div class="down-5">
+            <h5>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</h5>
+        </div>
+        <div class="down-5">
           <ul>
             <li>Java 语言的构件模型直接支持Prototype模式</li><br>
-            <li><code>java.lang.Object</code> 根类： <code>protected Object clone();</code></li><br>
-            <li><code>java.lang.Cloneable</code> 接口</li><br>
+            <li><code>java.lang.Object</code> 根类： </li>
+                 <pre class = "java">
+                   <code data-trim>
+                      protected Object clone() throws CloneNotSupportedException;
+                   </code>
+                 </pre>
+            <li><code>java.lang.Cloneable</code> 接口：<font color=red>标记接口</font></li><br>
           </ul>
         </div>
     </section>
@@ -376,7 +399,14 @@
         </div>
         <div class="down-3">
             <ul>
-              <li>shallow copy vs. deep copy</li><br>
+              <li>shallow copy (默认) vs. deep copy （改写<code>clone</code>方法）</li>
+                <pre class = "java">
+                  <code data-trim>
+                      x.clone() != x
+                      x.clone().getClass() == x.getClass()
+                      x.clone().equals(x)
+                  </code>
+                 </pre>
               <li>Save & Load</code></li><br>
             </ul>
         </div>
@@ -392,7 +422,7 @@
              <h3>单例</h3>
           </div>
           <div class="down-5">
-            <h4>一个类仅有一个实例，自行实例化并向整个系统提供一个访问它的全局访问点</h4>
+            <h5>一个类仅有一个实例，自行实例化并向整个系统提供一个访问它的全局访问点。</h5>
           </div>
           <div class="down-5">
               <ul>
@@ -501,7 +531,7 @@
             <h2>结构型设计模式</h2>
           </div>
           <div class="down-5">
-            <h4>结构模式描述如何将类或者对象结合在一起形成更大的结构</h4>
+            <h5>结构模式描述如何将类或者对象结合在一起形成更大的结构</h5>
           </div>
           <div class="down-5">
             <ul>
@@ -533,7 +563,7 @@
             <h2>适配器</h2>
           </div>
           <div class="down-5">
-            <h4>将一个类的接口转换成客户希望的另外一个接口。（转换匹配，重用功能）</h4>
+            <h5>将一个类的接口转换成客户希望的另外一个接口。<font color=red>（转换匹配，重用功能）</font></h5>
           </div>
           <div class="down-5">
             <ul>
@@ -610,7 +640,7 @@
           <h2>装饰器模式</h2>
         </div>
         <div class="down-5">
-          <h4>动态地给一个对象添加一些额外的职责</h4>
+          <h5>动态地给一个对象添加一些额外的职责。</h5>
         </div>
         <div class="down-5 center">
             <img src="content/images/12/Decorator.png" style="width:60%"/>
@@ -627,10 +657,15 @@
           <h2>代理模式</h2>
         </div>
         <div class="down-5">
-          <h4>为其它对象提供一种代理以控制对这个对象的访问</h4>
+          <h5>为其它对象提供一种代理以控制对这个对象的访问。</h5>
         </div>
         <div class="down-5 center">
             <img src="content/images/12/Proxy.png" style="width:60%"/>
+        </div>
+        <div class="down-5 row fragment">
+            <div>
+                <div class="center danger">控制对象访问</div>
+            </div>
         </div>
     </section>
 
@@ -701,7 +736,7 @@
             <h2>行为型设计模式</h2>
         </div>
         <div class="down-5">
-          <h4>行为模式是对在不同的对象之间划分责任和算法的抽象化。行为模式不仅仅是关于类和对象的，而且关注它们之间的通信模式。</h4>
+          <h5>行为模式是对在不同的对象之间划分责任和算法的抽象化。行为模式不仅仅是关于类和对象的，而且关注它们之间的通信模式。</h5>
         </div>
           <div class="down-5">
             <ul>
@@ -781,7 +816,7 @@
           <div class="down-5">
             <ul>
               <li>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化</li><br>
-              <li>对请求排队或记录请求日志，以及支持undo和redo操作</li><br>
+              <li>对请求排队或记录请求日志，以及支持<font color=red>undo</font>和<font color=red>redo</font>操作</li><br>
               <li>可将多个Command装配成一个复合Command</li><br>
             </ul>
           </div>
@@ -792,12 +827,12 @@
             <h2>命令模式</h2>
           </div>
           <div class="down-5">
-            <h4>抽象出待执行的动作以参数化某对象，可以代替“回调”函数</h4>
+            <h5>抽象出待执行的动作以参数化某对象，可以代替“回调”函数。</h5>
           </div>
-          <div class="down-1 center">
+          <div class="down-3 center">
               <img src="content/images/12/Command.png" style="width:50%"/>
           </div>
-          <div class="down-1 row fragment">
+          <div class="down-3 row fragment">
               <div>
                   <div class="center danger">使用aCommand将anInvoker和aReceiver解耦</div>
               </div>
@@ -856,8 +891,13 @@
           <div class="down-5">
             <ul>
               <li>也称为publish/subscribe</li><br>
-              <li>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</li><br>
+              <li>定义对象间的一种<font color=red>一对多</font>的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</li><br>
             </ul>
+          </div>
+          <div class="down-3 row fragment">
+              <div>
+                  <div class="center danger">最著名的应用：MVC</div>
+              </div>
           </div>
     </section>
 
@@ -958,8 +998,22 @@
             <h2>模版方法</h2>
         </div>
         <div class="down-5">
-            <h4>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。
-              Template Method使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</h4>
+            <h5>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。
+              Template Method使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</h5>
+        </div>
+    </section>
+
+    <section>
+        <div class="down-3">
+            <h2>模版方法</h2>
+        </div>
+        <div class="down-5 center">
+            <img src="content/images/12/Template.png" style="width:60%"/>
+        </div>
+        <div class="down-3 row fragment">
+            <div>
+                <div class="center danger">注意对模版方法的访问控制！</div>
+            </div>
         </div>
     </section>
 
@@ -970,7 +1024,7 @@
           <div class="down-5">
             <ul>
               <li>固定算法骨架</li><br>
-              <li>模板方法导致一种反向的控制结构</li><br>
+              <li>模板方法导致一种<font color=red>反向</font>的控制结构</li><br>
               <li>子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑！</li>
             </ul>
           </div>
@@ -1009,6 +1063,12 @@
             <bspan class="right-40">植物大战僵尸！</bspan>
         </div>
     </section>
+
+    <section class="title-slide">
+        <div class="biggest framed bordered border-2x font-passionone bg-success">
+           以“不变”应“万变”
+        </div>
+  </section>
 
     </div> <!-- slides -->
   </div> <!-- reveal -->
