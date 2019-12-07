@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注解 Annotation</title>
+<link href="lib/css/app.css" rel="stylesheet"><link href="https:/use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"></head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    注解 Annotation
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>注解</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            从JavaSE 1.5开始，Java增加了对元数据的支持，也就是Annotation
+                        </li>
+                        <li>
+                            Annotation其实就是对代码的一种特殊标记，这些标记可以在编译，类加载和运行时被读取，并执行相应的处理
+                        </li>
+                    </ul>
+                </div>
+                <div class="down-3">
+                    元数据是关于数据的数据。在编程语言上下文中，元数据是添加到程序元素如方法、字段、类和包上的额外信息，对数据进行说明描述的数据
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>多进程、多线程</h2>
+                </div>
+                <div class="down-9">
+                    <div class="down-1 ">
+                        多进程操作的意义在于多个计算任务轮流共享CPU的时间片(针对单处理器情形，多处理器可理解为并行)并发执行。
+                    </div>
+                    <div class="down-1 ">
+                        每个计算任务（进程）内又可以存在多个线程（指令执行序列）。
+                    </div>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>并发 vs. 并行</h2>
+                </div>
+                <div class="down-1 center">
+                    <div class="center down-1">
+                        <img
+                            src="http://images.cnitblog.com/blog/94031/201307/01001508-e1a4c7ed78274ec4aa325b928af044e5.png" />
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>多线程优势</h2>
+                </div>
+                <div class="down-9">
+                    <div class="down-1 ">
+                        多线程的并发操作优势在于，当程序的某个任务因外部条件问题，导致阻塞，如果没有并发，则整个程序停止，直到外部条件发生变化，使用并发后，程序中的其他任务还可以继续执行。
+                        <div class="down-1 ">
+                            如果没有阻塞，在单处理器上考虑多线程并发也就没有意义了，线程之间的切换会造成大量的时间消耗。
+                        </div>
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>JVM Threads</h2>
+                </div>
+                <div class="down-5 center">
+                    <div class="center down-1">
+                        <img src="https://equinoxrar.files.wordpress.com/2014/08/threads1.png" />
+                    </div>
+            </section>
+
+
+            <section>
+                <div class="down-30 center larger">
+                    基础篇 </div>
+            </section>
+
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Runnable接口定义“任务”</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java tiny">
+                        <code data-trim>
+                            ublic class LiftOff implements Runnable {
+                                protected int countDown = 10; // Default
+                                private static int taskCount = 0;
+                                private final int id = taskCount++;
+                            
+                                public LiftOff() {
+                                }
+                            
+                                public LiftOff(int countDown) {
+                                    this.countDown = countDown;
+                                }
+                            
+                                public String status() {
+                                    return "#" + id + "(" +
+                                            (countDown > 0 ? countDown : "Liftoff!") + "), ";
+                                }
+                            
+                                public void run() {
+                                    while (countDown-- > 0) {
+                                        System.out.print(status());
+                                        Thread.yield(); //后面解释
+                                    }
+                                }
+                            }
+                            
+                            public class MainThread {
+                                public static void main(String[] args) {
+                                    LiftOff launch = new LiftOff();
+                                    launch.run();
+                                }
+                            }
+                        </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Thread</h2>
+                </div>
+                <div class="down-5">
+                    <code> java.lang.Thread</code>
+
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                            <code data-trim>
+                                public class BasicThreads {
+                                    public static void main(String[] args) {
+                                        //把任务装进线程里
+                                        Thread t = new Thread(new LiftOff());
+                                        t.start();
+                                        System.out.println("Waiting for LiftOff");
+                                    }
+                                }
+                            </code>
+                            
+                        </pre>
+                </div>
+                <div class="down-1">Thread对象像是运载火箭，Runnable的实现对象就是一个荷载（payload）</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>或者</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java tiny">
+                        <code data-trim> 
+                            public class SimpleThread extends Thread {
+                                private int countDown = 5;
+                                private static int threadCount = 0;
+                            
+                                public SimpleThread() {
+                                    // Store the thread name:
+                                    super(Integer.toString(++threadCount));
+                                    start();
+                                }
+                            
+                                public String toString() {
+                                    return "#" + getName() + "(" + countDown + "), ";
+                                }
+                            
+                                public void run() {
+                                    while (true) {
+                                        System.out.print(this);
+                                        if (--countDown == 0)
+                                            return;
+                                    }
+                                }
+                            
+                                public static void main(String[] args) {
+                                    for (int i = 0; i &lt; 5; i++)
+                                        new SimpleThread();
+                                }
+                            }
+                        </code>
+                        
+                    </pre>
+                </div>
+                <div class="down-1 fragment small center">实际上<code>public class Thread implements Runnable</code></div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>多线程，走起</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                                    <code data-trim>
+                                        public class MoreBasicThreads {
+                                            public static void main(String[] args) {
+                                                for (int i = 0; i < 5; i++)
+                                                    new Thread(new LiftOff()).start();
+                                                System.out.println("Waiting for LiftOff");
+                                            }
+                                        }
+                                    </code>
+                                    
+                                </pre>
+                </div>
+
+                <div class="down-5 center">
+                    直接启动多个<code>Thread</code></div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>或者用ExecutorService启动</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                        <code data-trim>
+                            public class CachedThreadPool {
+                                public static void main(String[] args) {
+                                    ExecutorService exec = Executors.newCachedThreadPool();
+                                    for (int i = 0; i < 5; i++)
+                                        exec.execute(new LiftOff());
+                                    exec.shutdown();
+                                }
+                            }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-1  center">
+                    <code>CachedThreadPool</code>根据需要创建新线程的线程池，如果现有线程没有可用的，则创建一个新线程并添加到池中，如果有被使用完但是还没销毁的线程，就复用该线程
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>线程池？</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。
+                        </li>
+                        <li>
+                            在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。
+                        </li>
+                        <li>
+                            所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁。
+                        </li>
+                        <li>
+                            如何利用已有对象来服务就是一个需要解决的关键问题，其实这就是一些"池化资源"技术产生的原因。
+                        </li>
+                    </ul>
+
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>或者另一种策略</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                        <code data-trim>
+                                public class FixedThreadPool {
+                                    public static void main(String[] args) {
+                                        // Constructor argument is number of threads:
+                                        ExecutorService exec = Executors.newFixedThreadPool(5);
+                                        for (int i = 0; i < 5; i++)
+                                            exec.execute(new LiftOff());
+                                        exec.shutdown();
+                                    }
+                                }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-1 small center">
+                    创建一个固定线程数的线程池，在任何时候最多只有n个线程被创建。如果在所有线程都处于活动状态时，有其他任务提交，他们将等待队列中直到线程可用。如果任何线程由于执行过程中的故障而终止，将会有一个新线程将取代这个线程执行后续任务。
+                </div>
+                <div class="down-1 small danger fragment center">如果需要获得异步执行的任务的结果怎么办？
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2> Callable</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java tiny">
+                                        <code data-trim>
+                                                public interface Callable&lt;V&gt; {
+                                                    V call() throws Exception;
+                                                }
+                                                class TaskWithResult implements Callable&lt;String&gt; {
+                                                    private int id;
+                                                
+                                                    public TaskWithResult(int id) {
+                                                        this.id = id;
+                                                    }
+                                                
+                                                    public String call() {
+                                                        return "result of TaskWithResult " + id;
+                                                    }
+                                                }
+                                                
+                                                public class CallableDemo {
+                                                    public static void main(String[] args) {
+                                                        ExecutorService exec = Executors.newCachedThreadPool();
+                                                        ArrayList&lt;Future&lt;String&gt;&gt; results =
+                                                                new ArrayList&lt;Future&lt;String&gt;&gt;();
+                                                        for (int i = 0; i &lt; 10; i++)
+                                                            results.add(exec.submit(new TaskWithResult(i)));
+                                                        for (Future&lt;String&gt; fs : results)
+                                                            try {
+                                                                // get() blocks until completion:
+                                                                System.out.println(fs.get());
+                                                            } catch (InterruptedException e) {
+                                                                System.out.println(e);
+                                                                return;
+                                                            } catch (ExecutionException e) {
+                                                                System.out.println(e);
+                                                            } finally {
+                                                                exec.shutdown();
+                                                            }
+                                                    }
+                                                }
+                                        </code>
+                                        
+                                    </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2> Future </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                                                <code data-trim>
+                                                        class MyCallable implements Callable&lt;String&gt;{
+                                                                @Override
+                                                                public String call() throws Exception {
+                                                                    System.out.println("做一些耗时的任务...");
+                                                                    Thread.sleep(5000);
+                                                                    return "OK";
+                                                                }
+                                                            }
+                                                            
+                                                            public class FutureSimpleDemo {
+                                                                public static void main(String[] args) throws InterruptedException, ExecutionException {
+                                                                    ExecutorService executorService = Executors.newCachedThreadPool();
+                                                                    Future&lt;String&gt; future = executorService.submit(new MyCallable());
+                                                            
+                                                                    System.out.println("dosomething...");
+                                                                    System.out.println("得到异步任务返回结果：" + future.get());
+                                                                    System.out.println("Completed!");
+                                                                }
+                                                            }
+                                                </code>
+                                            </pre>
+                </div>
+                <div class=" fragment danger center small">
+                    当调用<code>future.get()</code>方法以获得结果时，当前线程就开始阻塞，直接<code>call()</code>方法结束返回结果。</div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> SLEEP </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                public class SleepingTask extends LiftOff {
+                                    public void run() {
+                                        try {
+                                            while (countDown-- > 0) {
+                                                System.out.print(status());
+                                                // Old-style: Thread.sleep(100);
+                                                TimeUnit.MILLISECONDS.sleep(100);
+                                            }
+                                        } catch (InterruptedException e) {
+                                            System.err.println("Interrupted");  //可能被打断
+                                        }
+                                    }
+                                    public static void main(String[] args) {
+                                        ExecutorService exec = Executors.newCachedThreadPool();
+                                        for (int i = 0; i &lt; 5; i++)
+                                            exec.execute(new SleepingTask());
+                                        exec.shutdown();
+                                    }
+                                }
+                        </code>                 
+                    </pre>
+                </div>
+
+                <div class="center small">
+                    运行结果看起来应该平稳，但实际并不完全如此... </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Yeild 让位  </h2>
+                </div>
+                <!-- <div class="down-5">
+                    <code>yield</code>和<code>sleep</code>的主要区别是
+                </div> -->
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            yield方法会临时暂停当前正在执行的线程，来让有同样优先级的正在等待的线程有机会执行 </li>
+                        <li>
+                            如果没有正在等待的线程，或者所有正在等待的线程的优先级都比较低，那么该线程会继续运行 </li>
+                        <li>
+                            执行了yield方法的线程什么时候会继续运行由线程调度器来决定，不同的厂商可能有不同的行为 </li>
+                        <li>
+                            yield方法不保证当前的线程会暂停或者停止，但是可以保证当前线程在调用yield方法时会放弃CPU。 </li>
+                    </ul>
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2> Priority </h2>
+                </div>
+                <div>
+                    <pre class="java tiny">
+                            <code data-trim>
+                                    public class SimplePriorities implements Runnable {
+                                        private int countDown = 5;
+                                        private volatile double d; // No optimization 后面再解释
+                                        private int priority;
+                                    
+                                        public SimplePriorities(int priority) {
+                                            this.priority = priority;
+                                        }
+                                    
+                                        public String toString() {
+                                            return Thread.currentThread() + ": " + countDown;
+                                        }
+                                    
+                                        public void run() {
+                                            Thread.currentThread().setPriority(priority);
+                                            while (true) {
+                                                // An expensive, interruptable operation:
+                                                for (int i = 1; i &lg; 100000; i++) {
+                                                    d += (Math.PI + Math.E) / (double) i;
+                                                    if (i % 1000 == 0)
+                                                        Thread.yield();
+                                                }
+                                                System.out.println(this);
+                                                if (--countDown == 0) return;
+                                            }
+                                        }
+                                    
+                                        public static void main(String[] args) {
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            for (int i = 0; i &lg; 5; i++)
+                                                exec.execute(
+                                                        new SimplePriorities(Thread.MIN_PRIORITY));
+                                            exec.execute(
+                                                    new SimplePriorities(Thread.MAX_PRIORITY));
+                                            exec.shutdown();
+                                        }
+                                    }
+                            </code>
+                            
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2> Deamon 线程 </h2>
+                </div>
+                <div class="">
+                    <pre class="java">
+                                <code data-trim>
+                                        public class SimpleDaemons implements Runnable {
+                                            public void run() {
+                                                try {
+                                                    while (true) {
+                                                        TimeUnit.MILLISECONDS.sleep(100);
+                                                        print(Thread.currentThread() + " " + this);
+                                                    }
+                                                } catch (InterruptedException e) {
+                                                    print("sleep() interrupted");
+                                                }
+                                            }
+                                            public static void main(String[] args) throws Exception {
+                                                for (int i = 0; i &lt; 10; i++) {
+                                                    Thread daemon = new Thread(new SimpleDaemons());
+                                                    daemon.setDaemon(true); // Must call before start()
+                                                    daemon.start();
+                                                }
+                                                print("All daemons started");
+                                                TimeUnit.MILLISECONDS.sleep(99);
+                                            }
+                                        }
+                                </code>                   
+                            </pre>
+                </div>
+                <div class="smaller danger center">
+                    后台运行线程，当所有非后台线程结束时，应用退出，所有Deamon线程被杀😢
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>小结一下 </h2>
+                </div>
+
+                <div class="down-5">
+                    Java关于线程编程的抽象
+                </div>
+                <div class="down-3">
+                    <code>Thread</code>对象像是运载火箭，<code>Runnable</code>/<code>Callable</code>的实现对象就是一个荷载（payload）
+
+                </div>
+
+                <div class="down-5  large danger center">
+                    Runnable/Callable --> Task
+                </div>
+                <div class="down-1  large danger center">
+                    Thread --> let tasks go </div>
+            </section>
+
+
+
+            <section>
+                <div class="down-30 center larger">
+                    中级篇</div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>Join </h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                    <code data-trim>
+                                            class Sleeper extends Thread {
+                                                private int duration;
+                                            
+                                                public Sleeper(String name, int sleepTime) {
+                                                    super(name);
+                                                    duration = sleepTime;
+                                                    start();
+                                                }
+                                            
+                                                public void run() {
+                                                    try {
+                                                        sleep(duration);
+                                                    } catch (InterruptedException e) {
+                                                        print(getName() + " was interrupted. " +
+                                                                "isInterrupted(): " + isInterrupted());
+                                                        return;
+                                                    }
+                                                    print(getName() + " has awakened");
+                                                }
+                                            }
+                                    </code>
+                                                                
+                                </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                    <code data-trim>
+                                            class Joiner extends Thread {
+                                                private Sleeper sleeper;
+                                            
+                                                public Joiner(String name, Sleeper sleeper) {
+                                                    super(name);
+                                                    this.sleeper = sleeper;
+                                                    start();
+                                                }
+                                            
+                                                public void run() {
+                                                    try {
+                                                        sleeper.join();
+                                                    } catch (InterruptedException e) {
+                                                        print("Interrupted");
+                                                    }
+                                                    print(getName() + " join completed");
+                                                }
+                                            }
+                                            
+                                            public class Joining {
+                                                public static void main(String[] args) {
+                                                    Sleeper
+                                                            sleepy = new Sleeper("Sleepy", 1500),
+                                                            grumpy = new Sleeper("Grumpy", 1500);
+                                                    Joiner
+                                                            dopey = new Joiner("Dopey", sleepy),
+                                                            doc = new Joiner("Doc", grumpy);
+                                                    grumpy.interrupt();
+                                                }
+                                            }
+                                    </code>
+                                                                
+                                </pre>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Uncaught Exceptions </h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                    public class ExceptionThread implements Runnable {
+                                        public void run() {
+                                            throw new RuntimeException();
+                                        }
+                                    
+                                        public static void main(String[] args) {
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            exec.execute(new ExceptionThread());
+                                        }
+                                    }
+                            </code>
+                            <code  data-trim>
+                                    public class NaiveExceptionHandling {
+                                        public static void main(String[] args) {
+                                            try {
+                                                ExecutorService exec =
+                                                        Executors.newCachedThreadPool();
+                                                exec.execute(new ExceptionThread());
+                                            } catch (RuntimeException ue) {
+                                                // This statement will NOT execute!
+                                                System.out.println("Exception has been handled!");
+                                            }
+                                        }
+                                    }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+
+                <div class="down-1  large danger center">
+                    Exception in thread "pool-1-thread-1" java.lang.RuntimeException
+                    at concurrency.ExceptionThread.run(ExceptionThread.java:7)
+                    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+                    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+                    at java.lang.Thread.run(Thread.java:745)
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>UncaughtExceptionHandler</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                        <code data-trim>
+                                                class ExceptionThread2 implements Runnable {
+                                                    public void run() {
+                                                        Thread t = Thread.currentThread();
+                                                        System.out.println("run() by " + t);
+                                                        System.out.println(
+                                                                "eh = " + t.getUncaughtExceptionHandler());
+                                                        throw new RuntimeException();
+                                                    }
+                                                }
+                                                
+                                                class MyUncaughtExceptionHandler implements
+                                                        Thread.UncaughtExceptionHandler {
+                                                    public void uncaughtException(Thread t, Throwable e) {
+                                                        System.out.println("caught " + e);
+                                                    }
+                                                }
+                                        </code>
+                                                                    
+                                    </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                        <code data-trim>
+                                                class HandlerThreadFactory implements ThreadFactory {
+                                                    public Thread newThread(Runnable r) {
+                                                        System.out.println(this + " creating new Thread");
+                                                        Thread t = new Thread(r);
+                                                        System.out.println("created " + t);
+                                                        t.setUncaughtExceptionHandler(
+                                                                new MyUncaughtExceptionHandler());
+                                                        System.out.println(
+                                                                "eh = " + t.getUncaughtExceptionHandler());
+                                                        return t;
+                                                    }
+                                                }
+                                                
+                                                public class CaptureUncaughtException {
+                                                    public static void main(String[] args) {
+                                                        ExecutorService exec = Executors.newCachedThreadPool(
+                                                                new HandlerThreadFactory());
+                                                        exec.execute(new ExceptionThread2());
+                                                        exec.shutdown();
+                                                    }
+                                                }
+                                        </code>
+                                                                    
+                                    </pre>
+                    </div>
+                </div>
+            </section>
+            <!-- <section>
+                <div class="down-3">
+                    <h2>或者简单一点</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                                <code data-trim>
+                                        class HandlerThreadFactory implements ThreadFactory {
+                                            public Thread newThread(Runnable r) {
+                                                System.out.println(this + " creating new Thread");
+                                                Thread t = new Thread(r);
+                                                System.out.println("created " + t);
+                                                t.setUncaughtExceptionHandler(
+                                                        new MyUncaughtExceptionHandler());
+                                                System.out.println(
+                                                        "eh = " + t.getUncaughtExceptionHandler());
+                                                return t;
+                                            }
+                                        }
+                                        
+                                        public class CaptureUncaughtException {
+                                            public static void main(String[] args) {
+                                                ExecutorService exec = Executors.newCachedThreadPool(
+                                                        new HandlerThreadFactory());
+                                                exec.execute(new ExceptionThread2());
+                                                exec.shutdown();
+                                            }
+                                        }
+                                </code>
+                                                            
+                            </pre>
+                </div>
+
+            </section> -->
+
+            <section>
+                <div class="down-3">
+                    <h2> 资源共享问题 </h2>
+                </div>
+                <div class="down-9">
+                    一个葫芦娃在战场上可以随意走，多个葫芦娃在战场上是随意走，那就会撞头。
+
+                </div>
+                <div class="down-5">
+                    因为一个空间位置，是不能共享的。
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>示例</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                            <code data-trim>
+                                    public abstract class IntGenerator {
+                                        private volatile boolean canceled = false;
+                                    
+                                        public abstract int next();
+                                    
+                                        // Allow this to be canceled:
+                                        public void cancel() {
+                                            canceled = true;
+                                        }
+                                    
+                                        public boolean isCanceled() {
+                                            return canceled;
+                                        }
+                                    }
+                                    
+                                    public class EvenGenerator extends IntGenerator {
+                                        private int currentEvenValue = 0;
+                                    
+                                        public int next() {
+                                            ++currentEvenValue; // Danger point here!
+                                            Thread.yield();
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        }
+                                    }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>EvenChecker</h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java tiny">
+                            <code data-trim>
+                                    public class EvenChecker implements Runnable {
+                                        private IntGenerator generator;
+                                        private final int id;
+                                    
+                                        public EvenChecker(IntGenerator g, int ident) {
+                                            generator = g;
+                                            id = ident;
+                                        }
+                                        public void run() {
+                                            while (!generator.isCanceled()) {
+                                                int val = generator.next();
+                                                if (val % 2 != 0) {
+                                                    System.out.println(val + " not even!");
+                                                    generator.cancel(); // Cancels all EvenCheckers
+                                                }
+                                            }
+                                        }
+                                        // Test any type of IntGenerator:
+                                        public static void test(IntGenerator gp, int count) {
+                                            System.out.println("Press Control-C to exit");
+                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                            for (int i = 0; i &lt; count; i++)
+                                                exec.execute(new EvenChecker(gp, i));
+                                            exec.shutdown();
+                                        }
+                                        // Default value for count:
+                                        public static void test(IntGenerator gp) {
+                                            test(gp, 10);
+                                        }   
+                                        public static void main(String[] args) {
+                                            EvenChecker.test(new EvenGenerator());
+                                        }
+                                    
+                                    }
+                            </code>
+                                                        
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>解决方法</h2>
+                </div>
+                <div class="down-3">
+                    对资源加锁，使得对资源的访问顺序化，确保在某一时刻只有一个任务在使用共享资源（使其互斥）
+                </div>
+                <div class="down-3 center">
+                    Mutual Exclusion （Mutex）
+
+                </div>
+
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Synchronized</h2>
+                </div>
+
+                <div class="down-9">
+                    <pre class="java">
+                            <code data-trim>
+                                    public class SynchronizedEvenGenerator extends IntGenerator {
+                                        private int currentEvenValue = 0;
+                                    
+                                        public synchronized int next() {
+                                            ++currentEvenValue;
+                                            Thread.yield(); 
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        }
+                                    
+                                        public static void main(String[] args) {
+                                            EvenChecker.test(new SynchronizedEvenGenerator());
+                                        }
+                                    }
+                            </code>              
+                        </pre>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Lock</h2>
+                </div>
+
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                                public class MutexEvenGenerator extends IntGenerator {
+                                    private int currentEvenValue = 0;
+                                    private Lock lock = new ReentrantLock();
+                                
+                                    public int next() {
+                                        //加锁
+                                        lock.lock();
+                                        try {
+                                            ++currentEvenValue;
+                                            Thread.yield();
+                                            ++currentEvenValue;
+                                            return currentEvenValue;
+                                        } finally {
+                                            //一定要用try-catch的finally去释放锁
+                                            lock.unlock();
+                                        }
+                                    }
+                                    public static void main(String[] args) {
+                                        EvenChecker.test(new MutexEvenGenerator());
+                                    }
+                                } 
+                        </code>              
+                    </pre>
+                </div>
+                <div class="smaller center">
+
+                    <code>ReentrantLock</code>允许尝试加锁：<code>lock.tryLock(2, TimeUnit.SECONDS)</code>，若失败做其他处理。
+
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Critical Sections 临界区</h2>
+                </div>
+                <div>
+                    <pre class="java">
+                            <code data-trim>
+                                    synchronized(syncObject){
+                                        //balabala
+                                    }
+                            </code>              
+                        </pre>
+                    <pre class="java">
+                            <code data-trim>
+                                    class PairManager1 extends PairManager {
+                                        public synchronized void increment() {  // Synchronize the entire method
+                                            p.incrementX();
+                                            p.incrementY();
+                                            store(getPair());
+                                        }
+                                    }
+                                    class PairManager2 extends PairManager {
+                                        public void increment() {
+                                            Pair temp;
+                                            synchronized (this) {   // Use a critical section:
+                                                p.incrementX();
+                                                p.incrementY();
+                                                temp = getPair();
+                                            }
+                                            store(temp);
+                                        }
+                                    }
+                            </code>              
+                        </pre>
+                </div>
+
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>Lock on Object</h2>
+                </div>
+
+                <div class="center down-1">
+                    <img
+                        src="http://4.bp.blogspot.com/-kRUcoXzDmAM/T48eQOjNzuI/AAAAAAAAA38/TaU6Eub90uA/s1600/Object-Monitor-Threads.PNG" />
+
+                </div>
+
+            </section>
+            <section>
+
+                <div class="down-3">
+                    <h2>Thread local Storage</h2>
+                </div>
+
+                <div class="center down-1">
+                    <img src="https://i.stack.imgur.com/Dhws6.jpg" />
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>示例</h2>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class Accessor implements Runnable {
+                                                        private final int id;
+                                                    
+                                                        public Accessor(int idn) {
+                                                            id = idn;
+                                                        }
+                                                    
+                                                        public void run() {
+                                                            while (!Thread.currentThread().isInterrupted()) {
+                                                                ThreadLocalVariableHolder.increment();
+                                                                System.out.println(this);
+                                                                Thread.yield();
+                                                            }
+                                                        }
+                                                    
+                                                        public String toString() {
+                                                            return "#" + id + ": " +
+                                                                    ThreadLocalVariableHolder.get();
+                                                        }
+                                                    }
+                                                    
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    public class ThreadLocalVariableHolder {
+                                                        private static ThreadLocal&lt;Integer&gt; value =
+                                                                new ThreadLocal&lt;Integer&gt;() {
+                                                                    private Random rand = new Random(47);
+                                                    
+                                                                    protected synchronized Integer initialValue() {
+                                                                        return rand.nextInt(10000);
+                                                                    }
+                                                                };
+                                                    
+                                                        public static void increment() {
+                                                            value.set(value.get() + 1);
+                                                        }
+                                                    
+                                                        public static int get() {
+                                                            return value.get();
+                                                        }
+                                                    
+                                                        public static void main(String[] args) throws Exception {
+                                                            ExecutorService exec = Executors.newCachedThreadPool();
+                                                            for (int i = 0; i &lt; 5; i++)
+                                                                exec.execute(new Accessor(i));
+                                                            TimeUnit.SECONDS.sleep(3);  // Run for a while
+                                                            exec.shutdownNow();         // All Accessors will quit
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>从竞争到协作</h2>
+                </div>
+
+                <div class="down-9 center">
+                    <pre class="java ">
+                            <code data-trim>
+                                    wait();
+                                    notify();
+                                    notifyAll();
+                            </code>              
+                        </pre>
+
+                    <div class="center down-1">
+                        <code>Object</code>类型上的三个方法
+
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>还是看个例子</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class Car {
+                                                        private boolean waxOn = false;
+                                                    
+                                                        public synchronized void waxed() {
+                                                            waxOn = true; // Ready to buff
+                                                            notifyAll();
+                                                        }
+                                                    
+                                                        public synchronized void buffed() {
+                                                            waxOn = false; // Ready for another coat of wax
+                                                            notifyAll();
+                                                        }
+                                                    
+                                                        public synchronized void waitForWaxing()
+                                                                throws InterruptedException {
+                                                            while (waxOn == false)
+                                                                wait();
+                                                        }
+                                                    
+                                                        public synchronized void waitForBuffing()
+                                                                throws InterruptedException {
+                                                            while (waxOn == true)
+                                                                wait();
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                            <code data-trim>
+                                                    class WaxOn implements Runnable {
+                                                        private Car car;
+                                                    
+                                                        public WaxOn(Car c) {
+                                                            car = c;
+                                                        }
+                                                    
+                                                        public void run() {
+                                                            try {
+                                                                while (!Thread.interrupted()) {
+                                                                    printnb("Wax On! ");
+                                                                    TimeUnit.MILLISECONDS.sleep(200);
+                                                                    car.waxed();
+                                                                    car.waitForBuffing();
+                                                                }
+                                                            } catch (InterruptedException e) {
+                                                                print("Exiting via interrupt");
+                                                            }
+                                                            print("Ending Wax On task");
+                                                        }
+                                                    }
+                                            </code>
+                                                                        
+                                        </pre>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>接上页</h2>
+                </div>
+                <div class="row">
+
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                                <code data-trim>
+                                                        class WaxOff implements Runnable {
+                                                            private Car car;
+                                                        
+                                                            public WaxOff(Car c) {
+                                                                car = c;
+                                                            }
+                                                        
+                                                            public void run() {
+                                                                try {
+                                                                    while (!Thread.interrupted()) {
+                                                                        car.waitForWaxing();
+                                                                        printnb("Wax Off! ");
+                                                                        TimeUnit.MILLISECONDS.sleep(200);
+                                                                        car.buffed();
+                                                                    }
+                                                                } catch (InterruptedException e) {
+                                                                    print("Exiting via interrupt");
+                                                                }
+                                                                print("Ending Wax Off task");
+                                                            }
+                                                        }
+                                                </code>
+                                                                            
+                                            </pre>
+                    </div>
+                    <div class="col-50">
+                        <pre class="java tiny">
+                                                <code data-trim>
+                                                        public class WaxOMatic {
+                                                            public static void main(String[] args) throws Exception {
+                                                                Car car = new Car();
+                                                                ExecutorService exec = Executors.newCachedThreadPool();
+                                                                exec.execute(new WaxOff(car));
+                                                                exec.execute(new WaxOn(car));
+                                                                TimeUnit.SECONDS.sleep(5); // Run for a while...
+                                                                exec.shutdownNow(); // Interrupt all tasks
+                                                            }
+                                                        }
+                                                </code>
+                                                                            
+                                            </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>线程状态</h2>
+                </div>
+
+                <div class="center down-1">
+                    <img
+                        src="https://www.w3resource.com/w3r_images/java-threadclass-methods-and-threadstates-jimage1.png" />
+
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>wait和sleep的区别</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            调用wait方法时，线程在等待的时候会释放掉它所获得的monitor，但是调用Thread.sleep()方法时，线程在等待的时候仍然会持有monitor或者锁，wait方法应在同步代码块中调用，但是sleep方法不需要
+                        </li>
+                        <li>
+                            Thread.sleep()方法是一个静态方法，作用在当前线程上；但是wait方法是一个实例方法，并且只能在其他线程调用本实例的notify()方法时被唤醒 </li>
+
+                    </ul>
+
+                </div>
+                <div class=" large danger center">
+                    如果需要暂停线程一段特定的时间就使用sleep()方法，如果要实现线程间通信就使用wait()方法。
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-30 center larger">
+                    高级篇</div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>高级设施</h2>
+                </div>
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            CountDownLatch
+                        </li>
+                        <li>
+                            CyclicBarrier </li>
+                        <li>
+                            DelayQueue
+                        </li>
+                        <li>
+                            PriorityBlockingQueue
+                        </li>
+                        <li>
+                            ScheduledExector
+                        </li>
+                        <li>
+                            Semaphore
+                        </li>
+                        <li>
+                            Exchanger
+                        </li>
+                    </ul>
+
+                </div>
+                <div class=" large center">请看书
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-30 center larger">
+                    让你的葫芦娃们抖动起来！
+                </div>
+            </section>
+        </div>
+    </div>
+<script type="text/javascript" src="lib/js/app.js"></script></body>
+</head>
+
+</html>
