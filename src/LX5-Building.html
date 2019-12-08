@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注解 Annotation</title>
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    自动构建
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>自动构建 Build automation</h2>
+                </div>
+                <div class="down-9">
+
+                    Build automation is the process of automating the creation of a software build and the associated
+                    processes including: compiling computer source code into binary code, packaging binary code, and
+                    running automated tests.
+                </div>
+
+                <div class="down-3 right">-- Wikipedia
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>自动构建工具</h2>
+                </div>
+                <div class="down-3">
+                    <ul>
+                        <li>Make</li>
+                        <li>Rake</li>
+                        <li>Cake</li>
+                        <li>MS build</li>
+                        <li>Ant</li>
+                        <li>Gradle</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="down-3">
+                    <h2>Make</h2>
+                </div>
+                <div class="down-1 center">
+                    <div class="center down-1">
+                        假设a.txt来源于合并b.txt 和c.txt
+
+                        <pre class="bash">
+                                        <code data-trim>
+                                                $ cat b.txt c.txt > a.txt
+    
+                                        </code>
+                                </pre>
+
+                        可以定义一个Makefile
+
+                        <pre class="makefile">
+                                        <code data-trim>
+                                                a.txt: b.txt c.txt
+                                                    cat b.txt c.txt > a.txt
+                                        </code>
+                                </pre>
+
+                        <pre class="bash">
+                                        <code data-trim>
+                                                $ make a.txt
+    
+                                        </code>
+                                </pre>
+
+                    </div>
+                    <div class="right small">
+                        <a href="http://www.ruanyifeng.com/blog/2015/02/make.html">Make教程</a>
+                    </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Maven</h2>
+                </div>
+                <div class="down-9">
+
+                    Apache
+                    Maven，是一个软件（特别是Java软件）项目管理及自动构建工具，由Apache软件基金会所提供。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
+
+                    Maven也可被用于构建和管理各种项目，例如C#，Ruby，Scala和其他语言编写的项目。 </div>
+
+                <div class="right"> -- Wikipedia</div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>Maven 规范</h2>
+
+                </div>
+                <div class="down-9">
+                    <pre class="bash">
+                            <code data-trim>
+                                src
+                                    |----main
+                                        |----java
+                                            |----package
+                                    |----test
+                                        |----java
+                                            |----package
+                                    |----resources
+                                pom.xml
+                            </code>
+                        </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>还是那个Math</h2>
+                </div>
+                <div class="down-3 row">
+                    <div class="col-33">
+                        <pre class="java tiny">
+                                    <code data-trim>
+                                            package edu.nju.ics;
+
+                                            public class Math {
+                                                /**
+                                                * 阶乘
+                                                *
+                                                * @param n
+                                                * @return
+                                                */
+                                                public int factorial(int n) throws Exception {
+                                                    if (n < 0) {
+                                                        throw new Exception("负数没有阶乘");
+                                                    } else if (n <= 1) {
+                                                        return 1;
+                                                    } else {
+                                                        return n * factorial(n - 1);
+                                                    }
+                                                }
+                                    </code>
+                                    
+                                </pre>
+                    </div>
+                    <div class="col-33">
+                        <pre class="java tiny">
+                                    <code data-trim>
+                                          /**
+                                            * 斐波那契数列
+                                            *
+                                            * @param n
+                                            * @return
+                                            */
+                                            public int fibonacci(int n) throws Exception {
+                                                if (n <= 0) {
+                                                    throw new Exception("斐波那契数列从第1位开始");
+                                                } else if (n == 1) {
+                                                    return 0;
+                                                } else if (n == 2) {
+                                                    return 1;
+                                                } else {
+                                                    return fibonacci(n - 1) + fibonacci(n - 2);
+                                                }
+                                            }
+
+                                        }
+                                    </code>
+                                    
+                                </pre>
+                    </div>
+                    <div class="col-33">
+                        <pre class="java tiny">
+                                        <code data-trim>
+                                                package edu.nju.ics;
+
+                                                import org.junit.Test;
+                                                import static org.junit.Assert.*;
+                                                
+                                                public class MathTest {
+                                                    @Test
+                                                    public void fibonacci() throws Exception {
+                                                        assertEquals(21, new Math().fibonacci(9));
+                                                    }
+                                                
+                                                    @Test
+                                                    public void testFactorial() throws Exception {
+                                                        assertEquals(120, new Math().factorial(5));
+                                                    }
+                                                }
+                                        </code>
+                                        
+                                    </pre>
+                    </div>
+                </div>
+                <div>
+                    需要JUnit.jar怎么办？
+                </div>
+            </section>
+
+
+
+            <section>
+                <div class="down-3">
+                    <h2>项目对象模型（Project Object Model，POM）</h2>
+
+                </div>
+                <div class="down-9">
+                    <pre class="xml">
+                                <code data-trim>
+                                        <?xml version="1.0" encoding="UTF-8"?>
+                                        <project xmlns="http://maven.apache.org/POM/4.0.0"
+                                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                                            <modelVersion>4.0.0</modelVersion>
+                                        
+                                            <groupId>edu.nju.ics</groupId>
+                                            <artifactId>math</artifactId>
+                                            <version>1.0-SNAPSHOT</version>
+                                        
+                                        
+                                            <dependencies>
+                                                <dependency>
+                                                    <groupId>junit</groupId>
+                                                    <artifactId>junit</artifactId>
+                                                    <version>4.12</version>
+                                                </dependency>
+                                            </dependencies>
+                                        </project>
+                                </code>
+                            </pre>
+                </div>
+            </section>
+
+            <section>
+
+                    <div class="down-3">
+                        <h2>自动化</h2>
+                    </div>
+                    <div class="down-1 center">
+                        <div class="center down-1">
+    
+                            <pre class="sh">
+                                            <code data-trim>
+                                                    $ mvn clean
+                                                    $ mvn test
+                                                    $ mvn package        
+                                            </code>
+                                    </pre>
+    
+                           
+    
+                        </div>
+                        <div class="right small">
+                            <a href="https://www.jianshu.com/p/1eff16f60297">Maven教程</a>
+                        </div>
+                </section>
+
+            <section>
+                <div class="down-30 center larger">
+                        自动构建你的葫芦娃
+                    </div>
+            </section>
+        </div>
+    </div>
+</body>
+</head>
+
+</html>
