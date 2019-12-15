@@ -20,7 +20,7 @@ async function getConfig() {
 
     /* Languages to be supported by syntax highlighting in Reveal 
      (the more fonts, the heavier the bundle will be) */
-    HIGHLIGHT_LANGUAGES: ['xml', 'java', 'bash'],
+    HIGHLIGHT_LANGUAGES: ['xml', 'java', 'bash', 'swift'],
 
     /* Fonts and formats to be included in build. Could be several from ['ttf', 'eot', 'woff', 'woff2']*/
     GOOGLE_FONTS: [{ "family": "Source Sans Pro" },
