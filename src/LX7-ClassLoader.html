@@ -308,10 +308,10 @@
                                     class CustomClassLoader extends ClassLoader {
 
                                         Class findClass(String name) {
-                                        // 寻找字节码
-                                        byte[] code = findCodeFromSomewhere(name);
-                                        // 组装Class对象
-                                        return this.defineClass(code, name);
+                                            // 寻找字节码
+                                            byte[] code = findCodeFromSomewhere(name);
+                                            // 组装Class对象
+                                            return this.defineClass(code, name);
                                         }
                                     }
                                     
