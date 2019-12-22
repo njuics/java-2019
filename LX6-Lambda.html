@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lambda Expressions</title>
+<link href="lib/css/app.css" rel="stylesheet"><link href="https:/use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"><link href="lib/css/ttf.css" rel="stylesheet"></head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+            <section class="title-slide">
+                <div class="huge framed bordered border-3x font-passionone bg-warning-alpha-08">
+                    Lambda Expressions
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2><code>ActionListener</code></h2>
+                </div>
+                <div class="down-1">
+                    <pre class="java">
+                        <code data-trim>
+                            public class TestActionEvent {  
+  
+                                public static void main(String[] args) {  
+                                    ...
+                                    Button b = new Button("Press me");  
+                                    Monitor mo = new Monitor();  
+                                    b.addActionListener(mo);  
+                                    ...
+                                }  
+                            }  
+                              
+                            static class Monitor implements ActionListener {  
+                              
+                                @Override  
+                                public void actionPerformed(ActionEvent e) {  
+                                    System.out.println(e);  
+                                }  
+                              
+                            }
+                        </code>
+                        
+                    </pre>
+                </div>
+                <div class="center"><code>Button</code>需要一个<code>ActionListener</code>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>使用匿名类</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java">
+                        <code data-trim>
+                            public class TestActionEvent {  
+
+                                public static void main(String[] args) {  
+                                    ...
+                                    Button b = new Button("Press me");  
+                                    b.addActionListener(new ActionListener(){
+                                        @Override  
+                                        public void actionPerformed(ActionEvent e) {  
+                                            System.out.println(e);  
+                                        } 
+                                    } );  
+                                    ...
+                                }  
+                            }  
+                        </code>
+                        
+                    </pre>
+                </div>
+                <div class="down-1 center"><code>Button</code>并不在意<code>Listener</code>是谁，要的一个函数处理<code>Action</code>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>ActionListener</h2>
+                </div>
+
+                <div class="center down-15 smaller">
+                    <a
+                        href="https://docs.oracle.com/javase/9/docs/api/java/awt/event/ActionListener.html">https://docs.oracle.com/javase/9/docs/api/java/awt/event/ActionListener.html</a>
+
+                </div>
+
+                <div class="down-5 fragment small center"><code>ActionListener</code>只定义了一个函数接口
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>那直接传个函数不好么？</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                            public class TestActionEvent {  
+                                public static void main(String[] args) {  
+                                    Button b = new Button("Press me");  
+                                    b.addActionListener((e) -> {
+                                        System.out.println(e)
+                                    });  
+                                }  
+                            } 
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-5 center">
+                    <code>(e) -> {System.out.println(e)}</code></div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>此事并不稀奇</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="c">
+                        <code data-trim>
+                            void MyFun(int x);   
+                            void (*FunP)(int ); 
+
+                            int main(int argc, char* argv[])
+                            {
+                                MyFun(10);    
+                                FunP=&MyFun; 
+                                (*FunP)(20); 
+                            }
+
+                            void MyFun(int x) 
+                            {
+                                printf(“%d\n”,x);
+                            }
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-1  center">
+                    C Pointer
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2>真的不稀奇</h2>
+                </div>
+                <div class="down-9">
+                    <pre class="swift">
+                        <code data-trim>
+                            func backward(_ s1: String, _ s2: String) -> Bool {
+                                return s1 > s2
+                            }
+                            var reversedNames = names.sorted(by: backward)
+                        </code>
+                        
+                    </pre>
+
+                </div>
+
+                <div class="down-1  center">
+                    Swift Clousure
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2>真的一点不稀奇</h2>
+                </div>
+                <div class="down-3">
+                    <pre class="oc">
+                        <code data-trim>
+                            float price = 1.99; 
+                            float (^finalPrice)(int) = ^(int quantity) {
+                                // Notice local variable price is 
+                                // accessible in the block
+                                return quantity * price;
+                            };
+                            int orderQuantity = 10;
+                            NSLog(@"Ordering %d units, final price is: $%2.2f", orderQuantity, finalPrice(orderQuantity));
+                        </code>
+                        
+                    </pre>
+                </div>
+
+                <div class="down-1 small center">
+                    Objective-C block
+                </div>
+            </section>
+
+            <section>
+                <div class="down-1">
+                    <h2> Java？</h2>
+                </div>
+                <div class="down-5">
+                    Java里将普通的方法或函数像参数一样传值并不简单
+                </div>
+                <div class="down-3">
+                    Java 世界是严格地以名词为中心的
+
+                </div>
+                <div class="center down-9 smaller">
+                    <a href="http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html">Execution in
+                        the Kingdom of Nouns</a>
+                </div>
+            </section>
+            <section>
+                <div class="down-3">
+                    <h2> Imperative versus Declarative </h2>
+                </div>
+                <!-- <div class="down-5">
+                    <code>yield</code>和<code>sleep</code>的主要区别是
+                </div> -->
+                <div class="down-9">
+                    <ul>
+                        <li>
+                            Imperative: is a style of programming where you program the algorithm with control flow and
+                            explicit steps.</li>
+                        <li>
+                            Declarative: is a style of programming where you declare what needs be done without concern
+                            for the control flow. </li>
+                        <li>
+                            Functional programming: is a declarative programming paradigm that treats computation as a
+                            series of functions and avoids state and mutable data to facilitate concurrency</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="down-3">
+                    Java缺少函数式编程特点， 为此Java 8 增加了一个语言级的新特性，名为Lambda表达式。
+
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Lambda 表达式 </h2>
+                </div>
+                <div class="down-5">
+                    Lambda表达式是一种匿名函数(并不完全正确)，简单地说，它是没有声明的方法，也即没有访问修饰符、返回值声明和名字。
+                </div>
+                <div class="down-3">
+                    你可以将其想做一种速记，在你需要使用某个方法的地方写上它。当某个方法只使用一次，而且定义很简短，使用这种速记替代之尤其有效，这样，你就不必在类中费力写声明与方法了。
+                </div>
+
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> 语法 </h2>
+                </div>
+                <div class="down-3">
+                    <pre class="java"">
+                        <code data-trim>
+                            (arg1, arg2...) -> { body }
+
+                            (type1 arg1, type2 arg2...) -> { body }
+                        </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class=" down-1">
+                    <h2> 例如 </h2>
+                </div>
+                <div>
+                    <pre class="java">
+                        <code data-trim>
+                            (int a, int b) -> {  return a + b; }
+
+                            () -> System.out.println("Hello World");
+                            
+                            (String s) -> { System.out.println(s); }
+                            
+                            () -> 42
+                            
+                            () -> { return 3.1415 };
+                        </code>
+                        
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <div class="down-3">
+                    <h2> Lambda 表达式的结构 </h2>
+                </div>
+                <div class="down-3">
+                    <ul>
+                        <li>一个Lambda表达式可以有零个或多个参数</li>
+                        <li>参数的类型既可以明确声明，也可以根据上下文来推断。例如：<code>(int a)</code>与<code>(a)</code>效果相同</li>
+                        <li>所有参数需包含在圆括号内，参数之间用逗号相隔。例如：<code>(a, b)</code> 或 <code>(int a, int b)</code> 或 <code>(String
+                                a, int b, float c)</code></li>
+                        <li>空圆括号代表参数集为空。例如：<code>() -> 42</code></li>
+                        <li>当只有一个参数，且其类型可推导时，圆括号<code>（）</code>可省略。例如：<code>a -> return a*a</code></li>
+                        <li>Lambda 表达式的主体可包含零条或多条语句</li>
+                        <li>如果Lambda表达式的主体只有一条语句，花括号<code>{}</code>可省略。匿名函数的返回类型与该主体表达式一致</li>
+                        <li>如果Lambda表达式的主体包含一条以上语句，则表达式必须包含在花括号<code>{}</code>中（形成代码块）。匿名函数的返回类型与代码块的返回类型一致，若没有返回则为空
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+
+            <section>
+                <div class="down-3">
+                    <h2>函数式接口</h2>
+                </div>
+                <div class="down-3">
+                    <ul>
+
+                        <li>函数式接口是只包含一个抽象方法声明的接口
+
+                            <ul>
+                                <li>
+                                    <code>java.lang.Runnable</code>就是一种函数式接口，在<code>Runnable</code>>接口中只声明了一个方法<code>void
+                                        run()</code>
+
+                                </li>
+                                <li>
+                                    相似地，<code>ActionListener</code>接口也是一种函数式接口，我们使用匿名内部类来实例化函数式接口的对象，有了Lambda表达式，这一方式可以得到简化。
+                                </li>
+                            </ul>
+                        </li>
+                        <li>每个 Lambda 表达式都能隐式地赋值给函数式接口</li>
+                    </ul>
+                </div>
+            </section>
+
+
+            <section>
+                <div class=" down-1">
+                    <h2> 例如 </h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            Runnable r = () -> System.out.println("hello world");
+
+                        </code>
+                        <code data-trim="">
+                            new Thread(
+                                () -> System.out.println("hello world")
+                                ).start();
+                        </code>
+                        
+                    </pre>
+                </div>
+                <div class="down-3 small">
+                    根据线程类的构造函数签名<code>public Thread(Runnable r) { }</code>，将该Lambda表达式赋给<cocde>Runnable</cocde>接口。
+                </div>
+            </section>
+
+
+            <section>
+                <div class=" down-1">
+                    <h2> 其他常见的函数式接口 </h2>
+                </div>
+                <div class="down-9">
+                    <pre class="java">
+                        <code data-trim>
+                            Consumer&lt;Integer&gt;  c = (int x) -> { System.out.println(x) };
+
+                            BiConsumer&lt;Integer, String&gt; b = (Integer x, String y) -> System.out.println(x + " : " + y);
+                                
+                            Predicate&lt;String&gt; p = (String s) -> { s == null };
+                        </code>
+                    </pre>
+                </div>
+
+            </section>
+
+            <section>
+                <div class=" down-1">
+                    <h2> 定义自己的函数式接口 </h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            @FunctionalInterface public interface WorkerInterface {
+                                public void doSomeWork();
+                            }
+                        </code>
+                    </pre>
+                </div>
+                <div>
+                    <code>@FunctionalInterface</code>是 Java 8 新加入的一种接口，用于指明该接口类型声明是根据 Java 语言规范定义的函数式接口。
+                </div>
+            </section>
+
+            <section>
+                <div class=" down-1">
+                    <h2> 使用 </h2>
+                </div>
+                <div class="down-5">
+                    <pre class="java">
+                        <code data-trim>
+                            @FunctionalInterface
+                            public interface WorkerInterface {
+                                public void doSomeWork();
+                            }
+
+                            public class WorkerInterfaceTest {
+                                public static void execute(WorkerInterface worker) {
+                                    worker.doSomeWork();
+                                }
+                                public static void main(String [] args) {
+                                    execute(new WorkerInterface() {
+                                        @Override
+                                        public void doSomeWork() {
+                                            System.out.println("Worker invoked using Anonymous class");
+                                        }
+                                    });
+
+                                    execute( () -> System.out.println("Worker invoked using Lambda expression") );
+                                }
+
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+        </div>
+    </div>
+<script type="text/javascript" src="lib/js/app.js"></script></body>
+
+</html>
