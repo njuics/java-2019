@@ -54,7 +54,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-regular-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "highlight.js": "^9.16.2",
+    "highlight.js": "^10.4.1",
     "npm-check-updates": "^3.2.2",
     "reveal-ga": "^0.2.0",
     "reveal.js": "^3.8.0",
